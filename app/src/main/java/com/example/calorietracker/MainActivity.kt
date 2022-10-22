@@ -12,9 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val inputStream = assets.open("logo.jpg")
-        val bitmap = BitmapFactory.decodeStream(inputStream)
-        binding.logo.setImageBitmap(bitmap)
         setContentView(R.layout.activity_main)
 
     }
