@@ -1,10 +1,14 @@
 package com.example.calorietracker
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.calorietracker.databinding.FragmentStartBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,7 +24,16 @@ private const val ARG_PARAM2 = "param2"
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
-
+    private var resultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Log.d(javaClass.simpleName, "result ok")
+            } else {
+                Log.w(javaClass.simpleName, "Bad activity return code ${result.resultCode}")
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +49,14 @@ class StartFragment : Fragment() {
         binding.start.setOnClickListener {
 
         }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+    }
+
+    private fun toProfile() {
+        val intent = Intent(this.activity, Profile::class.java)
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
