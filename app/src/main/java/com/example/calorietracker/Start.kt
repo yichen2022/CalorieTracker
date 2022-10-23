@@ -3,18 +3,12 @@ package com.example.calorietracker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.example.calorietracker.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class Start : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i(javaClass.name, "onCreate")
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
-
+        setContentView(R.layout.activity_start)
     }
-
     override fun onStart() {
         super.onStart()
         Log.i(javaClass.name, "onStart")
