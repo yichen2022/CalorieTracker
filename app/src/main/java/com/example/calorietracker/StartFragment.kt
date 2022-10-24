@@ -39,6 +39,7 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,6 +47,7 @@ class StartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i(javaClass.simpleName, "onViewCreated")
         binding.start.setOnClickListener {
 
         }
@@ -60,6 +62,7 @@ class StartFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
         _binding = null
     }

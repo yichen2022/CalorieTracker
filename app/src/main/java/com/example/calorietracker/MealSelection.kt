@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
-class Profile : AppCompatActivity() {
+class MealSelection : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i(javaClass.name, "onCreate")
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        Log.i(javaClass.name, "onCreate")
+        setContentView(R.layout.activity_meal_selection)
     }
     override fun onStart() {
         super.onStart()
