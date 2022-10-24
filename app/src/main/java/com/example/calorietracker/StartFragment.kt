@@ -24,16 +24,6 @@ private const val ARG_PARAM2 = "param2"
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
-    private var resultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                Log.d(javaClass.simpleName, "result ok")
-            } else {
-                Log.w(javaClass.simpleName, "Bad activity return code ${result.resultCode}")
-            }
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,15 +39,20 @@ class StartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         binding.start.setOnClickListener {
-
-        }
-        binding.profile.setOnClickListener {
             toProfile()
+        }
+        binding.add.setOnClickListener {
+            toMeal()
         }
     }
 
     private fun toProfile() {
         val intent = Intent(this.activity, Profile::class.java)
+        startActivity(intent)
+    }
+
+    private fun toMeal() {
+        val intent = Intent(this.activity, MealSelection::class.java)
         startActivity(intent)
     }
 
