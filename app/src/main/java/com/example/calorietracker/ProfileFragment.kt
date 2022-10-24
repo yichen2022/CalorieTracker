@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.example.calorietracker.databinding.FragmentProfileBinding
 import com.example.calorietracker.databinding.FragmentStartBinding
 
@@ -40,7 +41,15 @@ class ProfileFragment : Fragment() {
         binding.add.setOnClickListener {
             toMeal()
         }
-
+        val heightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.height, android.R.layout.simple_spinner_item)
+        heightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.heightUnit.adapter = heightUnitAdapter
+        val weightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.weight, android.R.layout.simple_spinner_item)
+        weightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.weightUnit.adapter = weightUnitAdapter
+        val activityLevelAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.activity, android.R.layout.simple_spinner_item)
+        activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.activityDropdown.adapter = activityLevelAdapter
     }
     private fun toMeal() {
         val intent = Intent(this.activity, MealSelection::class.java)

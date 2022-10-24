@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="activity">
+        <item>Select?</item>
+        <item>Sedentary</item>
+        <item>Moderately Active</item>
+        <item>Active</item>
+        <item>Very Active</item>
+    </string-array>
+</resources>
