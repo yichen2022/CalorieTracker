@@ -7,7 +7,7 @@
     tools:context=".MealSelection">
     <fragment
         android:id="@+id/meal_fragment"
-        android:name="com.example.calorietracker.MealSelectionFragment"
+        android:name="com.example.calorietracker.fragments.MealSelectionFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

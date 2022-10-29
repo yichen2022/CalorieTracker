@@ -1,6 +1,5 @@
-package com.example.calorietracker
+package com.example.calorietracker.fragments
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import com.example.calorietracker.databinding.FragmentStartBinding
+import com.example.calorietracker.MyPlate
+import com.example.calorietracker.databinding.FragmentMealSelectionBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,48 +17,43 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [StartFragment.newInstance] factory method to
+ * Use the [MealSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class StartFragment : Fragment() {
-    private var _binding: FragmentStartBinding? = null
+class MealSelectionFragment : Fragment() {
+    private var _binding: FragmentMealSelectionBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
-        _binding = FragmentStartBinding.inflate(inflater, container, false)
+        _binding = FragmentMealSelectionBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        binding.start.setOnClickListener {
-            toProfile()
+        binding.breakfast.setOnClickListener {
+            myPlate()
         }
-        binding.add.setOnClickListener {
-            toMeal()
+        binding.lunch.setOnClickListener {
+            myPlate()
+        }
+        binding.dinner.setOnClickListener {
+            myPlate()
+        }
+        binding.snacks.setOnClickListener {
+            myPlate()
         }
     }
-
-    private fun toProfile() {
-        val intent = Intent(this.activity, Profile::class.java)
+    private fun myPlate() {
+        val intent = Intent(this.activity, MyPlate::class.java)
         startActivity(intent)
-    }
-
-    private fun toMeal() {
-        val intent = Intent(this.activity, MealSelection::class.java)
-        startActivity(intent)
-    }
-
-    override fun onDestroyView() {
-        Log.i(javaClass.simpleName, "onDestroyView")
-        super.onDestroyView()
-        _binding = null
     }
     companion object {
         /**
@@ -68,12 +62,12 @@ class StartFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment StartFragment.
+         * @return A new instance of fragment MealSelectionFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            StartFragment().apply {
+            MealSelectionFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

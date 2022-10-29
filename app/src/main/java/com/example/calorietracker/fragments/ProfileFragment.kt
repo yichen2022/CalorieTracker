@@ -1,4 +1,4 @@
-package com.example.calorietracker
+package com.example.calorietracker.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.example.calorietracker.MealSelection
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
-import com.example.calorietracker.databinding.FragmentStartBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

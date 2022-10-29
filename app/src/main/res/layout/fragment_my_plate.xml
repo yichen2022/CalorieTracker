@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MyPlateFragment">
+    tools:context=".fragments.MyPlateFragment">
 
     <ImageView
         android:id="@+id/calendar"
