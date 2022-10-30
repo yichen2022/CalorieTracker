@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Yogurt",
+    "calories": 17
+  },
+  {
+    "title": "Soy Milk",
+    "calories": 14
+  },
+  {
+    "title": "Skim Milk",
+    "calories": 11
+  },
+  {
+    "title": "Milk",
+    "calories": 18
+  },
+  {
+    "title": "Hot Chocolate",
+    "calories": 27
+  },
+  {
+    "title": "Whole Milk",
+    "calories": 18
+  },
+  {
+    "title": "American Cheese",
+    "calories": 41
+  },
+  {
+    "title": "Blue Cheese",
+    "calories": 99
+  },
+  {
+    "title": "Feta",
+    "calories": 74
+  },
+  {
+    "title": "Swiss Cheese",
+    "calories": 106
+  },
+  {
+    "title": "Mozzarella",
+    "calories": 78
+  },
+  {
+    "title": "Cheddar",
+    "calories": 113
+  }
+]

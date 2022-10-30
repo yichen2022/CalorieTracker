@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Chocolate",
+    "calories": 148
+  },
+  {
+    "title": "Cookies",
+    "calories": 137
+  },
+  {
+    "title": "Granola Bars",
+    "calories": 127
+  },
+  {
+    "title": "Gummi Bears",
+    "calories": 88
+  },
+  {
+    "title": "Waffles",
+    "calories": 76
+  },
+  {
+    "title": "Hershey Kisses",
+    "calories": 132
+  },
+  {
+    "title": "M&M's",
+    "calories": 134
+  },
+  {
+    "title": "Marshmallows",
+    "calories": 89
+  },
+  {
+    "title": "Peanut Butter Cookies",
+    "calories": 133
+  },
+  {
+    "title": "Animal Crackers",
+    "calories": 123
+  },
+  {
+    "title": "Chocolate Chips",
+    "calories": 138
+  },
+  {
+    "title": "Jelly Beans",
+    "calories": 99
+  }
+]

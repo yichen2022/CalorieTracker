@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Ravioli",
+    "calories": 104
+  },
+  {
+    "title": "Whole Grain Noodles",
+    "calories": 97
+  },
+  {
+    "title": "Whole Grain Spaghetti",
+    "calories": 98
+  },
+  {
+    "title": "Tortilla Chips",
+    "calories": 140
+  },
+  {
+    "title": "Pancake",
+    "calories": 65
+  },
+  {
+    "title": "Toast",
+    "calories": 73
+  },
+  {
+    "title": "Muffin",
+    "calories": 83
+  },
+  {
+    "title": "Raisin Bread",
+    "calories": 77
+  },
+  {
+    "title": "Bagel",
+    "calories": 72
+  },
+  {
+    "title": "Bun",
+    "calories": 88
+  },
+  {
+    "title": "White Bread",
+    "calories": 69
+  },
+  {
+    "title": "Garlic Bread",
+    "calories": 98
+  }
+]

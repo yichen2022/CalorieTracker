@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Beef",
+    "calories": 69
+  },
+  {
+    "title": "Chicken",
+    "calories": 61
+  },
+  {
+    "title": "Ham",
+    "calories": 46
+  },
+  {
+    "title": "Pork",
+    "calories": 55
+  },
+  {
+    "title": "Turkey",
+    "calories": 53
+  },
+  {
+    "title": "Chicken Wing",
+    "calories": 74
+  },
+  {
+    "title": "Ground Beef",
+    "calories": 69
+  },
+  {
+    "title": "Spare Ribs",
+    "calories": 67
+  },
+  {
+    "title": "Chicken Thigh",
+    "calories": 64
+  },
+  {
+    "title": "Flat Iron Steak",
+    "calories": 38
+  },
+  {
+    "title": "Chicken Leg",
+    "calories": 49
+  },
+  {
+    "title": "Roast Beef",
+    "calories": 39
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Apple",
+    "calories": 15
+  },
+  {
+    "title": "Banana",
+    "calories": 25
+  },
+  {
+    "title": "Strawberries",
+    "calories": 9
+  },
+  {
+    "title": "Pear",
+    "calories": 16
+  },
+  {
+    "title": "Pineapple",
+    "calories": 14
+  },
+  {
+    "title": "Peach",
+    "calories": 11
+  },
+  {
+    "title": "Grapes",
+    "calories": 19
+  },
+  {
+    "title": "Blackberries",
+    "calories": 12
+  },
+  {
+    "title": "Mandarin Oranges",
+    "calories": 15
+  },
+  {
+    "title": "Plum",
+    "calories": 13
+  },
+  {
+    "title": "Raspberries",
+    "calories": 15
+  },
+  {
+    "title": "Blueberries",
+    "calories": 16
+  }
+]
