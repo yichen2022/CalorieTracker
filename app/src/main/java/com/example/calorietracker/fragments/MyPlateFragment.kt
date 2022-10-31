@@ -1,6 +1,5 @@
 package com.example.calorietracker.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,12 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModel
-import com.example.calorietracker.FoodActivity
+import androidx.fragment.app.commitNow
 import com.example.calorietracker.MainViewModel
-import com.example.calorietracker.MealSelection
 import com.example.calorietracker.R
-import com.example.calorietracker.databinding.FragmentMealSelectionBinding
 import com.example.calorietracker.databinding.FragmentMyPlateBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,12 +55,11 @@ class MyPlateFragment : Fragment() {
         }
     }
     private fun toFoodList(selection: String) {
-        viewModel.observeFoodGroup().observeForever {
-            viewModel.updateFoodGroup(selection)
+        viewModel.updateFoodGroup(selection)
+        this.requireActivity().supportFragmentManager.commitNow {
+            setReorderingAllowed(true)
+            replace(R.id.fragment, FoodFragment.newInstance())
         }
-        val intent = Intent(this.activity, FoodActivity::class.java)
-        intent.putExtra("categorySelection", selection)
-        startActivity(intent)
     }
     private fun handleCategory(): String {
         val pos = binding.categorySelection.selectedItemPosition
@@ -84,12 +79,8 @@ class MyPlateFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyPlateFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): MyPlateFragment {
+            return MyPlateFragment()
+        }
     }
 }

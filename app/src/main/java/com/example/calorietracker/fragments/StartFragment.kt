@@ -1,14 +1,13 @@
 package com.example.calorietracker.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.calorietracker.MealSelection
-import com.example.calorietracker.Profile
+import androidx.fragment.app.commitNow
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentStartBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,13 +46,17 @@ class StartFragment : Fragment() {
     }
 
     private fun toProfile() {
-        val intent = Intent(this.activity, Profile::class.java)
-        startActivity(intent)
+        this.requireActivity().supportFragmentManager.commitNow {
+            setReorderingAllowed(true)
+            replace(R.id.fragment, ProfileFragment.newInstance())
+        }
     }
 
     private fun toMeal() {
-        val intent = Intent(this.activity, MealSelection::class.java)
-        startActivity(intent)
+        this.requireActivity().supportFragmentManager.commitNow {
+            setReorderingAllowed(true)
+            replace(R.id.fragment, MealSelectionFragment.newInstance())
+        }
     }
 
     override fun onDestroyView() {
@@ -72,12 +75,8 @@ class StartFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance(): StartFragment {
+            return StartFragment()
+        }
     }
 }

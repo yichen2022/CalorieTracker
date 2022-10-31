@@ -1,7 +1,6 @@
 package com.example.calorietracker
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,16 +11,6 @@ import com.example.calorietracker.firebase.AuthInit
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
-    private var resultLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                Log.d(javaClass.simpleName, "result ok")
-            } else {
-                Log.w(javaClass.simpleName, "Bad activity return code ${result.resultCode}")
-            }
-        }
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -41,15 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AuthInit(viewModel, signInLauncher)
-        binding.logo.setOnClickListener {
-            start()
-        }
     }
 
-    private fun start() {
-        val intent = Intent(this, Start::class.java)
-        resultLauncher.launch(intent)
-    }
 
     override fun onStart() {
         super.onStart()

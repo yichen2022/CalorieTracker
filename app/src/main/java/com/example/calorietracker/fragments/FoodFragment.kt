@@ -21,7 +21,6 @@ class FoodFragment : Fragment() {
     private var _binding: FragmentFoodListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
-    private lateinit var foodGroup: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,10 +28,8 @@ class FoodFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentFoodListBinding.inflate(inflater, container, false)
-        foodGroup = requireActivity().intent.extras!!.getString("categorySelection").toString()
         var adapter = FoodAdapter(listOf())
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        viewModel.updateFoodGroup(foodGroup)
         viewModel.observeFoodGroup().observeForever {
             when(viewModel.observeFoodGroup().value!!) {
                 "Grains" -> {
@@ -100,11 +97,8 @@ class FoodFragment : Fragment() {
 
         // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
-            FoodFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+        fun newInstance():FoodFragment {
+            return FoodFragment()
+        }
     }
 }
