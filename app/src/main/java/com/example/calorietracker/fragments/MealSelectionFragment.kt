@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.MyPlate
 import com.example.calorietracker.databinding.FragmentMealSelectionBinding
 
@@ -23,7 +25,7 @@ private const val ARG_PARAM2 = "param2"
 class MealSelectionFragment : Fragment() {
     private var _binding: FragmentMealSelectionBinding? = null
     private val binding get() = _binding!!
-
+    private val viewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,15 +41,19 @@ class MealSelectionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         binding.breakfast.setOnClickListener {
+            viewModel.setMeal("Breakfast")
             myPlate()
         }
         binding.lunch.setOnClickListener {
+            viewModel.setMeal("Lunch")
             myPlate()
         }
         binding.dinner.setOnClickListener {
+            viewModel.setMeal("Dinner")
             myPlate()
         }
         binding.snacks.setOnClickListener {
+            viewModel.setMeal("Snacks")
             myPlate()
         }
     }

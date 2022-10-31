@@ -63,6 +63,7 @@ class MyPlateFragment : Fragment() {
             viewModel.updateFoodGroup(selection)
         }
         val intent = Intent(this.activity, FoodActivity::class.java)
+        intent.putExtra("categorySelection", selection)
         startActivity(intent)
     }
     private fun handleCategory(): String {
