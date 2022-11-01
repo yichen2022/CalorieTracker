@@ -3,14 +3,24 @@ package com.example.calorietracker
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
+    companion object {
+        private val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        fun localPhotoFile(foodName : String): File {
+            val localPhotoFile = File(storageDir, "${foodName}.jpg")
+            Log.d("MainActivity", "photo path ${localPhotoFile.absolutePath}")
+            return localPhotoFile
+        }
+    }
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {

@@ -86,12 +86,14 @@ class FoodFragment : Fragment() {
                 else -> reader.skipValue()
             }
         }
+        viewModel.observeMeal().observeForever {
+            food.meal = viewModel.observeMeal().value.toString()
+        }
         reader.endObject()
         return food
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance():FoodFragment {
             return FoodFragment()

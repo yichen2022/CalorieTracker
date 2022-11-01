@@ -13,7 +13,13 @@ class MainViewModel() : ViewModel() {
     private var currentMeal = MutableLiveData<String>()
     private var foodSelections = MutableLiveData<MutableList<Food>>()
     private val storage = Storage()
+    private var foodSuccess: (path: String) -> Unit = ::defaultFood
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
+    private lateinit var crashMe: String
+    private fun defaultFood(@Suppress("UNUSED_PARAMETER") name: String) {
+        Log.d(javaClass.simpleName, "Function must be initialized to photo callback" )
+        crashMe.plus(" ")
+    }
     fun updateUser() {
         firebaseAuthLiveData.updateUser()
     }
@@ -28,6 +34,13 @@ class MainViewModel() : ViewModel() {
     }
     fun observeFoodSelections(): LiveData<MutableList<Food>> {
         return foodSelections
+    }
+    fun foodUploadSuccess(name: String) {
+        val file = MainActivity.localPhotoFile(name)
+        storage.uploadImage(file, name) {
+            foodSuccess(name)
+            foodSuccess = ::defaultFood
+        }
     }
     fun addFood(food: Food) {
         foodSelections.value!!.add(food)

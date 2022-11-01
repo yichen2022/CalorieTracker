@@ -10,11 +10,6 @@ import androidx.fragment.app.commitNow
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentStartBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!

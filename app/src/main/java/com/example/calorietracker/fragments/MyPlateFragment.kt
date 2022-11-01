@@ -13,13 +13,7 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMyPlateBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MyPlateFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyPlateFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var _binding: FragmentMyPlateBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
