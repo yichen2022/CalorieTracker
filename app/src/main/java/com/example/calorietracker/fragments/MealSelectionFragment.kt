@@ -12,11 +12,6 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealSelectionBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Use the [MealSelectionFragment.newInstance] factory method to

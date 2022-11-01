@@ -64,7 +64,7 @@ class FoodFragment : Fragment() {
     }
 
     private fun readFoodsArray(reader: JsonReader): List<Food>  {
-        var list = mutableListOf<Food>()
+        val list = mutableListOf<Food>()
         reader.beginArray()
         while (reader.hasNext()) {
             list.add(readFood(reader))
@@ -92,10 +92,6 @@ class FoodFragment : Fragment() {
 
     companion object {
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance():FoodFragment {
             return FoodFragment()

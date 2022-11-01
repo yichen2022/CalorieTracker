@@ -10,13 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.commitNow
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentBlankBinding
-import com.example.calorietracker.databinding.FragmentFoodListBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BlankFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BlankFragment : Fragment() {
     private var _binding: FragmentBlankBinding? = null
     private val binding get() = _binding!!
