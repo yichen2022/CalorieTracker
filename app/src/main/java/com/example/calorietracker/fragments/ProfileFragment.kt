@@ -1,20 +1,39 @@
 package com.example.calorietracker.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.commitNow
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
+import com.example.calorietracker.model.User
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
+    private var user = User()
+    private var weightUnit = ""
+    private val weightUnits: Array<String> by lazy {
+        resources.getStringArray(R.array.weight)
+    }
+    private var heightUnit = ""
+    private val heightUnits: Array<String> by lazy {
+        resources.getStringArray(R.array.height)
+    }
+    private val activityLevels: Array<String> by lazy {
+        resources.getStringArray(R.array.activity)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +50,141 @@ class ProfileFragment : Fragment() {
         binding.add.setOnClickListener {
             toMeal()
         }
+        if (user.sex == "Male") {
+            binding.checkmarkM.isVisible = true
+        }
+        else if (user.sex == "Female") {
+            binding.checkmarkF.isVisible = true
+        }
+        binding.female.setOnClickListener {
+            user.sex = "Female"
+            binding.checkmarkM.isVisible = false
+            binding.checkmarkF.isVisible = true
+            calculateRecommendedCalories()
+        }
+        binding.male.setOnClickListener {
+            user.sex = "Male"
+            binding.checkmarkF.isVisible = false
+            binding.checkmarkM.isVisible = true
+            calculateRecommendedCalories()
+        }
+        binding.ageInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
+                    user.age = s.toString().toInt()
+                }
+                calculateRecommendedCalories()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
+                    user.age = s.toString().toInt()
+                }
+                calculateRecommendedCalories()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
+                    user.age = s.toString().toInt()
+                }
+                calculateRecommendedCalories()
+            }
+        })
+        binding.heightUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                handleHeight(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                handleHeight(0)
+            }
+
+        }
+        binding.weightUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                handleWeight(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                handleWeight(0)
+            }
+
+        }
+        binding.activityDropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                handleActivityLevel(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                handleActivityLevel(0)
+            }
+
+        }
+        binding.heightInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.height = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.height = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.height = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+        })
+        binding.weightInput.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.weight = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.weight = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().toDoubleOrNull() != null) {
+                    user.weight = s.toString().toDouble()
+                }
+                calculateBMI()
+                calculateRecommendedCalories()
+            }
+        })
         val heightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.height, android.R.layout.simple_spinner_item)
         heightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.heightUnit.adapter = heightUnitAdapter
@@ -41,11 +195,90 @@ class ProfileFragment : Fragment() {
         activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.activityDropdown.adapter = activityLevelAdapter
     }
+    private fun handleHeight(heightPos: Int) {
+        if (heightPos > 0) {
+            heightUnit = heightUnits[heightPos]
+        }
+        calculateRecommendedCalories()
+        calculateBMI()
+    }
+    private fun handleWeight(weightPos: Int) {
+        if (weightPos > 0) {
+            weightUnit = weightUnits[weightPos]
+        }
+        calculateRecommendedCalories()
+        calculateBMI()
+    }
+    private fun calculateBMI() {
+        if (weightUnit == "lb") {
+            user.weight = user.weight * 0.454
+        }
+        if (heightUnit == "in") {
+            user.height = user.height * 2.54
+        }
+        user.bmi = user.weight / (user.height / 100.0) / (user.height / 100.0)
+        binding.BMIValue.text = "BMI: ${user.bmi}      "
+        var status = ""
+        if (user.bmi > 30) {
+            status = "Obese"
+        }
+        else if (user.bmi > 25) {
+            status = "Overweight"
+        }
+        else if (user.bmi > 18.5) {
+            status = "Ideal"
+        }
+        else {
+            status = "Underweight"
+        }
+        binding.BMIStatus.text = "Status: $status"
+        binding.idealWeightText.text = "${18.5 * (user.height / 100.0) * (user.height / 100.0)} - ${25 * (user.height / 100.0) * (user.height / 100.0)} kg"
+    }
+    private fun handleActivityLevel(activityPos: Int) {
+        if (activityPos > 0) {
+            user.activityLevel = activityLevels[activityPos]
+        }
+        calculateRecommendedCalories()
+    }
     private fun toMeal() {
         this.requireActivity().supportFragmentManager.commitNow {
             setReorderingAllowed(true)
             replace(R.id.fragment, MealSelectionFragment.newInstance())
         }
+    }
+    private fun calculateRecommendedCalories() {
+        var bmr = 0.0
+        when (user.sex) {
+            "Female" -> {
+                bmr = 655.1 + 9.563 * user.weight + 1.85 * user.height - 4.676 * user.age
+            }
+            "Male" -> {
+                bmr = 66.47 + 13.75 * user.weight + 5.003 * user.height - 6.755 * user.age
+            }
+        }
+        when (user.activityLevel) {
+            "Sedentary" -> {
+                user.recommendedCal = (1.2 * bmr).roundToInt()
+            }
+            "Lightly Active" -> {
+                user.recommendedCal = (1.375 * bmr).roundToInt()
+            }
+            "Moderately Active" -> {
+                user.recommendedCal = (1.55 * bmr).roundToInt()
+            }
+            "Active" -> {
+                user.recommendedCal = (1.725 * bmr).roundToInt()
+            }
+            "Very Active" -> {
+                user.recommendedCal = (1.9 * bmr).roundToInt()
+            }
+        }
+        Log.i(javaClass.simpleName, user.activityLevel)
+        Log.i(javaClass.simpleName, user.weight.toString())
+        Log.i(javaClass.simpleName, user.height.toString())
+        Log.i(javaClass.simpleName, user.age.toString())
+        Log.i(javaClass.simpleName, user.recommendedCal.toString())
+        binding.recommendedCal.text = user.recommendedCal.toString() + " Cal"
     }
     companion object {
         @JvmStatic

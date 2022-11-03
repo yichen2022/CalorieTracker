@@ -28,33 +28,45 @@ class FoodFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentFoodListBinding.inflate(inflater, container, false)
-        var adapter = FoodAdapter(listOf())
+        var adapter = FoodAdapter(viewModel, listOf())
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         viewModel.observeFoodGroup().observeForever {
             when(viewModel.observeFoodGroup().value!!) {
                 "Grains" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("grains.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Grains", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
                 "Veggies" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("veggies.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Veggies", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
                 "Fruits" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("fruits.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Fruits", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
                 "Dairy" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("dairy.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Dairy", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
                 "Protein" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("protein.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Protein", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
                 "Sugars" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("sugars.json")))
-                    adapter = FoodAdapter((readFoodsArray(jsonReader)))
+                    val list = readFoodsArray("Sugars", jsonReader)
+                    viewModel.uploadFoods(list)
+                    adapter = FoodAdapter(viewModel, list)
                 }
             }
         }
@@ -63,16 +75,16 @@ class FoodFragment : Fragment() {
         return binding.root
     }
 
-    private fun readFoodsArray(reader: JsonReader): List<Food>  {
+    private fun readFoodsArray(category: String, reader: JsonReader): List<Food>  {
         val list = mutableListOf<Food>()
         reader.beginArray()
         while (reader.hasNext()) {
-            list.add(readFood(reader))
+            list.add(readFood(category, reader))
         }
         reader.endArray()
         return list
     }
-    private fun readFood(reader: JsonReader): Food {
+    private fun readFood(category: String, reader: JsonReader): Food {
         val food = Food()
         reader.beginObject()
         while (reader.hasNext()) {
@@ -86,6 +98,7 @@ class FoodFragment : Fragment() {
                 else -> reader.skipValue()
             }
         }
+        food.group = category
         viewModel.observeMeal().observeForever {
             food.meal = viewModel.observeMeal().value.toString()
         }

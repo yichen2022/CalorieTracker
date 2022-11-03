@@ -3,6 +3,7 @@
     <string-array name="activity">
         <item>Select?</item>
         <item>Sedentary</item>
+        <item>Lightly Active</item>
         <item>Moderately Active</item>
         <item>Active</item>
         <item>Very Active</item>

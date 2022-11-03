@@ -216,11 +216,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
         <TextView
+            android:id="@+id/BMIValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BMI: "
             />
         <TextView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/BMIStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: "
@@ -261,6 +264,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/calories"/>
         <TextView
+            android:id="@+id/recommendedCal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""/>

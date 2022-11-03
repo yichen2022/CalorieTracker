@@ -6,9 +6,8 @@ class User {
     var recommendedCal = 0
     var activityLevel = ""
     var age = 0
-    var height = 0
-    var bmi = 0f
+    var height = 0.0
+    var weight = 0.0
+    var bmi = 0.0
     var sex = ""
-    var idealWeight = ""
-    var idealCal = ""
 }

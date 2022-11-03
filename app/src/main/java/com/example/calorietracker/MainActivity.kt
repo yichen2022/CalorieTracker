@@ -13,14 +13,6 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
-    companion object {
-        private val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        fun localPhotoFile(foodName : String): File {
-            val localPhotoFile = File(storageDir, "${foodName}.jpg")
-            Log.d("MainActivity", "photo path ${localPhotoFile.absolutePath}")
-            return localPhotoFile
-        }
-    }
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -39,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.setMeals()
         AuthInit(viewModel, signInLauncher)
     }
 
