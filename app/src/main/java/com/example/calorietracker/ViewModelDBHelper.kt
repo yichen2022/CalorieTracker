@@ -37,7 +37,8 @@ class ViewModelDBHelper {
         }
     }
     fun createFood(food: Food, foodList: MutableLiveData<List<Food>>) {
-        db.collection("allFoods").document("food").set(food).addOnSuccessListener {
+        food.firestoreId = db.collection("allFoods").document().id
+        db.collection("allFoods").add(food).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Food successfully uploaded")
             dbFetchAllFoods(foodList)
         }.addOnFailureListener {
@@ -45,7 +46,8 @@ class ViewModelDBHelper {
         }
     }
     fun createMeal(meal: Meal, mealList: MutableLiveData<List<Meal>>) {
-        db.collection("allMeals").document("meal").set(meal).addOnSuccessListener {
+        meal.firestoreId = db.collection("allMeals").document().id
+        db.collection("allMeals").add(meal).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Meal successfully uploaded")
             dbFetchMeals(mealList)
         }.addOnFailureListener {
@@ -53,7 +55,8 @@ class ViewModelDBHelper {
         }
     }
     fun addFoodToSelection(food: Food, foodList: MutableLiveData<List<Food>>) {
-        db.collection("selectedFoods").document("foodSelection").set(food).addOnSuccessListener {
+        food.firestoreId = db.collection("selectedFoods").document().id
+        db.collection("selectedFoods").add(food).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Food successfully added")
             dbFetchSelectedFoods(foodList)
         }.addOnFailureListener {

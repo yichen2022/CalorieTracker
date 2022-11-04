@@ -2,19 +2,36 @@ package com.example.calorietracker.fragments
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.databinding.FragmentFoodBinding
+import com.example.calorietracker.databinding.FragmentFoodListBinding
 
 import com.example.calorietracker.model.Food
 
-class FoodAdapter(private val viewModel: MainViewModel, private val foodList: List<Food>) : RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
+class FoodAdapter(private val viewModel: MainViewModel, private val foodList: List<Food>, private val binding: FragmentFoodListBinding) : RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FragmentFoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = ViewHolder(binding)
         holder.binding.item.setOnClickListener {
-            viewModel.addFood(foodList[holder.adapterPosition])
+            if (viewModel.observeSelectedFoods().value!!.contains(foodList[holder.adapterPosition])) {
+                viewModel.removeFoodFromMeal(foodList[holder.adapterPosition])
+                viewModel.removeFood(foodList[holder.adapterPosition])
+            }
+            else {
+                this.binding.amountInput.visibility = View.VISIBLE
+                this.binding.amount.visibility = View.VISIBLE
+                this.binding.add.setOnClickListener {
+                    foodList[holder.adapterPosition].amount = this.binding.amountInput.text.toString().toInt()
+                    this.binding.amountInput.visibility = View.INVISIBLE
+                    this.binding.amount.visibility = View.INVISIBLE
+                    viewModel.addFoodToMeal(foodList[holder.adapterPosition])
+                    viewModel.addFood(foodList[holder.adapterPosition])
+                }
+
+            }
         }
         return holder
     }

@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentId
 
 class Meal {
     var type = ""
-    var foodIds = ""
+    var foodIds = mutableListOf<String>()
     var calories = 0
     var grains = 0
     var fruitVeggie = 0

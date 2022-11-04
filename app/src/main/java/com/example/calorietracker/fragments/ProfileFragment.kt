@@ -12,7 +12,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commitNow
+import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
 import com.example.calorietracker.model.User
@@ -24,6 +26,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private var user = User()
     private var weightUnit = ""
+    private val viewModel: MainViewModel by activityViewModels()
     private val weightUnits: Array<String> by lazy {
         resources.getStringArray(R.array.weight)
     }
@@ -194,6 +197,7 @@ class ProfileFragment : Fragment() {
         val activityLevelAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.activity, android.R.layout.simple_spinner_item)
         activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.activityDropdown.adapter = activityLevelAdapter
+        viewModel.setProfile(user)
     }
     private fun handleHeight(heightPos: Int) {
         if (heightPos > 0) {
@@ -273,11 +277,6 @@ class ProfileFragment : Fragment() {
                 user.recommendedCal = (1.9 * bmr).roundToInt()
             }
         }
-        Log.i(javaClass.simpleName, user.activityLevel)
-        Log.i(javaClass.simpleName, user.weight.toString())
-        Log.i(javaClass.simpleName, user.height.toString())
-        Log.i(javaClass.simpleName, user.age.toString())
-        Log.i(javaClass.simpleName, user.recommendedCal.toString())
         binding.recommendedCal.text = user.recommendedCal.toString() + " Cal"
     }
     companion object {
