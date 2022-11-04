@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.setMeals()
         AuthInit(viewModel, signInLauncher)
     }
 

@@ -18,7 +18,7 @@ class BlankFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentBlankBinding.inflate(inflater, container, false)
         Log.i(javaClass.simpleName, "onCreateView")

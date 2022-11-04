@@ -33,8 +33,16 @@ class StartFragment : Fragment() {
         binding.add.setOnClickListener {
             toMeal()
         }
-    }
+        binding.calendar.setOnClickListener {
 
+        }
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.commitNow {
+            setReorderingAllowed(true)
+            add(R.id.fragment, DatePickerFragment.newInstance())
+        }
+    }
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.commitNow {
             setReorderingAllowed(true)

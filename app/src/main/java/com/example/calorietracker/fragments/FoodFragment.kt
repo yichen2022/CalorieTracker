@@ -24,7 +24,7 @@ class FoodFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentFoodListBinding.inflate(inflater, container, false)

@@ -7,6 +7,7 @@ import com.example.calorietracker.firebase.FirestoreAuthLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
+import java.sql.Date
 
 class MainViewModel() : ViewModel() {
     private var currentUser = MutableLiveData<User>()
@@ -16,25 +17,44 @@ class MainViewModel() : ViewModel() {
     private var selectedFoods = MutableLiveData<List<Food>>(listOf())
     private var allMeals = MutableLiveData<List<Meal>>()
     private val dbHelp = ViewModelDBHelper()
+    private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     fun uploadFoods(foods: List<Food>) {
         for (i in foods.indices) {
             dbHelp.createFood(foods[i], allFoods)
         }
     }
+    fun observeDate(): LiveData<Date> {
+        return currentDate
+    }
+    fun setDate(date: Date) {
+        currentDate.value = date
+    }
     fun setMeals() {
         val breakfast = Meal()
         breakfast.type = "Breakfast"
+        breakfast.date = currentDate.value
         val lunch = Meal()
         lunch.type = "Lunch"
+        lunch.date = currentDate.value
         val dinner = Meal()
         dinner.type = "Dinner"
+        dinner.date = currentDate.value
         val snacks = Meal()
         snacks.type = "Snacks"
-        dbHelp.createMeal(breakfast, allMeals)
-        dbHelp.createMeal(lunch, allMeals)
-        dbHelp.createMeal(dinner, allMeals)
-        dbHelp.createMeal(snacks, allMeals)
+        snacks.date = currentDate.value
+        if (!allMeals.value!!.contains(breakfast)) {
+            dbHelp.createMeal(breakfast, allMeals)
+        }
+        if (!allMeals.value!!.contains(lunch)) {
+            dbHelp.createMeal(lunch, allMeals)
+        }
+        if (!allMeals.value!!.contains(dinner)) {
+            dbHelp.createMeal(dinner, allMeals)
+        }
+        if (!allMeals.value!!.contains(snacks)) {
+            dbHelp.createMeal(snacks, allMeals)
+        }
     }
     fun addFoodToMeal(food: Food) {
         when(currentMeal.value.toString()) {
