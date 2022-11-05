@@ -1,5 +1,7 @@
 package com.example.calorietracker.fragments
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -61,36 +63,12 @@ class ProfileFragment : Fragment() {
             user.sex = "Female"
             binding.checkmarkM.isVisible = false
             binding.checkmarkF.isVisible = true
-            calculateRecommendedCalories()
         }
         binding.male.setOnClickListener {
             user.sex = "Male"
             binding.checkmarkF.isVisible = false
             binding.checkmarkM.isVisible = true
-            calculateRecommendedCalories()
         }
-        binding.ageInput.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
-                    user.age = s.toString().toInt()
-                }
-                calculateRecommendedCalories()
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
-                    user.age = s.toString().toInt()
-                }
-                calculateRecommendedCalories()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s.toString().isNotBlank() && s.toString().all{ char -> char.isDigit()}) {
-                    user.age = s.toString().toInt()
-                }
-                calculateRecommendedCalories()
-            }
-        })
         binding.heightUnit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -136,56 +114,10 @@ class ProfileFragment : Fragment() {
             }
 
         }
-        binding.heightInput.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.height = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.height = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.height = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-        })
-        binding.weightInput.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.weight = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.weight = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s.toString().toDoubleOrNull() != null) {
-                    user.weight = s.toString().toDouble()
-                }
-                calculateBMI()
-                calculateRecommendedCalories()
-            }
-        })
+        binding.calculate.setOnClickListener {
+            calculateBMI()
+            calculateRecommendedCalories()
+        }
         val heightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.height, android.R.layout.simple_spinner_item)
         heightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.heightUnit.adapter = heightUnitAdapter
@@ -201,46 +133,56 @@ class ProfileFragment : Fragment() {
         if (heightPos > 0) {
             heightUnit = heightUnits[heightPos]
         }
-        calculateRecommendedCalories()
-        calculateBMI()
     }
     private fun handleWeight(weightPos: Int) {
         if (weightPos > 0) {
             weightUnit = weightUnits[weightPos]
         }
-        calculateRecommendedCalories()
-        calculateBMI()
     }
     private fun calculateBMI() {
-        if (weightUnit == "lb") {
-            user.weight = user.weight * 0.454
+        user.height = binding.heightInput.text.toString().toDouble()
+        user.weight = binding.weightInput.text.toString().toDouble()
+        if (weightUnit == "kg") {
+            user.weight = user.weight * 2.205
+            weightUnit = "lb"
         }
-        if (heightUnit == "in") {
-            user.height = user.height * 2.54
+        if (heightUnit == "cm") {
+            user.height = user.height / 2.54
+            heightUnit = "in"
         }
-        user.bmi = user.weight / (user.height / 100.0) / (user.height / 100.0)
+        user.bmi = user.weight / user.height / user.height * 703.0
         binding.BMIValue.text = "BMI: ${user.bmi}      "
         var status = ""
         if (user.bmi > 30) {
             status = "Obese"
+            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
         }
         else if (user.bmi > 25) {
             status = "Overweight"
+            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
         }
         else if (user.bmi > 18.5) {
             status = "Ideal"
+            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
         }
         else {
             status = "Underweight"
+            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
+        }
+        if (user.bmi > 15 && user.bmi < 40) {
+            binding.progressBar.setProgress(user.bmi.roundToInt(), true)
+        } else if (user.bmi > 40) {
+            binding.progressBar.setProgress(40, true)
+        } else {
+            binding.progressBar.setProgress(15, true)
         }
         binding.BMIStatus.text = "Status: $status"
-        binding.idealWeightText.text = "${18.5 * (user.height / 100.0) * (user.height / 100.0)} - ${25 * (user.height / 100.0) * (user.height / 100.0)} kg"
+        binding.idealWeightText.text = "${18.5 * user.height  * user.height / 703.0} - ${25 * user.height * user.height / 703.0} lb"
     }
     private fun handleActivityLevel(activityPos: Int) {
         if (activityPos > 0) {
             user.activityLevel = activityLevels[activityPos]
         }
-        calculateRecommendedCalories()
     }
     private fun toMeal() {
         this.requireActivity().supportFragmentManager.commitNow {
@@ -250,6 +192,7 @@ class ProfileFragment : Fragment() {
     }
     private fun calculateRecommendedCalories() {
         var bmr = 0.0
+        user.age = binding.ageInput.text.toString().toInt()
         when (user.sex) {
             "Female" -> {
                 bmr = 655.1 + 9.563 * user.weight + 1.85 * user.height - 4.676 * user.age
