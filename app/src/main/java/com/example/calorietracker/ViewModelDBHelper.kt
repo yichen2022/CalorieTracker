@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.google.firebase.firestore.FirebaseFirestore
-import java.sql.Date
 
 class ViewModelDBHelper {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()

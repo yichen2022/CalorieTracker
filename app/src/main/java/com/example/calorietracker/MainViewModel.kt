@@ -7,7 +7,7 @@ import com.example.calorietracker.firebase.FirestoreAuthLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
-import java.sql.Date
+import java.util.Date
 
 class MainViewModel() : ViewModel() {
     private var currentUser = MutableLiveData<User>()

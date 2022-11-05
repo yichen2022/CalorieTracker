@@ -1,7 +1,7 @@
 package com.example.calorietracker.model
 
 import com.google.firebase.firestore.DocumentId
-import java.sql.Date
+import java.util.Date
 
 class Food {
     var numCalories = 0
