@@ -34,7 +34,7 @@ class StartFragment : Fragment() {
             toMeal()
         }
         binding.calendar.setOnClickListener {
-
+            toDate()
         }
     }
     private fun toDate() {

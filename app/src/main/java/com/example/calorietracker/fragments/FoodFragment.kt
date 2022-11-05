@@ -101,20 +101,10 @@ class FoodFragment : Fragment() {
         food.group = category
         viewModel.observeMeal().observeForever {
             viewModel.observeAllMeals().observeForever {
-                food.meal = viewModel.observeMeal().value.toString()
-                when (food.meal) {
-                    "Breakfast" -> {
-                        food.mealId = viewModel.observeAllMeals().value!![0].firestoreId
-                    }
-                    "Lunch" -> {
-                        food.mealId = viewModel.observeAllMeals().value!![1].firestoreId
-                    }
-                    "Dinner" -> {
-                        food.mealId = viewModel.observeAllMeals().value!![2].firestoreId
-                    }
-                    "Snacks" -> {
-                        food.mealId = viewModel.observeAllMeals().value!![3].firestoreId
-                    }
+                viewModel.observeDate().observeForever {
+                    food.meal = viewModel.observeMeal().value.toString()
+                    food.date = viewModel.observeDate().value!!
+                    food.mealId = viewModel.getMeal(food.meal, food.date!!).firestoreId
                 }
             }
 

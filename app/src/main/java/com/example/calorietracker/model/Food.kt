@@ -1,6 +1,7 @@
 package com.example.calorietracker.model
 
 import com.google.firebase.firestore.DocumentId
+import java.sql.Date
 
 class Food {
     var numCalories = 0
@@ -9,6 +10,7 @@ class Food {
     var amount = 0
     var name = ""
     var mealId = ""
+    var date: Date? = null
     @DocumentId
     var firestoreId: String = ""
     override fun equals(other: Any?): Boolean =

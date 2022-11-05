@@ -10,6 +10,7 @@ class Meal {
     var grains = 0
     var fruitVeggie = 0
     var meat = 0
+    var dairy = 0
     var otherCategories = 0
     var date: Date? = null
     @DocumentId

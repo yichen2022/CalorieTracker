@@ -56,141 +56,61 @@ class MainViewModel() : ViewModel() {
             dbHelp.createMeal(snacks, allMeals)
         }
     }
+    fun getMeal(title: String, date: Date): Meal {
+        val meal = Meal()
+        meal.type = title
+        meal.date = date
+        return allMeals.value!![allMeals.value!!.indexOf(meal)]
+    }
     fun addFoodToMeal(food: Food) {
-        when(currentMeal.value.toString()) {
-            "Breakfast" -> {
-                allMeals.value!![0].foodIds.add(food.firestoreId)
-                allMeals.value!![0].calories += food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![0].grains += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![0].fruitVeggie += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![0].meat += food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![0].otherCategories += food.numCalories * food.amount
-                }
+        val meal = getMeal(currentMeal.value!!, currentDate.value!!)
+        meal.foodIds.add(food.firestoreId)
+        when (foodGroup.value.toString()) {
+            "Grains" -> {
+                meal.grains += food.numCalories * food.amount
             }
-            "Lunch" -> {
-                allMeals.value!![1].foodIds.add(food.firestoreId)
-                allMeals.value!![1].calories += food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![1].grains += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![1].fruitVeggie += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![1].meat += food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![1].otherCategories += food.numCalories * food.amount
-                }
+            "Veggies" -> {
+                meal.fruitVeggie += food.numCalories * food.amount
             }
-            "Dinner" -> {
-                allMeals.value!![2].foodIds.add(food.firestoreId)
-                allMeals.value!![2].calories += food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![2].grains += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![2].fruitVeggie += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![2].meat += food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![2].otherCategories += food.numCalories * food.amount
-                }
+            "Fruits" -> {
+                meal.fruitVeggie += food.numCalories * food.amount
             }
-            "Snacks" -> {
-                allMeals.value!![3].foodIds.add(food.firestoreId)
-                allMeals.value!![3].calories += food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![3].grains += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![3].fruitVeggie += food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![3].meat += food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![3].otherCategories += food.numCalories * food.amount
-                }
+            "Protein" -> {
+                meal.meat += food.numCalories * food.amount
+            }
+            "Dairy" -> {
+                meal.dairy += food.numCalories * food.amount
+            }
+            else -> {
+                meal.otherCategories += food.numCalories * food.amount
             }
         }
+        dbHelp.updateMeal(meal, allMeals)
     }
     fun removeFoodFromMeal(food: Food) {
-        when(currentMeal.value.toString()) {
-            "Breakfast" -> {
-                allMeals.value!![0].foodIds.remove(food.firestoreId)
-                allMeals.value!![0].calories -= food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![0].grains -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![0].fruitVeggie -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![0].meat -= food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![0].otherCategories -= food.numCalories * food.amount
-                }
+        val meal = getMeal(currentMeal.value!!, currentDate.value!!)
+        meal.foodIds.remove(food.firestoreId)
+        when (foodGroup.value.toString()) {
+            "Grains" -> {
+                meal.grains -= food.numCalories * food.amount
             }
-            "Lunch" -> {
-                allMeals.value!![1].foodIds.remove(food.firestoreId)
-                allMeals.value!![1].calories -= food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![1].grains -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![1].fruitVeggie -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![1].meat -= food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![1].otherCategories -= food.numCalories * food.amount
-                }
+            "Veggies" -> {
+                meal.fruitVeggie -= food.numCalories * food.amount
             }
-            "Dinner" -> {
-                allMeals.value!![2].foodIds.remove(food.firestoreId)
-                allMeals.value!![2].calories -= food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![2].grains -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![2].fruitVeggie -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![2].meat -= food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![2].otherCategories -= food.numCalories * food.amount
-                }
+            "Fruits" -> {
+                meal.fruitVeggie -= food.numCalories * food.amount
             }
-            "Snacks" -> {
-                allMeals.value!![3].foodIds.remove(food.firestoreId)
-                allMeals.value!![3].calories -= food.numCalories * food.amount
-                if (foodGroup.value.toString() == "Grains") {
-                    allMeals.value!![3].grains -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Veggies" || foodGroup.value.toString() == "Fruits") {
-                    allMeals.value!![3].fruitVeggie -= food.numCalories * food.amount
-                }
-                else if (foodGroup.value.toString() == "Protein") {
-                    allMeals.value!![3].meat -= food.numCalories * food.amount
-                }
-                else {
-                    allMeals.value!![3].otherCategories -= food.numCalories * food.amount
-                }
+            "Protein" -> {
+                meal.meat -= food.numCalories * food.amount
+            }
+            "Dairy" -> {
+                meal.dairy -= food.numCalories * food.amount
+            }
+            else -> {
+                meal.otherCategories -= food.numCalories * food.amount
             }
         }
+        dbHelp.updateMeal(meal, allMeals)
     }
     fun observeAllMeals(): LiveData<List<Meal>> {
         return allMeals
