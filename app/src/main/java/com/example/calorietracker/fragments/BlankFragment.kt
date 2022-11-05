@@ -29,7 +29,6 @@ class BlankFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.logo.setOnClickListener {
-            binding.logo.isVisible = false
             this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, StartFragment.newInstance()).addToBackStack("startFragment").commit()
         }
     }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.calorietracker.MainViewModel
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentFoodListBinding
 import com.example.calorietracker.model.Food
 import java.io.InputStreamReader
@@ -73,6 +74,17 @@ class FoodFragment : Fragment() {
         binding.recyclerview.adapter = adapter
         binding.recyclerview.layoutManager = layoutManager
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i(javaClass.simpleName, "onViewCreated")
+        binding.diary.setOnClickListener {
+            toMealSummary()
+        }
+    }
+    private fun toMealSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
 
     private fun readFoodsArray(category: String, reader: JsonReader): List<Food>  {

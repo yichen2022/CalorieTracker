@@ -30,7 +30,6 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
                     viewModel.addFoodToMeal(foodList[holder.adapterPosition])
                     viewModel.addFood(foodList[holder.adapterPosition])
                 }
-
             }
         }
         return holder
