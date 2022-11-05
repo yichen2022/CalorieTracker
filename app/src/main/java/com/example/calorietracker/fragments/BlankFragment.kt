@@ -30,10 +30,7 @@ class BlankFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.logo.setOnClickListener {
             binding.logo.isVisible = false
-            this.requireActivity().supportFragmentManager.commitNow {
-                setReorderingAllowed(true)
-                replace(R.id.fragment, StartFragment.newInstance())
-            }
+            this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, StartFragment.newInstance()).addToBackStack("startFragment").commit()
         }
     }
 }

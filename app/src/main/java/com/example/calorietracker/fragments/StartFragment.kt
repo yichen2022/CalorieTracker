@@ -38,23 +38,14 @@ class StartFragment : Fragment() {
         }
     }
     private fun toDate() {
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            add(R.id.fragment, DatePickerFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun toProfile() {
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            replace(R.id.fragment, ProfileFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
     }
 
     private fun toMeal() {
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            replace(R.id.fragment, MealSelectionFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }
 
     override fun onDestroyView() {

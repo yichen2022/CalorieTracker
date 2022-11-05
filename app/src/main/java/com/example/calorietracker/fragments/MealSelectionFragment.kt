@@ -48,10 +48,7 @@ class MealSelectionFragment : Fragment() {
         }
     }
     private fun myPlate() {
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            replace(R.id.fragment, MyPlateFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MyPlateFragment.newInstance()).addToBackStack("myPlateFragment").commit()
     }
     companion object {
         @JvmStatic

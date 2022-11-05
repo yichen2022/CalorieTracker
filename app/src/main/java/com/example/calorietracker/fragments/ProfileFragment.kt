@@ -185,10 +185,7 @@ class ProfileFragment : Fragment() {
         }
     }
     private fun toMeal() {
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            replace(R.id.fragment, MealSelectionFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }
     private fun calculateRecommendedCalories() {
         var bmr = 0.0

@@ -15,7 +15,7 @@ class MainViewModel() : ViewModel() {
     private var currentMeal = MutableLiveData<String>()
     private var allFoods = MutableLiveData<List<Food>>()
     private var selectedFoods = MutableLiveData<List<Food>>(listOf())
-    private var allMeals = MutableLiveData<List<Meal>>()
+    private var allMeals = MutableLiveData<List<Meal>>(listOf())
     private val dbHelp = ViewModelDBHelper()
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()

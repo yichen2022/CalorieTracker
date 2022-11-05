@@ -38,17 +38,14 @@ class MyPlateFragment : Fragment() {
         binding.categorySelection.adapter = categoryAdapter
         binding.myPlate.setOnClickListener {
             val selection = handleCategory()
-            if (selection != "Select?") {
+            if (selection != "") {
                 toFoodList(selection)
             }
         }
     }
     private fun toFoodList(selection: String) {
         viewModel.updateFoodGroup(selection)
-        this.requireActivity().supportFragmentManager.commitNow {
-            setReorderingAllowed(true)
-            replace(R.id.fragment, FoodFragment.newInstance())
-        }
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, FoodFragment.newInstance()).addToBackStack("foodFragment").commit()
     }
     private fun handleCategory(): String {
         val pos = binding.categorySelection.selectedItemPosition
