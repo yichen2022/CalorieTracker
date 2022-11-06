@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:name="com.example.calorietracker.fragments.CalorieFragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/calendar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/calories"
+        app:layout_constraintRight_toLeftOf="@+id/calories"/>
+    <ImageView
+        android:id="@+id/profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/calories"
+        app:layout_constraintBottom_toTopOf="@+id/calories"/>
+    <FrameLayout
+        android:id="@+id/calories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        >
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            style="?android:attr/progressBarStyleLarge" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="Calories Left"
+                android:layout_alignLeft="@id/progress"
+                android:layout_alignTop="@id/progress"
+                android:layout_alignRight="@id/progress"
+                android:layout_alignBottom="@id/progress"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="Recommended Calories"
+                android:layout_alignLeft="@id/progress"
+                android:layout_alignTop="@id/progress"
+                android:layout_alignRight="@id/progress"
+                android:layout_alignBottom="@id/progress"/>
+        </LinearLayout>
+    </FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recyclerview"
+        android:name="com.example.calorietracker.fragments.CalorieSummaryFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calories"
+        app:layout_constraintBottom_toTopOf="@+id/add"
+        tools:context=".fragments.CalorieSummaryFragment"
+        tools:listitem="@layout/fragment_meal" />
+    <ImageView
+        android:id="@+id/diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/diary"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/add" />
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <ImageView
+        android:id="@+id/trend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/trend"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/add" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

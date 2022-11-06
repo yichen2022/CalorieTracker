@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealSummaryBinding
 
 
@@ -44,8 +45,13 @@ class MealSummaryFragment : Fragment() {
                 }
             }
         }
+        binding.diary.setOnClickListener {
+            toCalorieSummary()
+        }
     }
-
+    private fun toCalorieSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
+    }
     companion object {
         @JvmStatic
         fun newInstance(): MealSummaryFragment {
