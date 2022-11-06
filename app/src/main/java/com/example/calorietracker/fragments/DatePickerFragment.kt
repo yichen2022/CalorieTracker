@@ -10,7 +10,8 @@ import android.widget.DatePicker
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.databinding.FragmentDatePickerBinding
-import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class DatePickerFragment : Fragment() {
     private var _binding: FragmentDatePickerBinding? = null
@@ -33,7 +34,21 @@ class DatePickerFragment : Fragment() {
         binding.datePicker.setOnDateChangedListener(object : DatePicker.OnDateChangedListener {
             override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int
             ) {
-                viewModel.setDate(Date(year, monthOfYear, dayOfMonth))
+                var dateString = "$year-"
+                val month = monthOfYear + 1
+                if (month < 10) {
+                    dateString += "0$month"
+                } else {
+                    dateString += month.toString()
+                }
+                dateString += "-"
+                if (dayOfMonth < 10) {
+                    dateString += "0$dayOfMonth"
+                } else {
+                    dateString += dayOfMonth.toString()
+                }
+                val formatter = SimpleDateFormat("yyyy-MM-dd")
+                viewModel.setDate(formatter.parse(dateString))
                 viewModel.setMeals()
                 requireActivity().supportFragmentManager.popBackStack()
             }

@@ -27,7 +27,6 @@ class ViewModelDBHelper {
         }
     }
     fun createMeal(meal: Meal, mealList: MutableLiveData<List<Meal>>) {
-//        meal.firestoreId = db.collection("allMeals").document().id
         db.collection("allMeals").add(meal).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Meal successfully uploaded")
             dbFetchMeals(mealList)

@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.JsonReader
 import android.util.Log
@@ -22,6 +23,11 @@ class FoodFragment : Fragment() {
     private var _binding: FragmentFoodListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var mContext: Context
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,32 +40,32 @@ class FoodFragment : Fragment() {
         viewModel.observeFoodGroup().observeForever {
             when(viewModel.observeFoodGroup().value!!) {
                 "Grains" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("grains.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("grains.json")))
                     val list = readFoodsArray("Grains", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Veggies" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("veggies.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("veggies.json")))
                     val list = readFoodsArray("Veggies", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Fruits" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("fruits.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("fruits.json")))
                     val list = readFoodsArray("Fruits", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Dairy" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("dairy.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("dairy.json")))
                     val list = readFoodsArray("Dairy", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Protein" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("protein.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("protein.json")))
                     val list = readFoodsArray("Protein", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Sugars" -> {
-                    val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("sugars.json")))
+                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("sugars.json")))
                     val list = readFoodsArray("Sugars", jsonReader)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
