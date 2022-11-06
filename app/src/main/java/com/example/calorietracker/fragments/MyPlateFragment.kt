@@ -41,6 +41,9 @@ class MyPlateFragment : Fragment() {
                 toFoodList(selection)
             }
         }
+        binding.add.setOnClickListener {
+            this.requireActivity().supportFragmentManager.popBackStack()
+        }
     }
     private fun toFoodList(selection: String) {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, FoodFragment.newInstance()).addToBackStack("foodFragment").commit()
