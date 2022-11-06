@@ -43,8 +43,8 @@ class MyPlateFragment : Fragment() {
         }
     }
     private fun toFoodList(selection: String) {
-        viewModel.updateFoodGroup(selection)
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, FoodFragment.newInstance()).addToBackStack("foodFragment").commit()
+        viewModel.updateFoodGroup(selection)
     }
     private fun handleCategory(): String {
         val pos = binding.categorySelection.selectedItemPosition

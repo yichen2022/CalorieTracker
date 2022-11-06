@@ -1,5 +1,6 @@
 package com.example.calorietracker.model
 
+import android.util.Log
 import com.google.firebase.firestore.DocumentId
 import java.util.Date
 
@@ -11,12 +12,20 @@ class Food {
     var name = ""
     var mealId = ""
     var date: Date? = null
-    @DocumentId
-    var firestoreId: String = ""
+    @DocumentId var firestoreId: String = ""
     override fun equals(other: Any?): Boolean =
         if (other is Food) {
-            meal == other.meal && group == other.group
+            name == other.name && meal == other.meal && group == other.group
         } else {
             false
         }
+
+    override fun toString(): String {
+        return "Food{" +
+                "meal: " + meal +
+                ", group: " + group +
+                ", name: " + name +
+                ", firestoreID: " + firestoreId +
+                "}"
+    }
 }

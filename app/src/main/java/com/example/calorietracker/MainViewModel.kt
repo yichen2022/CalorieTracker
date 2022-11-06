@@ -13,17 +13,11 @@ class MainViewModel() : ViewModel() {
     private var currentUser = MutableLiveData<User>()
     private var foodGroup = MutableLiveData<String>()
     private var currentMeal = MutableLiveData<String>()
-    private var allFoods = MutableLiveData<List<Food>>()
-    private var selectedFoods = MutableLiveData<List<Food>>(listOf())
-    private var allMeals = MutableLiveData<List<Meal>>(listOf())
+    private var selectedFoods = MutableLiveData<List<Food>>()
+    private var allMeals = MutableLiveData<List<Meal>>()
     private val dbHelp = ViewModelDBHelper()
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
-    fun uploadFoods(foods: List<Food>) {
-        for (i in foods.indices) {
-            dbHelp.createFood(foods[i], allFoods)
-        }
-    }
     fun observeDate(): LiveData<Date> {
         return currentDate
     }
@@ -43,16 +37,16 @@ class MainViewModel() : ViewModel() {
         val snacks = Meal()
         snacks.type = "Snacks"
         snacks.date = currentDate.value
-        if (!allMeals.value!!.contains(breakfast)) {
+        if (allMeals.value == null || !allMeals.value!!.contains(breakfast)) {
             dbHelp.createMeal(breakfast, allMeals)
         }
-        if (!allMeals.value!!.contains(lunch)) {
+        if (allMeals.value == null || !allMeals.value!!.contains(lunch)) {
             dbHelp.createMeal(lunch, allMeals)
         }
-        if (!allMeals.value!!.contains(dinner)) {
+        if (allMeals.value == null || !allMeals.value!!.contains(dinner)) {
             dbHelp.createMeal(dinner, allMeals)
         }
-        if (!allMeals.value!!.contains(snacks)) {
+        if (allMeals.value == null || !allMeals.value!!.contains(snacks)) {
             dbHelp.createMeal(snacks, allMeals)
         }
     }
@@ -61,6 +55,12 @@ class MainViewModel() : ViewModel() {
         meal.type = title
         meal.date = date
         return allMeals.value!![allMeals.value!!.indexOf(meal)]
+    }
+    fun getSelectedFoods() {
+        dbHelp.dbFetchSelectedFoods(selectedFoods)
+    }
+    fun getAllMeals() {
+        dbHelp.dbFetchMeals(allMeals)
     }
     fun addFoodToMeal(food: Food) {
         val meal = getMeal(currentMeal.value!!, currentDate.value!!)
@@ -85,6 +85,7 @@ class MainViewModel() : ViewModel() {
                 meal.otherCategories += food.numCalories * food.amount
             }
         }
+        meal.calories += food.numCalories * food.amount
         dbHelp.updateMeal(meal, allMeals)
     }
     fun removeFoodFromMeal(food: Food) {
@@ -110,6 +111,7 @@ class MainViewModel() : ViewModel() {
                 meal.otherCategories -= food.numCalories * food.amount
             }
         }
+        meal.calories -= food.numCalories * food.amount
         dbHelp.updateMeal(meal, allMeals)
     }
     fun observeAllMeals(): LiveData<List<Meal>> {

@@ -36,37 +36,31 @@ class FoodFragment : Fragment() {
                 "Grains" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("grains.json")))
                     val list = readFoodsArray("Grains", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Veggies" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("veggies.json")))
                     val list = readFoodsArray("Veggies", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Fruits" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("fruits.json")))
                     val list = readFoodsArray("Fruits", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Dairy" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("dairy.json")))
                     val list = readFoodsArray("Dairy", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Protein" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("protein.json")))
                     val list = readFoodsArray("Protein", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
                 "Sugars" -> {
                     val jsonReader = JsonReader(InputStreamReader(this.requireActivity().assets.open("sugars.json")))
                     val list = readFoodsArray("Sugars", jsonReader)
-                    viewModel.uploadFoods(list)
                     adapter = FoodAdapter(viewModel, list, binding)
                 }
             }
@@ -81,6 +75,9 @@ class FoodFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         binding.diary.setOnClickListener {
             toMealSummary()
+        }
+        binding.add.setOnClickListener {
+            this.requireActivity().supportFragmentManager.popBackStack()
         }
     }
     private fun toMealSummary() {
@@ -112,12 +109,10 @@ class FoodFragment : Fragment() {
         }
         food.group = category
         viewModel.observeMeal().observeForever {
-            viewModel.observeAllMeals().observeForever {
-                viewModel.observeDate().observeForever {
-                    food.meal = viewModel.observeMeal().value.toString()
-                    food.date = viewModel.observeDate().value!!
-                    food.mealId = viewModel.getMeal(food.meal, food.date!!).firestoreId
-                }
+            viewModel.observeDate().observeForever {
+                food.meal = viewModel.observeMeal().value.toString()
+                food.date = viewModel.observeDate().value!!
+                food.mealId = viewModel.getMeal(food.meal, food.date!!).firestoreId
             }
 
         }

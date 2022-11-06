@@ -1,5 +1,6 @@
 package com.example.calorietracker.model
 
+import android.util.Log
 import com.google.firebase.firestore.DocumentId
 import java.util.Date
 
@@ -18,7 +19,7 @@ class Meal {
 
     override fun equals(other: Any?): Boolean =
         if (other is Meal) {
-            date == other.date && type == other.type
+            type == other.type && date == other.date
         } else {
             false
         }

@@ -10,6 +10,9 @@ import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
 import java.io.File
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
@@ -32,6 +35,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         AuthInit(viewModel, signInLauncher)
+        viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
+        viewModel.observeSelectedFoods().observeForever {
+            viewModel.getSelectedFoods()
+        }
+        viewModel.getAllMeals()
+        viewModel.observeAllMeals().observeForever {
+            viewModel.setMeals()
+        }
     }
 
 

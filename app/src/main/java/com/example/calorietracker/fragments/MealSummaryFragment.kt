@@ -30,15 +30,15 @@ class MealSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         viewModel.observeMeal().observeForever {
             viewModel.observeDate().observeForever {
-                binding.mealDate.text = "${viewModel.observeDate().value!!.year}-${viewModel.observeDate().value!!.month}-${viewModel.observeDate().value!!.date}"
+                binding.mealDate.text = "${viewModel.observeDate().value!!.year}-${viewModel.observeDate().value!!.month + 1}-${viewModel.observeDate().value!!.date}"
                 binding.mealTitle.text = viewModel.observeMeal().value.toString()
                 viewModel.observeAllMeals().observeForever {
                     val meal = viewModel.getMeal(viewModel.observeMeal().value.toString(), viewModel.observeDate().value!!)
-                    binding.grains.text = (meal.grains * 100/meal.calories).toString() + "%"
-                    binding.fruitVeggie.text = (meal.fruitVeggie * 100/meal.calories).toString() + "%"
-                    binding.meat.text = (meal.meat * 100/meal.calories).toString() + "%"
-                    binding.dairyGroup.text = (meal.dairy * 100/meal.calories).toString() + "%"
-                    binding.other.text = (meal.otherCategories * 100/meal.calories).toString() + "%"
+                    binding.grains.text = "Grains: ${(meal.grains * 100/meal.calories)}%"
+                    binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100/meal.calories)}%"
+                    binding.meat.text = "Meat: ${(meal.meat * 100/meal.calories)}%"
+                    binding.dairyGroup.text = "Dairy: ${(meal.dairy * 100/meal.calories)}%"
+                    binding.other.text = "Other: ${(meal.otherCategories * 100/meal.calories)}%"
                 }
             }
         }

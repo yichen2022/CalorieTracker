@@ -8,18 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ViewModelDBHelper {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    fun dbFetchAllFoods(foodList: MutableLiveData<List<Food>>) {
-        db.collection("allFoods").get().addOnSuccessListener { result ->
-            Log.d(javaClass.simpleName, "All foods fetched successfully")
-            foodList.postValue(result.documents.mapNotNull {
-                it.toObject(Food::class.java)
-            })
-        }.addOnFailureListener {
-            Log.d(javaClass.simpleName, "Error fetching foods")
-        }
-    }
     fun dbFetchSelectedFoods(foodList: MutableLiveData<List<Food>>) {
-        db.collection("allFoods").get().addOnSuccessListener { result ->
+        db.collection("selectedFoods").get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Selected foods fetched successfully")
             foodList.postValue(result.documents.mapNotNull {
                 it.toObject(Food::class.java)
@@ -36,17 +26,8 @@ class ViewModelDBHelper {
             })
         }
     }
-    fun createFood(food: Food, foodList: MutableLiveData<List<Food>>) {
-        food.firestoreId = db.collection("allFoods").document().id
-        db.collection("allFoods").add(food).addOnSuccessListener {
-            Log.d(javaClass.simpleName, "Food successfully uploaded")
-            dbFetchAllFoods(foodList)
-        }.addOnFailureListener {
-            Log.d(javaClass.simpleName, "Error uploading food")
-        }
-    }
     fun createMeal(meal: Meal, mealList: MutableLiveData<List<Meal>>) {
-        meal.firestoreId = db.collection("allMeals").document().id
+//        meal.firestoreId = db.collection("allMeals").document().id
         db.collection("allMeals").add(meal).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Meal successfully uploaded")
             dbFetchMeals(mealList)
@@ -56,7 +37,7 @@ class ViewModelDBHelper {
     }
     fun addFoodToSelection(food: Food, foodList: MutableLiveData<List<Food>>) {
         food.firestoreId = db.collection("selectedFoods").document().id
-        db.collection("selectedFoods").add(food).addOnSuccessListener {
+        db.collection("selectedFoods").document(food.firestoreId).set(food).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Food successfully added")
             dbFetchSelectedFoods(foodList)
         }.addOnFailureListener {
