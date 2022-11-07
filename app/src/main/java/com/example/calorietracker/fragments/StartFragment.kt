@@ -29,9 +29,6 @@ class StartFragment : Fragment() {
         binding.start.setOnClickListener {
             toProfile()
         }
-        binding.add.setOnClickListener {
-            toMeal()
-        }
         binding.calendar.setOnClickListener {
             toDate()
         }
@@ -41,10 +38,6 @@ class StartFragment : Fragment() {
     }
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
-    }
-
-    private fun toMeal() {
-        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }
 
     override fun onDestroyView() {

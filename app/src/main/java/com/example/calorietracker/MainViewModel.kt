@@ -135,10 +135,15 @@ class MainViewModel() : ViewModel() {
     fun setMeal(meal: String) {
         currentMeal.value = meal
     }
+    fun observeUser(): LiveData<User> {
+        return currentUser
+    }
     fun addFood(food: Food) {
+        currentUser.value!!.calories += food.numCalories * food.amount
         dbHelp.addFoodToSelection(food, selectedFoods)
     }
     fun removeFood(food: Food) {
+        currentUser.value!!.calories -= food.numCalories * food.amount
         dbHelp.removeFoodFromSelection(food, selectedFoods)
     }
     fun updateFoodGroup(selection: String) {

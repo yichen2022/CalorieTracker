@@ -23,6 +23,12 @@ class CalorieSummaryFragment : Fragment() {
         val adapter = CalorieAdapter()
         adapter.submitList(viewModel.observeAllMeals().value)
         binding.recyclerview.adapter = adapter
+        binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+        binding.progress.progress = viewModel.observeUser().value!!.calories
+        viewModel.observeUser().observeForever {
+            binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
+            binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
+        }
         return binding.root
     }
 
