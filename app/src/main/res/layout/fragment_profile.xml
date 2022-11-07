@@ -229,11 +229,13 @@
             android:id="@+id/BMIValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="BMI: "
             />
         <TextView
             android:layout_gravity="center_horizontal"
             android:id="@+id/BMIStatus"
+            android:layout_marginLeft="175dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: "

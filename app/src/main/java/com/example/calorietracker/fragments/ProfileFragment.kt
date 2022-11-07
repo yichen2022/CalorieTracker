@@ -146,7 +146,7 @@ class ProfileFragment : Fragment() {
             user.height = user.height / 2.54
         }
         user.bmi = user.weight / user.height / user.height * 703.0
-        binding.BMIValue.text = "BMI: ${user.bmi}      "
+        binding.BMIValue.text = "BMI: ${user.bmi}"
         var status = ""
         if (user.bmi > 30) {
             status = "Obese"
