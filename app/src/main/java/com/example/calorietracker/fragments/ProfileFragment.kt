@@ -211,6 +211,12 @@ class ProfileFragment : Fragment() {
             }
         }
         binding.recommendedCal.text = user.recommendedCal.toString() + " Cal"
+        binding.diary.setOnClickListener {
+            toCalorieSummary()
+        }
+    }
+    private fun toCalorieSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
     }
     companion object {
         @JvmStatic
