@@ -141,11 +141,9 @@ class ProfileFragment : Fragment() {
         user.weight = binding.weightInput.text.toString().toDouble()
         if (weightUnit == "kg") {
             user.weight = user.weight * 2.205
-            weightUnit = "lb"
         }
         if (heightUnit == "cm") {
             user.height = user.height / 2.54
-            heightUnit = "in"
         }
         user.bmi = user.weight / user.height / user.height * 703.0
         binding.BMIValue.text = "BMI: ${user.bmi}      "
