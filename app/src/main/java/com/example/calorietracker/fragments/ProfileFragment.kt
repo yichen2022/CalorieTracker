@@ -125,6 +125,9 @@ class ProfileFragment : Fragment() {
         activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.activityDropdown.adapter = activityLevelAdapter
         viewModel.setProfile(user)
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
     }
     private fun handleHeight(heightPos: Int) {
         if (heightPos > 0) {
@@ -181,6 +184,9 @@ class ProfileFragment : Fragment() {
     }
     private fun toMeal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     private fun calculateRecommendedCalories() {
         var bmr = 0.0

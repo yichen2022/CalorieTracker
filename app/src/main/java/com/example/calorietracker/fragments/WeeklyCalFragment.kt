@@ -602,14 +602,18 @@ class WeeklyCalFragment : Fragment() {
             }
             day = Date.from(day.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
         }
-        weeklyCal.average = weeklyCal.numCal/days
+        if (days != 0) {
+            weeklyCal.average = weeklyCal.numCal/days
+        }
         binding.avgCal.text = "Daily Average: ${weeklyCal.average}"
         binding.weeklyCalText.text = "${weeklyCal.numCal} Calories Per Week"
         binding.target.text = "Target: ${weeklyCal.target}"
-        weeklyCal.breakfastPercent = weeklyCal.breakfastCal * 100 / weeklyCal.numCal
-        weeklyCal.lunchPercent = weeklyCal.lunchCal * 100 / weeklyCal.numCal
-        weeklyCal.dinnerPercent = weeklyCal.dinnerCal * 100 / weeklyCal.numCal
-        weeklyCal.otherPercent = weeklyCal.otherCal * 100 / weeklyCal.numCal
+        if (weeklyCal.numCal != 0) {
+            weeklyCal.breakfastPercent = weeklyCal.breakfastCal * 100 / weeklyCal.numCal
+            weeklyCal.lunchPercent = weeklyCal.lunchCal * 100 / weeklyCal.numCal
+            weeklyCal.dinnerPercent = weeklyCal.dinnerCal * 100 / weeklyCal.numCal
+            weeklyCal.otherPercent = weeklyCal.otherCal * 100 / weeklyCal.numCal
+        }
         binding.breakfastCal.text = "${weeklyCal.breakfastCal} Cal"
         binding.breakfastPercent.text = "${weeklyCal.breakfastPercent}%"
         binding.lunchCal.text = "${weeklyCal.lunchCal} Cal"
