@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.ZoneId
+import java.util.Date
 
 class ViewModelDBHelper {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -18,12 +20,27 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Error fetching selected foods")
         }
     }
+    fun dbFetchMealByDate(date: Date): MutableList<Meal> {
+        val list = mutableListOf<Meal>()
+        db.collection("allMeals").whereGreaterThanOrEqualTo("date",
+            Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
+                .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())).whereLessThanOrEqualTo("date", date).orderBy("date").get()
+            .addOnSuccessListener { result ->
+                Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
+                result.documents.mapNotNull {
+                    list.add(it.toObject(Meal::class.java)!!)
+                }
+        }
+        return list
+    }
     fun dbFetchMeals(mealList: MutableLiveData<List<Meal>>) {
         db.collection("allMeals").get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Meals fetched successfully")
             mealList.postValue(result.documents.mapNotNull {
                 it.toObject(Meal::class.java)
             })
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error fetching meals")
         }
     }
     fun createMeal(meal: Meal, mealList: MutableLiveData<List<Meal>>) {

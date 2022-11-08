@@ -49,6 +49,11 @@ class MealSelectionFragment : Fragment() {
     private fun myPlate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MyPlateFragment.newInstance()).addToBackStack("myPlateFragment").commit()
     }
+    override fun onDestroyView() {
+        Log.i(javaClass.simpleName, "onDestroyView")
+        super.onDestroyView()
+        _binding = null
+    }
     companion object {
         @JvmStatic
         fun newInstance(): MealSelectionFragment {

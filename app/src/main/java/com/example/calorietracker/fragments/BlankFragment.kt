@@ -32,4 +32,9 @@ class BlankFragment : Fragment() {
             this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, StartFragment.newInstance()).addToBackStack("startFragment").commit()
         }
     }
+    override fun onDestroyView() {
+        Log.i(javaClass.simpleName, "onDestroyView")
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -117,6 +117,9 @@ class MainViewModel() : ViewModel() {
     fun observeAllMeals(): LiveData<List<Meal>> {
         return allMeals
     }
+    fun getMealsByDate(date: Date): MutableList<Meal> {
+        return dbHelp.dbFetchMealByDate(date)
+    }
     fun observeSelectedFoods(): LiveData<List<Food>> {
         return selectedFoods
     }

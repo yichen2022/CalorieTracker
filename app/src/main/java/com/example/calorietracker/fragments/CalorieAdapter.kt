@@ -30,6 +30,5 @@ class CalorieAdapter() : ListAdapter<Meal, CalorieAdapter.ViewHolder>(Diff()) {
         override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
             return oldItem.type == newItem.type && oldItem.date == newItem.date
         }
-
     }
 }
