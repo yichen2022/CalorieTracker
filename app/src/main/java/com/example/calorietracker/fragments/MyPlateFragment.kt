@@ -53,6 +53,9 @@ class MyPlateFragment : Fragment() {
         binding.calendar.setOnClickListener {
             toDate()
         }
+        binding.diary.setOnClickListener {
+            toMealSummary()
+        }
     }
     private fun toFoodList(selection: String) {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, FoodFragment.newInstance()).addToBackStack("foodFragment").commit()
@@ -73,6 +76,9 @@ class MyPlateFragment : Fragment() {
     }
     private fun toWeeklyCal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
+    }
+    private fun toMealSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

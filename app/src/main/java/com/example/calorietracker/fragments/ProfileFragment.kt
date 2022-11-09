@@ -131,11 +131,17 @@ class ProfileFragment : Fragment() {
         binding.calendar.setOnClickListener {
             toDate()
         }
+        binding.diary.setOnClickListener {
+            toMealSummary()
+        }
     }
     private fun handleHeight(heightPos: Int) {
         if (heightPos > 0) {
             heightUnit = heightUnits[heightPos]
         }
+    }
+    private fun toMealSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
     private fun handleWeight(weightPos: Int) {
         if (weightPos > 0) {

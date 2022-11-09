@@ -24,7 +24,9 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
-        adapter.submitList(viewModel.getMealsByDate(viewModel.observeDate().value!!))
+        viewModel.observeDate().observeForever {
+            adapter.submitList(viewModel.getMealsByDate(viewModel.observeDate().value!!))
+        }
         binding.recyclerview.adapter = adapter
         binding.progress.max = viewModel.observeUser().value!!.recommendedCal
         binding.progress.progress = viewModel.observeUser().value!!.calories
