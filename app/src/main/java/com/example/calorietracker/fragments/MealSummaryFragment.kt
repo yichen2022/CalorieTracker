@@ -56,12 +56,6 @@ class MealSummaryFragment : Fragment() {
         binding.calendar.setOnClickListener {
             toDate()
         }
-        binding.diary.setOnClickListener {
-            toMealSummary()
-        }
-    }
-    private fun toMealSummary() {
-        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
