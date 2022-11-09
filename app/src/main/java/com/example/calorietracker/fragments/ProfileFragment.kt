@@ -47,6 +47,20 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        viewModel.fetchUser()
+        viewModel.observeUser().observeForever {
+            if (viewModel.observeUser().value != null) {
+                binding.female.isEnabled = false
+                binding.male.isEnabled = false
+                binding.heightUnit.isEnabled = false
+                binding.heightInput.isEnabled = false
+                binding.ageInput.isEnabled = false
+                binding.weightUnit.isEnabled = false
+                binding.weightUnit.isEnabled = false
+                binding.activityDropdown.isEnabled = false
+                binding.calculate.isEnabled = false
+            }
+        }
         binding.add.setOnClickListener {
             toMeal()
         }

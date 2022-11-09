@@ -6,6 +6,7 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import java.time.ZoneId
 import java.util.Date
 
@@ -21,32 +22,38 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Error fetching selected foods")
         }
     }
-    fun dbFetchMealByDate(date: Date): MutableList<Meal> {
-        val list = mutableListOf<Meal>()
+    fun dbFetchUser(user: MutableLiveData<User>) {
+        db.collection("user").limit(1).get().addOnSuccessListener { result ->
+            Log.d(javaClass.simpleName, "Successfully fetched user")
+            result.documents.mapNotNull {
+                user.postValue(it.toObject(User::class.java))
+            }
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error fetching user")
+        }
+    }
+    fun dbFetchMealByDate(date: Date, mealList: MutableLiveData<List<Meal>>){
         db.collection("allMeals").whereEqualTo("date", date).get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Meals in the current day fetched successfully")
-            result.documents.mapNotNull {
-                list.add(it.toObject(Meal::class.java)!!)
-            }
+            mealList.postValue(result.documents.mapNotNull {
+                it.toObject(Meal::class.java)
+            })
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching meals")
         }
-        return list
     }
-    fun dbFetchMealByLast7Days(date: Date): MutableList<Meal> {
-        val list = mutableListOf<Meal>()
+    fun dbFetchMealByLast7Days(date: Date, mealList: MutableLiveData<List<Meal>>) {
         db.collection("allMeals").whereGreaterThanOrEqualTo("date",
             Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
                 .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())).whereLessThanOrEqualTo("date", date).orderBy("date").get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
-                result.documents.mapNotNull {
-                    list.add(it.toObject(Meal::class.java)!!)
-                }
+                mealList.postValue(result.documents.mapNotNull {
+                    it.toObject(Meal::class.java)
+                })
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching meals")
             }
-        return list
     }
     fun dbFetchMeals(mealList: MutableLiveData<List<Meal>>) {
         db.collection("allMeals").get().addOnSuccessListener { result ->

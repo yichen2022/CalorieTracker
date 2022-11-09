@@ -33,9 +33,10 @@ class WeeklyCalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        viewModel.observeDate().observeForever {
-            var day = viewModel.observeDate().value!!
-            val meals = viewModel.getMealsByLast7Days(day)
+        var day = viewModel.observeDate().value!!
+        viewModel.getMealsByLast7Days(day)
+        viewModel.observeSelectedMeals().observeForever {
+            val meals = viewModel.observeSelectedMeals().value!!.toMutableList()
             val weeklyCal = WeeklyCal()
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
