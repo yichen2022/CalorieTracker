@@ -16,9 +16,6 @@ import com.example.calorietracker.databinding.FragmentFoodListBinding
 import com.example.calorietracker.model.Food
 import java.io.InputStreamReader
 
-/**
- * A fragment representing a list of Items.
- */
 class FoodFragment : Fragment() {
     private var _binding: FragmentFoodListBinding? = null
     private val binding get() = _binding!!
@@ -85,11 +82,28 @@ class FoodFragment : Fragment() {
         binding.add.setOnClickListener {
             this.requireActivity().supportFragmentManager.popBackStack()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun toMealSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
-
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
+    }
     private fun readFoodsArray(category: String, reader: JsonReader): List<Food>  {
         val list = mutableListOf<Food>()
         reader.beginArray()
@@ -128,7 +142,6 @@ class FoodFragment : Fragment() {
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
-        _binding = null
     }
     companion object {
         @JvmStatic

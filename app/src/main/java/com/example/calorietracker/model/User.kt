@@ -1,7 +1,8 @@
 package com.example.calorietracker.model
 
+import com.google.firebase.firestore.DocumentId
+
 class User {
-    var id = 0
     var name = ""
     var recommendedCal = 0
     var activityLevel = ""
@@ -11,4 +12,6 @@ class User {
     var bmi = 0.0
     var sex = ""
     var calories = 0
+    @DocumentId
+    var firestoreId: String = ""
 }

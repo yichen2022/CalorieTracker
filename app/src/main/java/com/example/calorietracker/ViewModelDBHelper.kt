@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
+import com.example.calorietracker.model.User
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.ZoneId
 import java.util.Date
@@ -22,6 +23,18 @@ class ViewModelDBHelper {
     }
     fun dbFetchMealByDate(date: Date): MutableList<Meal> {
         val list = mutableListOf<Meal>()
+        db.collection("allMeals").whereEqualTo("date", date).get().addOnSuccessListener { result ->
+            Log.d(javaClass.simpleName, "Meals in the current day fetched successfully")
+            result.documents.mapNotNull {
+                list.add(it.toObject(Meal::class.java)!!)
+            }
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error fetching meals")
+        }
+        return list
+    }
+    fun dbFetchMealByLast7Days(date: Date): MutableList<Meal> {
+        val list = mutableListOf<Meal>()
         db.collection("allMeals").whereGreaterThanOrEqualTo("date",
             Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
                 .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())).whereLessThanOrEqualTo("date", date).orderBy("date").get()
@@ -30,7 +43,9 @@ class ViewModelDBHelper {
                 result.documents.mapNotNull {
                     list.add(it.toObject(Meal::class.java)!!)
                 }
-        }
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error fetching meals")
+            }
         return list
     }
     fun dbFetchMeals(mealList: MutableLiveData<List<Meal>>) {
@@ -74,6 +89,13 @@ class ViewModelDBHelper {
             dbFetchSelectedFoods(foodList)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error removing food")
+        }
+    }
+    fun setUser(user: User, currentUser: MutableLiveData<User>) {
+        user.firestoreId = db.collection("user").document().id
+        db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
+            
+            currentUser.postValue(user)
         }
     }
 }

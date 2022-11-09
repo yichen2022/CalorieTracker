@@ -44,10 +44,25 @@ class MyPlateFragment : Fragment() {
         binding.add.setOnClickListener {
             this.requireActivity().supportFragmentManager.popBackStack()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
     }
     private fun toFoodList(selection: String) {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, FoodFragment.newInstance()).addToBackStack("foodFragment").commit()
         viewModel.updateFoodGroup(selection)
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun handleCategory(): String {
         val pos = binding.categorySelection.selectedItemPosition
@@ -55,6 +70,9 @@ class MyPlateFragment : Fragment() {
             return categories[pos]
         }
         return ""
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

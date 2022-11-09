@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealListBinding
 
 class CalorieSummaryFragment : Fragment() {
     private var _binding: FragmentMealListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -21,7 +24,7 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
-        adapter.submitList(viewModel.observeAllMeals().value)
+        adapter.submitList(viewModel.getMealsByDate(viewModel.observeDate().value!!))
         binding.recyclerview.adapter = adapter
         binding.progress.max = viewModel.observeUser().value!!.recommendedCal
         binding.progress.progress = viewModel.observeUser().value!!.calories
@@ -29,9 +32,26 @@ class CalorieSummaryFragment : Fragment() {
             binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
             binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
         }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
         return binding.root
     }
-
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")

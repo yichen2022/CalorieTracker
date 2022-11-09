@@ -45,9 +45,27 @@ class MealSelectionFragment : Fragment() {
             viewModel.setMeal("Snacks")
             myPlate()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun myPlate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MyPlateFragment.newInstance()).addToBackStack("myPlateFragment").commit()
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

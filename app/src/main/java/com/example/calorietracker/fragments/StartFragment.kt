@@ -32,6 +32,9 @@ class StartFragment : Fragment() {
         binding.calendar.setOnClickListener {
             toDate()
         }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
     }
     private fun toDate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
@@ -39,7 +42,6 @@ class StartFragment : Fragment() {
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
     }
-
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()

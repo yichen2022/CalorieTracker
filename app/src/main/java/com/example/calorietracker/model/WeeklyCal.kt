@@ -1,7 +1,6 @@
 package com.example.calorietracker.model
 
 class WeeklyCal {
-    var id = 0
     var numCal = 0
     var breakfastPercent = 0
     var breakfastCal = 0

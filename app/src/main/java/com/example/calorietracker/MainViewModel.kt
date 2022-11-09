@@ -117,6 +117,9 @@ class MainViewModel() : ViewModel() {
     fun observeAllMeals(): LiveData<List<Meal>> {
         return allMeals
     }
+    fun getMealsByLast7Days(date: Date): MutableList<Meal> {
+        return dbHelp.dbFetchMealByLast7Days(date)
+    }
     fun getMealsByDate(date: Date): MutableList<Meal> {
         return dbHelp.dbFetchMealByDate(date)
     }
@@ -124,7 +127,7 @@ class MainViewModel() : ViewModel() {
         return selectedFoods
     }
     fun setProfile(user: User) {
-        currentUser.value = user
+        dbHelp.setUser(user, currentUser)
     }
     fun updateUser() {
         firebaseAuthLiveData.updateUser()

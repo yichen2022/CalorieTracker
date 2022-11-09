@@ -114,6 +114,7 @@ class ProfileFragment : Fragment() {
         binding.calculate.setOnClickListener {
             calculateBMI()
             calculateRecommendedCalories()
+            viewModel.setProfile(user)
         }
         val heightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.height, android.R.layout.simple_spinner_item)
         heightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -124,9 +125,11 @@ class ProfileFragment : Fragment() {
         val activityLevelAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.activity, android.R.layout.simple_spinner_item)
         activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.activityDropdown.adapter = activityLevelAdapter
-        viewModel.setProfile(user)
         binding.trend.setOnClickListener {
             toWeeklyCal()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
         }
     }
     private fun handleHeight(heightPos: Int) {
@@ -187,6 +190,9 @@ class ProfileFragment : Fragment() {
     }
     private fun toWeeklyCal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun calculateRecommendedCalories() {
         var bmr = 0.0

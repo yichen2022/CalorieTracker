@@ -12,7 +12,6 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealSummaryBinding
 
-
 class MealSummaryFragment : Fragment() {
     private var _binding: FragmentMealSummaryBinding? = null
     private val binding get() = _binding!!
@@ -48,9 +47,27 @@ class MealSummaryFragment : Fragment() {
         binding.diary.setOnClickListener {
             toCalorieSummary()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

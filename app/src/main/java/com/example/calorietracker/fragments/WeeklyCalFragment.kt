@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentWeeklyCalListBinding
 import com.example.calorietracker.model.WeeklyCal
 import java.time.ZoneId
@@ -33,7 +34,7 @@ class WeeklyCalFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
-        val meals = viewModel.getMealsByDate(day)
+        val meals = viewModel.getMealsByLast7Days(day)
         val weeklyCal = WeeklyCal()
         weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
         var days = 0
@@ -622,6 +623,18 @@ class WeeklyCalFragment : Fragment() {
         binding.dinnerPercent.text = "${weeklyCal.dinnerPercent}%"
         binding.otherCal.text = "${weeklyCal.otherCal} Cal"
         binding.otherPercent.text = "${weeklyCal.otherPercent}%"
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
+    }
+    private fun toProfile() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
+    }
+    private fun toDate() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
