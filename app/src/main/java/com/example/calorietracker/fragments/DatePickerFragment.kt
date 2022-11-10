@@ -11,6 +11,8 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.databinding.FragmentDatePickerBinding
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class DatePickerFragment : Fragment() {
@@ -31,6 +33,8 @@ class DatePickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        binding.datePicker.maxDate = LocalDate.now().format(formatter).toLong()
         binding.datePicker.setOnDateChangedListener(object : DatePicker.OnDateChangedListener {
             override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int
             ) {
