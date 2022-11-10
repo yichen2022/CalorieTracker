@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
                 binding.heightUnit.isEnabled = false
                 binding.heightInput.isEnabled = false
                 binding.ageInput.isEnabled = false
-                binding.weightUnit.isEnabled = false
+                binding.weightInput.isEnabled = false
                 binding.weightUnit.isEnabled = false
                 binding.activityDropdown.isEnabled = false
                 binding.calculate.isEnabled = false
