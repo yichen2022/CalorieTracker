@@ -61,7 +61,6 @@ class DatePickerFragment : Fragment() {
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
-        _binding = null
     }
     companion object {
         @JvmStatic
