@@ -3,7 +3,6 @@ package com.example.calorietracker.model
 import com.google.firebase.firestore.DocumentId
 
 class User {
-    var name = ""
     var recommendedCal = 0
     var activityLevel = ""
     var age = 0

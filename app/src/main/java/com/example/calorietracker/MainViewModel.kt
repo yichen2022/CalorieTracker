@@ -154,10 +154,12 @@ class MainViewModel() : ViewModel() {
     fun addFood(food: Food) {
         currentUser.value!!.calories += food.numCalories * food.amount
         dbHelp.addFoodToSelection(food, selectedFoods)
+        dbHelp.updateUser(currentUser.value!!, currentUser)
     }
     fun removeFood(food: Food) {
         currentUser.value!!.calories -= food.numCalories * food.amount
         dbHelp.removeFoodFromSelection(food, selectedFoods)
+        dbHelp.updateUser(currentUser.value!!, currentUser)
     }
     fun updateFoodGroup(selection: String) {
         foodGroup.value = selection

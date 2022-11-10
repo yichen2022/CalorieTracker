@@ -43,9 +43,10 @@ class ViewModelDBHelper {
         }
     }
     fun dbFetchMealByLast7Days(date: Date, mealList: MutableLiveData<List<Meal>>) {
+        val temp = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
+            .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
         db.collection("allMeals").whereGreaterThanOrEqualTo("date",
-            Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
-                .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())).whereLessThanOrEqualTo("date", date).orderBy("date").get()
+            Date.from(temp)).whereLessThanOrEqualTo("date", date).orderBy("date").get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
                 mealList.postValue(result.documents.mapNotNull {
@@ -100,6 +101,14 @@ class ViewModelDBHelper {
     }
     fun setUser(user: User, currentUser: MutableLiveData<User>) {
         user.firestoreId = db.collection("user").document().id
+        db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
+            Log.d(javaClass.simpleName, "User successfully set")
+            currentUser.postValue(user)
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error setting user")
+        }
+    }
+    fun updateUser(user: User, currentUser: MutableLiveData<User>) {
         db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
             Log.d(javaClass.simpleName, "User successfully updated")
             currentUser.postValue(user)

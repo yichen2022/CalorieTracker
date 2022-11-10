@@ -250,7 +250,6 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
-        _binding = null
     }
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()

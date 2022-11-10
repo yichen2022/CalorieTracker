@@ -29,9 +29,9 @@ class CalorieSummaryFragment : Fragment() {
             adapter.submitList(viewModel.observeSelectedMeals().value!!)
         }
         binding.recyclerview.adapter = adapter
-        binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-        binding.progress.progress = viewModel.observeUser().value!!.calories
         viewModel.observeUser().observeForever {
+            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+            binding.progress.progress = viewModel.observeUser().value!!.calories
             binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
             binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
         }
