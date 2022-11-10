@@ -31,6 +31,7 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
                 this.binding.foodAdd.visibility = View.VISIBLE
                 this.binding.foodAdd.setOnClickListener {
                     foodList[holder.adapterPosition].amount = this.binding.amountInput.text.toString().toInt()
+                    this.binding.amountInput.text.clear()
                     this.binding.amountInput.visibility = View.INVISIBLE
                     this.binding.amount.visibility = View.INVISIBLE
                     this.binding.foodAdd.visibility = View.INVISIBLE
