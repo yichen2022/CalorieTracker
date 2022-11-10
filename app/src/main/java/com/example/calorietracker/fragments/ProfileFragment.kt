@@ -59,6 +59,9 @@ class ProfileFragment : Fragment() {
                 binding.weightUnit.isEnabled = false
                 binding.activityDropdown.isEnabled = false
                 binding.calculate.isEnabled = false
+                binding.BMIValue.text = "BMI: ${viewModel.observeUser().value!!.bmi}"
+                binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"
+                binding.idealWeightText.text = "${18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0} - ${25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0} lb"
             }
         }
         binding.add.setOnClickListener {
