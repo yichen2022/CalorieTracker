@@ -41,6 +41,7 @@ class WeeklyCalFragment : Fragment() {
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
             for (i in 7 downTo 1) {
+                Log.i(javaClass.simpleName, day.toString())
                 when (i) {
                     7 -> {
                         if (meals.isEmpty()) {
@@ -58,10 +59,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast7.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch7.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner7.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other7.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast7.layoutParams.height = 0
+                                binding.lunch7.layoutParams.height = 0
+                                binding.dinner7.layoutParams.height = 0
+                                binding.other7.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast7.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch7.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner7.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other7.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -138,10 +147,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast6.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch6.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner6.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other6.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast6.layoutParams.height = 0
+                                binding.lunch6.layoutParams.height = 0
+                                binding.dinner6.layoutParams.height = 0
+                                binding.other6.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast6.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch6.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner6.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other6.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -218,10 +235,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast5.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch5.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner5.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other5.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast5.layoutParams.height = 0
+                                binding.lunch5.layoutParams.height = 0
+                                binding.dinner5.layoutParams.height = 0
+                                binding.other5.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast5.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch5.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner5.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other5.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -298,10 +323,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast4.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch4.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner4.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other4.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast4.layoutParams.height = 0
+                                binding.lunch4.layoutParams.height = 0
+                                binding.dinner4.layoutParams.height = 0
+                                binding.other4.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast4.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch4.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner4.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other4.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -378,10 +411,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast3.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch3.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner3.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other3.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast3.layoutParams.height = 0
+                                binding.lunch3.layoutParams.height = 0
+                                binding.dinner3.layoutParams.height = 0
+                                binding.other3.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast3.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch3.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner3.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other3.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -458,10 +499,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast2.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch2.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner2.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other2.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast2.layoutParams.height = 0
+                                binding.lunch2.layoutParams.height = 0
+                                binding.dinner2.layoutParams.height = 0
+                                binding.other2.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast2.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch2.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner2.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other2.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -538,10 +587,18 @@ class WeeklyCalFragment : Fragment() {
                             weeklyCal.lunchCal += lunch.calories
                             weeklyCal.breakfastCal += breakfast.calories
                             weeklyCal.numCal += totalCal
-                            binding.breakfast1.layoutParams.height = breakfast.calories * 100 / totalCal
-                            binding.lunch1.layoutParams.height = lunch.calories * 100 / totalCal
-                            binding.dinner1.layoutParams.height = dinner.calories * 100 / totalCal
-                            binding.other1.layoutParams.height = snacks.calories * 100 / totalCal
+                            if (totalCal == 0) {
+                                binding.breakfast1.layoutParams.height = 0
+                                binding.lunch1.layoutParams.height = 0
+                                binding.dinner1.layoutParams.height = 0
+                                binding.other1.layoutParams.height = 0
+                            }
+                            else {
+                                binding.breakfast1.layoutParams.height = breakfast.calories * 100 / totalCal
+                                binding.lunch1.layoutParams.height = lunch.calories * 100 / totalCal
+                                binding.dinner1.layoutParams.height = dinner.calories * 100 / totalCal
+                                binding.other1.layoutParams.height = snacks.calories * 100 / totalCal
+                            }
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {

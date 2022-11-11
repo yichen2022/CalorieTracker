@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -44,6 +45,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
@@ -59,9 +61,27 @@ class ProfileFragment : Fragment() {
                 binding.weightUnit.isEnabled = false
                 binding.activityDropdown.isEnabled = false
                 binding.calculate.isEnabled = false
-                binding.BMIValue.text = "BMI: ${viewModel.observeUser().value!!.bmi}"
+                binding.BMIValue.text = "BMI: ${(viewModel.observeUser().value!!.bmi * 10).roundToInt() / 10.0}"
+                var status = ""
+                if (viewModel.observeUser().value!!.bmi > 30) {
+                    status = "Obese"
+                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
+                }
+                else if (viewModel.observeUser().value!!.bmi > 25) {
+                    status = "Overweight"
+                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
+                }
+                else if (viewModel.observeUser().value!!.bmi > 18.5) {
+                    status = "Ideal"
+                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
+                }
+                else {
+                    status = "Underweight"
+                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
+                }
+                binding.BMIStatus.text = "Status: $status"
                 binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"
-                binding.idealWeightText.text = "${18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0} - ${25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0} lb"
+                binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb"
             }
         }
         binding.add.setOnClickListener {
@@ -165,6 +185,7 @@ class ProfileFragment : Fragment() {
             weightUnit = weightUnits[weightPos]
         }
     }
+    @SuppressLint("SetTextI18n")
     private fun calculateBMI() {
         user.height = binding.heightInput.text.toString().toDouble()
         user.weight = binding.weightInput.text.toString().toDouble()
@@ -175,7 +196,7 @@ class ProfileFragment : Fragment() {
             user.height = user.height / 2.54
         }
         user.bmi = user.weight / user.height / user.height * 703.0
-        binding.BMIValue.text = "BMI: ${user.bmi}"
+        binding.BMIValue.text = "BMI: ${(user.bmi * 10).roundToInt() / 10.0}"
         var status = ""
         if (user.bmi > 30) {
             status = "Obese"
@@ -201,7 +222,7 @@ class ProfileFragment : Fragment() {
             binding.progressBar.setProgress(15, true)
         }
         binding.BMIStatus.text = "Status: $status"
-        binding.idealWeightText.text = "${18.5 * user.height  * user.height / 703.0} - ${25 * user.height * user.height / 703.0} lb"
+        binding.idealWeightText.text = "${(18.5 * user.height  * user.height / 703.0).roundToInt()} - ${(25 * user.height * user.height / 703.0).roundToInt()} lb"
     }
     private fun handleActivityLevel(activityPos: Int) {
         if (activityPos > 0) {
