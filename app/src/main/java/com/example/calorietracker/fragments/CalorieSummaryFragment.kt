@@ -1,6 +1,7 @@
 package com.example.calorietracker.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -30,10 +31,18 @@ class CalorieSummaryFragment : Fragment() {
         }
         binding.recyclerview.adapter = adapter
         viewModel.observeUser().observeForever {
-            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-            binding.progress.progress = viewModel.observeUser().value!!.calories
             binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
-            binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
+            if (viewModel.observeUser().value!!.calories > viewModel.observeUser().value!!.recommendedCal) {
+                binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
+                binding.progress.setBackgroundColor(Color.RED)
+                binding.remainingCalories.text = "0 Calories Left"
+            } else {
+                binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                binding.progress.progress = viewModel.observeUser().value!!.calories
+                binding.progress.setBackgroundColor(Color.BLUE)
+                binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
+            }
         }
         binding.profile.setOnClickListener {
             toProfile()

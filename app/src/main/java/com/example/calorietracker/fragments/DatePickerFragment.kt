@@ -13,6 +13,7 @@ import com.example.calorietracker.databinding.FragmentDatePickerBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
 
 class DatePickerFragment : Fragment() {
@@ -33,30 +34,27 @@ class DatePickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        binding.datePicker.maxDate = LocalDate.now().format(formatter).toLong()
-        binding.datePicker.setOnDateChangedListener(object : DatePicker.OnDateChangedListener {
-            override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int
-            ) {
-                var dateString = "$year-"
-                val month = monthOfYear + 1
-                if (month < 10) {
-                    dateString += "0$month"
-                } else {
-                    dateString += month.toString()
-                }
-                dateString += "-"
-                if (dayOfMonth < 10) {
-                    dateString += "0$dayOfMonth"
-                } else {
-                    dateString += dayOfMonth.toString()
-                }
-                val formatter = SimpleDateFormat("yyyy-MM-dd")
-                viewModel.setDate(formatter.parse(dateString))
-                viewModel.setMeals()
-                requireActivity().supportFragmentManager.popBackStack()
+        val calendar = Calendar.getInstance()
+        binding.datePicker.maxDate = calendar.timeInMillis
+        binding.datePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+            var dateString = "$year-"
+            val month = monthOfYear + 1
+            if (month < 10) {
+                dateString += "0$month"
+            } else {
+                dateString += month.toString()
             }
-        })
+            dateString += "-"
+            if (dayOfMonth < 10) {
+                dateString += "0$dayOfMonth"
+            } else {
+                dateString += dayOfMonth.toString()
+            }
+            val formatter = SimpleDateFormat("yyyy-MM-dd")
+            viewModel.setDate(formatter.parse(dateString))
+            viewModel.setMeals()
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
