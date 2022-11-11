@@ -35,7 +35,7 @@ class WeeklyCalFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
         viewModel.getMealsByLast7Days(day)
-        viewModel.observeSelectedMeals().observeForever {
+        viewModel.observeSelectedMeals().observe(viewLifecycleOwner) {
             val meals = viewModel.observeSelectedMeals().value!!.toMutableList()
             val weeklyCal = WeeklyCal()
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
