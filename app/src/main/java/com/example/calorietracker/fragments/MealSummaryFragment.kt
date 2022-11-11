@@ -47,6 +47,9 @@ class MealSummaryFragment : Fragment() {
         binding.diary.setOnClickListener {
             toCalorieSummary()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
         binding.profile.setOnClickListener {
             toProfile()
         }
@@ -62,6 +65,9 @@ class MealSummaryFragment : Fragment() {
     }
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

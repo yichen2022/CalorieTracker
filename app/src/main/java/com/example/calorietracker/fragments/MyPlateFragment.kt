@@ -44,6 +44,9 @@ class MyPlateFragment : Fragment() {
         binding.add.setOnClickListener {
             this.requireActivity().supportFragmentManager.popBackStack()
         }
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
         binding.profile.setOnClickListener {
             toProfile()
         }
@@ -70,6 +73,9 @@ class MyPlateFragment : Fragment() {
             return categories[pos]
         }
         return ""
+    }
+    private fun toWeeklyCal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
     private fun toMealSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
