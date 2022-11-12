@@ -35,9 +35,9 @@ class WeeklyCalFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
         viewModel.getMealsByLast7Days(day)
-        viewModel.observeSelectedMeals().observeForever {
+        viewModel.observeSelectedMealsByWeek().observeForever {
             day = viewModel.observeDate().value!!
-            val meals = viewModel.observeSelectedMeals().value!!.toMutableList()
+            val meals = it.toMutableList()
             val weeklyCal = WeeklyCal()
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
@@ -90,6 +90,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner7.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other7.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast7.requestLayout()
+                            binding.lunch7.requestLayout()
+                            binding.dinner7.requestLayout()
+                            binding.other7.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -196,6 +200,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner6.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other6.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast6.requestLayout()
+                            binding.lunch6.requestLayout()
+                            binding.dinner6.requestLayout()
+                            binding.other6.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -302,6 +310,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner5.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other5.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast5.requestLayout()
+                            binding.lunch5.requestLayout()
+                            binding.dinner5.requestLayout()
+                            binding.other5.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -408,6 +420,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner4.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other4.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast4.requestLayout()
+                            binding.lunch4.requestLayout()
+                            binding.dinner4.requestLayout()
+                            binding.other4.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -514,6 +530,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner3.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other3.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast3.requestLayout()
+                            binding.lunch3.requestLayout()
+                            binding.dinner3.requestLayout()
+                            binding.other3.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -620,6 +640,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner2.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other2.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast2.requestLayout()
+                            binding.lunch2.requestLayout()
+                            binding.dinner2.requestLayout()
+                            binding.other2.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {
@@ -726,6 +750,10 @@ class WeeklyCalFragment : Fragment() {
                                 binding.dinner1.layoutParams.height = dinnerCal * 200 / totalCal
                                 binding.other1.layoutParams.height = otherCal * 200 / totalCal
                             }
+                            binding.breakfast1.requestLayout()
+                            binding.lunch1.requestLayout()
+                            binding.dinner1.requestLayout()
+                            binding.other1.requestLayout()
                             when (day.day) {
                                 1 -> {
                                     if (day.date < 10) {

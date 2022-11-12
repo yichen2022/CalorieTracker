@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         viewModel.fetchUser()
-        viewModel.observeUser().observeForever {
+        viewModel.observeUser().observe(viewLifecycleOwner) {
             if (viewModel.observeUser().value != null) {
                 binding.female.isEnabled = false
                 binding.male.isEnabled = false
@@ -80,12 +80,13 @@ class ProfileFragment : Fragment() {
                     status = "Underweight"
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
                 }
+                Log.i(javaClass.simpleName, viewModel.observeUser().value!!.bmi.toString())
                 if (viewModel.observeUser().value!!.bmi > 15 && viewModel.observeUser().value!!.bmi < 40) {
-                    binding.progressBar.setProgress(user.bmi.roundToInt(), true)
+                    binding.progressBar.progress = it.bmi.roundToInt()
                 } else if (viewModel.observeUser().value!!.bmi > 40) {
-                    binding.progressBar.setProgress(40, true)
+                    binding.progressBar.progress = 40
                 } else {
-                    binding.progressBar.setProgress(15, true)
+                    binding.progressBar.progress = 15
                 }
                 binding.BMIStatus.text = "Status: $status"
                 binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"

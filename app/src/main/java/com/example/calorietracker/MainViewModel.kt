@@ -15,7 +15,8 @@ class MainViewModel() : ViewModel() {
     private var currentMeal = MutableLiveData<String>()
     private var selectedFoods = MutableLiveData<List<Food>>()
     private var allMeals = MutableLiveData<List<Meal>>()
-    private var selectedMeals = MutableLiveData<List<Meal>>()
+    private var selectedMealsByDay = MutableLiveData<List<Meal>>()
+    private var selectedMealsByWeek = MutableLiveData<List<Meal>>()
     private val dbHelp = ViewModelDBHelper()
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
@@ -133,14 +134,17 @@ class MainViewModel() : ViewModel() {
     fun observeAllMeals(): LiveData<List<Meal>> {
         return allMeals
     }
-    fun observeSelectedMeals(): LiveData<List<Meal>> {
-        return selectedMeals
+    fun observeSelectedMealsByDay(): LiveData<List<Meal>> {
+        return selectedMealsByDay
+    }
+    fun observeSelectedMealsByWeek(): LiveData<List<Meal>> {
+        return selectedMealsByWeek
     }
     fun getMealsByLast7Days(date: Date) {
-        dbHelp.dbFetchMealByLast7Days(date, selectedMeals)
+        dbHelp.dbFetchMealByLast7Days(date, selectedMealsByWeek)
     }
     fun getMealsByDate(date: Date) {
-        dbHelp.dbFetchMealByDate(date, selectedMeals)
+        dbHelp.dbFetchMealByDate(date, selectedMealsByDay)
     }
     fun observeSelectedFoods(): LiveData<List<Food>> {
         return selectedFoods

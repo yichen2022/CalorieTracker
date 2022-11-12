@@ -28,9 +28,9 @@ class CalorieSummaryFragment : Fragment() {
         val adapter = CalorieAdapter()
         viewModel.observeDate().observeForever {
             viewModel.getMealsByDate(viewModel.observeDate().value!!)
-            viewModel.observeSelectedMeals().observeForever {
+            viewModel.observeSelectedMealsByDay().observeForever {
                 var calories = 0
-                val list = viewModel.observeSelectedMeals().value!!.sortedWith(compareBy { it.index })
+                val list = viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
                 for (i in list.indices) {
                     calories += list[i].calories
                 }
