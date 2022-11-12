@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealSummaryBinding
+import kotlin.math.roundToInt
 
 class MealSummaryFragment : Fragment() {
     private var _binding: FragmentMealSummaryBinding? = null
@@ -36,11 +37,19 @@ class MealSummaryFragment : Fragment() {
                 binding.mealTitle.text = viewModel.observeMeal().value.toString()
                 viewModel.observeAllMeals().observeForever {
                     val meal = viewModel.getMeal(viewModel.observeMeal().value.toString(), viewModel.observeDate().value!!)
-                    binding.grains.text = "Grains: ${(meal.grains * 100/meal.calories)}%"
-                    binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100/meal.calories)}%"
-                    binding.meat.text = "Meat: ${(meal.meat * 100/meal.calories)}%"
-                    binding.dairyGroup.text = "Dairy: ${(meal.dairy * 100/meal.calories)}%"
-                    binding.other.text = "Other: ${(meal.otherCategories * 100/meal.calories)}%"
+                    if (meal.calories != 0) {
+                        binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
+                        binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100.0/meal.calories).roundToInt()}%"
+                        binding.meat.text = "Meat: ${(meal.meat * 100.0/meal.calories).roundToInt()}%"
+                        binding.dairyGroup.text = "Dairy: ${(meal.dairy * 100.0/meal.calories).roundToInt()}%"
+                        binding.other.text = "Other: ${(meal.otherCategories * 100.0/meal.calories).roundToInt()}%"
+                    } else {
+                        binding.grains.text = "Grains: 0%"
+                        binding.fruitVeggie.text = "Fruit/Vegetables: 0%"
+                        binding.meat.text = "Meat: 0%"
+                        binding.dairyGroup.text = "Dairy: 0%"
+                        binding.other.text = "Other: 0%"
+                    }
                 }
             }
         }
