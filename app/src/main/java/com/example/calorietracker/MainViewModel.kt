@@ -66,7 +66,11 @@ class MainViewModel() : ViewModel() {
         val meal = Meal()
         meal.type = title
         meal.date = date
-        return allMeals.value!![allMeals.value!!.indexOf(meal)]
+        val index = allMeals.value!!.indexOf(meal)
+        if (index == -1) {
+            return meal
+        }
+        return allMeals.value!![index]
     }
     fun getSelectedFoods() {
         dbHelp.dbFetchSelectedFoods(selectedFoods)
