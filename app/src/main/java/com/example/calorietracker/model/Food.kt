@@ -9,6 +9,7 @@ class Food {
     var group = ""
     var amount = 0
     var name = ""
+    var mealId = ""
     var date: Date? = null
     @DocumentId var firestoreId: String = ""
     override fun equals(other: Any?): Boolean =
