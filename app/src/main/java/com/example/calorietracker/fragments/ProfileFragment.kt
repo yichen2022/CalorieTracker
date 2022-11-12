@@ -171,6 +171,15 @@ class ProfileFragment : Fragment() {
             else if (weightUnit == "") {
                 Snackbar.make(binding.profileLayout, "Missing unit for weight", Snackbar.LENGTH_LONG).show()
             }
+            else if (!binding.ageInput.text.toString().all { char -> char.isDigit() }) {
+                Snackbar.make(binding.profileLayout, "Invalid value for age", Snackbar.LENGTH_LONG).show()
+            }
+            else if (binding.heightInput.text.toString().toDoubleOrNull() == null) {
+                Snackbar.make(binding.profileLayout, "Invalid value for height", Snackbar.LENGTH_LONG).show()
+            }
+            else if (binding.weightInput.text.toString().toDoubleOrNull() == null) {
+                Snackbar.make(binding.profileLayout, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
+            }
             else {
                 calculateBMI()
                 calculateRecommendedCalories()
