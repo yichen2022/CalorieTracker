@@ -80,6 +80,13 @@ class ProfileFragment : Fragment() {
                     status = "Underweight"
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
                 }
+                if (viewModel.observeUser().value!!.bmi > 15 && viewModel.observeUser().value!!.bmi < 40) {
+                    binding.progressBar.setProgress(user.bmi.roundToInt(), true)
+                } else if (viewModel.observeUser().value!!.bmi > 40) {
+                    binding.progressBar.setProgress(40, true)
+                } else {
+                    binding.progressBar.setProgress(15, true)
+                }
                 binding.BMIStatus.text = "Status: $status"
                 binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"
                 binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb"
