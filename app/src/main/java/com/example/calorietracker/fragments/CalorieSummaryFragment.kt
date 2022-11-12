@@ -1,6 +1,7 @@
 package com.example.calorietracker.fragments
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -25,23 +26,31 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
+        var calories = 0
         viewModel.getMealsByDate(viewModel.observeDate().value!!)
         viewModel.observeSelectedMeals().observeForever {
-            adapter.submitList(viewModel.observeSelectedMeals().value!!)
+            val list = viewModel.observeSelectedMeals().value!!.sortedWith(compareBy { it.index })
+            for (i in list.indices) {
+                calories += list[i].calories
+            }
+            viewModel.setCalories(calories)
+            adapter.submitList(list)
         }
         binding.recyclerview.adapter = adapter
-        viewModel.observeUser().observeForever {
-            binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
-            if (viewModel.observeUser().value!!.calories > viewModel.observeUser().value!!.recommendedCal) {
-                binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
-                binding.progress.setBackgroundColor(Color.RED)
-                binding.remainingCalories.text = "0 Calories Left"
-            } else {
-                binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                binding.progress.progress = viewModel.observeUser().value!!.calories
-                binding.progress.setBackgroundColor(Color.BLUE)
-                binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - viewModel.observeUser().value!!.calories} Calories Left"
+        viewModel.observeCalories().observeForever {
+            viewModel.observeUser().observeForever {
+                binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
+                if (calories > viewModel.observeUser().value!!.recommendedCal) {
+                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                    binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
+                    binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
+                    binding.remainingCalories.text = "0 Calories Left"
+                } else {
+                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                    binding.progress.progress = calories
+                    binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
+                    binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
+                }
             }
         }
         binding.profile.setOnClickListener {

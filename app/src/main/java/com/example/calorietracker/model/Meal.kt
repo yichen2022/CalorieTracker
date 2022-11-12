@@ -1,6 +1,5 @@
 package com.example.calorietracker.model
 
-import android.util.Log
 import com.google.firebase.firestore.DocumentId
 import java.util.Date
 
@@ -14,6 +13,7 @@ class Meal {
     var dairy = 0
     var otherCategories = 0
     var date: Date? = null
+    var index = 0
     @DocumentId
     var firestoreId: String = ""
 

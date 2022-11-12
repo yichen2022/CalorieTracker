@@ -19,6 +19,13 @@ class MainViewModel() : ViewModel() {
     private val dbHelp = ViewModelDBHelper()
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
+    private val numCalories = MutableLiveData<Int>()
+    fun observeCalories(): LiveData<Int> {
+        return numCalories
+    }
+    fun setCalories(calories: Int) {
+        numCalories.value = calories
+    }
     fun observeDate(): LiveData<Date> {
         return currentDate
     }
@@ -29,15 +36,19 @@ class MainViewModel() : ViewModel() {
         val breakfast = Meal()
         breakfast.type = "Breakfast"
         breakfast.date = currentDate.value
+        breakfast.index = 1
         val lunch = Meal()
         lunch.type = "Lunch"
         lunch.date = currentDate.value
+        lunch.index = 2
         val dinner = Meal()
         dinner.type = "Dinner"
         dinner.date = currentDate.value
+        dinner.index = 3
         val snacks = Meal()
         snacks.type = "Snacks"
         snacks.date = currentDate.value
+        snacks.index = 4
         if (allMeals.value == null || !allMeals.value!!.contains(breakfast)) {
             dbHelp.createMeal(breakfast, allMeals)
         }
@@ -152,12 +163,10 @@ class MainViewModel() : ViewModel() {
         return currentUser
     }
     fun addFood(food: Food) {
-        currentUser.value!!.calories += food.numCalories * food.amount
         dbHelp.addFoodToSelection(food, selectedFoods)
         dbHelp.updateUser(currentUser.value!!, currentUser)
     }
     fun removeFood(food: Food) {
-        currentUser.value!!.calories -= food.numCalories * food.amount
         dbHelp.removeFoodFromSelection(food, selectedFoods)
         dbHelp.updateUser(currentUser.value!!, currentUser)
     }

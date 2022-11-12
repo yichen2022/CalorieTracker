@@ -1,6 +1,5 @@
 package com.example.calorietracker.model
 
-import android.util.Log
 import com.google.firebase.firestore.DocumentId
 import java.util.Date
 

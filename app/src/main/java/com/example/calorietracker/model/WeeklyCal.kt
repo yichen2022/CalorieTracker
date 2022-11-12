@@ -12,5 +12,4 @@ class WeeklyCal {
     var otherCal = 0
     var target = 0
     var average = 0
-    var userId = 0
 }
