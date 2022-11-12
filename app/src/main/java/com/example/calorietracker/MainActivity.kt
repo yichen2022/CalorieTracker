@@ -3,13 +3,11 @@ package com.example.calorietracker
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
-import java.io.File
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
