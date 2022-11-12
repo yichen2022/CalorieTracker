@@ -132,7 +132,6 @@ class FoodFragment : Fragment() {
             viewModel.observeDate().observeForever {
                 food.meal = viewModel.observeMeal().value.toString()
                 food.date = viewModel.observeDate().value!!
-                food.mealId = viewModel.getMeal(food.meal, food.date!!).firestoreId
             }
 
         }
