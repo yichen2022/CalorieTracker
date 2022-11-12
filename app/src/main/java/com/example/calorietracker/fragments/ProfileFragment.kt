@@ -17,6 +17,7 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
 import com.example.calorietracker.model.User
+import com.google.android.material.snackbar.Snackbar
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
@@ -149,9 +150,32 @@ class ProfileFragment : Fragment() {
 
         }
         binding.calculate.setOnClickListener {
-            calculateBMI()
-            calculateRecommendedCalories()
-            viewModel.setProfile(user)
+            if (user.sex == "") {
+                Snackbar.make(binding.profileLayout, "Missing sex", Snackbar.LENGTH_LONG).show()
+            }
+            else if (binding.ageInput.text.toString() == "") {
+                Snackbar.make(binding.profileLayout, "Missing age", Snackbar.LENGTH_LONG).show()
+            }
+            else if (binding.heightInput.text.toString() == "") {
+                Snackbar.make(binding.profileLayout, "Missing height", Snackbar.LENGTH_LONG).show()
+            }
+            else if (binding.weightInput.text.toString() == "") {
+                Snackbar.make(binding.profileLayout, "Missing weight", Snackbar.LENGTH_LONG).show()
+            }
+            else if (user.activityLevel == "") {
+                Snackbar.make(binding.profileLayout, "Missing activity level", Snackbar.LENGTH_LONG).show()
+            }
+            else if (heightUnit == "") {
+                Snackbar.make(binding.profileLayout, "Missing unit for height", Snackbar.LENGTH_LONG).show()
+            }
+            else if (weightUnit == "") {
+                Snackbar.make(binding.profileLayout, "Missing unit for weight", Snackbar.LENGTH_LONG).show()
+            }
+            else {
+                calculateBMI()
+                calculateRecommendedCalories()
+                viewModel.setProfile(user)
+            }
         }
         val heightUnitAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.height, android.R.layout.simple_spinner_item)
         heightUnitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -238,6 +262,7 @@ class ProfileFragment : Fragment() {
     private fun toDate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
+    @SuppressLint("SetTextI18n")
     private fun calculateRecommendedCalories() {
         var bmr = 0.0
         user.age = binding.ageInput.text.toString().toInt()
