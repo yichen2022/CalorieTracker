@@ -26,33 +26,37 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
-        var calories = 0
-        viewModel.getMealsByDate(viewModel.observeDate().value!!)
-        viewModel.observeSelectedMeals().observeForever {
-            val list = viewModel.observeSelectedMeals().value!!.sortedWith(compareBy { it.index })
-            for (i in list.indices) {
-                calories += list[i].calories
-            }
-            viewModel.setCalories(calories)
-            adapter.submitList(list)
-        }
-        binding.recyclerview.adapter = adapter
-        viewModel.observeCalories().observeForever {
-            viewModel.observeUser().observeForever {
-                binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
-                if (calories > viewModel.observeUser().value!!.recommendedCal) {
-                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                    binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
-                    binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
-                    binding.remainingCalories.text = "0 Calories Left"
-                } else {
-                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                    binding.progress.progress = calories
-                    binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                    binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
+        viewModel.observeDate().observeForever {
+            viewModel.getMealsByDate(viewModel.observeDate().value!!)
+            viewModel.observeSelectedMeals().observeForever {
+                var calories = 0
+                val list = viewModel.observeSelectedMeals().value!!.sortedWith(compareBy { it.index })
+                for (i in list.indices) {
+                    calories += list[i].calories
+                }
+                Log.i(javaClass.simpleName, calories.toString())
+                viewModel.setCalories(calories)
+                adapter.submitList(list)
+                viewModel.observeCalories().observeForever {
+                    viewModel.observeUser().observeForever {
+                        binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
+                        if (calories > viewModel.observeUser().value!!.recommendedCal) {
+                            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                            binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
+                            binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
+                            binding.remainingCalories.text = "0 Calories Left"
+                        } else {
+                            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                            binding.progress.progress = calories
+                            binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
+                            binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
+                        }
+                    }
                 }
             }
         }
+        binding.recyclerview.adapter = adapter
+
         binding.profile.setOnClickListener {
             toProfile()
         }
