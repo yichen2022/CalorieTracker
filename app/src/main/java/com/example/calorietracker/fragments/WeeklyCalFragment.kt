@@ -35,7 +35,7 @@ class WeeklyCalFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
         viewModel.getMealsByLast7Days(day)
-        viewModel.observeSelectedMealsByWeek().observeForever {
+        viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
             val weeklyCal = WeeklyCal()
@@ -144,7 +144,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day7.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day7.text = "Sun 0${day.date}"
                                     }
@@ -254,7 +254,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day6.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day6.text = "Sun 0${day.date}"
                                     }
@@ -364,7 +364,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day5.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day5.text = "Sun 0${day.date}"
                                     }
@@ -474,7 +474,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day4.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day4.text = "Sun 0${day.date}"
                                     }
@@ -584,7 +584,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day3.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day3.text = "Sun 0${day.date}"
                                     }
@@ -694,7 +694,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day2.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day2.text = "Sun 0${day.date}"
                                     }
@@ -804,7 +804,7 @@ class WeeklyCalFragment : Fragment() {
                                         binding.day1.text = "Sat ${day.date}"
                                     }
                                 }
-                                7 -> {
+                                0 -> {
                                     if (day.date < 10) {
                                         binding.day1.text = "Sun 0${day.date}"
                                     }

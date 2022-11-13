@@ -378,22 +378,22 @@
             <TextView
                 android:textColor="@color/black"
                 android:layout_marginLeft="40dp"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:text="Breakfast"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/breakfastPercent"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="%"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/breakfastCal"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="Cal"/>
         </LinearLayout>
         <LinearLayout
@@ -410,22 +410,22 @@
             <TextView
                 android:textColor="@color/black"
                 android:layout_marginLeft="40dp"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:text="Lunch"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/lunchPercent"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="%"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/lunchCal"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="Cal"/>
         </LinearLayout>
         <LinearLayout
@@ -442,22 +442,22 @@
             <TextView
                 android:textColor="@color/black"
                 android:layout_marginLeft="40dp"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:text="Dinner"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/dinnerPercent"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="%"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/dinnerCal"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="Cal"/>
         </LinearLayout>
         <LinearLayout
@@ -474,22 +474,22 @@
             <TextView
                 android:textColor="@color/black"
                 android:layout_marginLeft="40dp"
-                android:layout_width="100dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:text="Other"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/otherPercent"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="%"/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/otherCal"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="50dp"
                 android:text="Cal"/>
         </LinearLayout>
     </LinearLayout>

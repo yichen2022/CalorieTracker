@@ -118,7 +118,9 @@ class ViewModelDBHelper {
         }
     }
     fun setWeeklyCal(weeklyCal: WeeklyCal, summary: MutableLiveData<WeeklyCal>) {
-        weeklyCal.firestoreId = db.collection("weeklyCal").document().id
+        if (weeklyCal.firestoreId == "") {
+            weeklyCal.firestoreId = db.collection("weeklyCal").document().id
+        }
         db.collection("weeklyCal").document(weeklyCal.firestoreId).set(weeklyCal).addOnSuccessListener {
             Log.d(javaClass.simpleName, "Weekly Calories successfully set")
             summary.postValue(weeklyCal)
