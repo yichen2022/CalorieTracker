@@ -7,6 +7,7 @@ import com.example.calorietracker.firebase.FirestoreAuthLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
+import com.example.calorietracker.model.WeeklyCal
 import java.util.Date
 
 class MainViewModel() : ViewModel() {
@@ -21,8 +22,12 @@ class MainViewModel() : ViewModel() {
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private val numCalories = MutableLiveData<Int>()
+    private var weeklyCalSummary = MutableLiveData<WeeklyCal>()
     fun observeCalories(): LiveData<Int> {
         return numCalories
+    }
+    fun setWeeklyCalSummary(weeklyCal: WeeklyCal) {
+        dbHelp.setWeeklyCal(weeklyCal, weeklyCalSummary)
     }
     fun setCalories(calories: Int) {
         numCalories.value = calories

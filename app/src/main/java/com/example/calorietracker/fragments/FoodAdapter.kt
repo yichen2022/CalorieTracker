@@ -10,6 +10,7 @@ import com.example.calorietracker.databinding.FragmentFoodBinding
 import com.example.calorietracker.databinding.FragmentFoodListBinding
 
 import com.example.calorietracker.model.Food
+import com.google.android.material.snackbar.Snackbar
 
 class FoodAdapter(private val viewModel: MainViewModel, private val foodList: List<Food>, private val binding: FragmentFoodListBinding) : RecyclerView.Adapter<FoodAdapter.ViewHolder>() {
 
@@ -30,13 +31,19 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
                 this.binding.amount.visibility = View.VISIBLE
                 this.binding.foodAdd.visibility = View.VISIBLE
                 this.binding.foodAdd.setOnClickListener {
-                    foodList[holder.adapterPosition].amount = this.binding.amountInput.text.toString().toInt()
-                    this.binding.amountInput.text.clear()
-                    this.binding.amountInput.visibility = View.INVISIBLE
-                    this.binding.amount.visibility = View.INVISIBLE
-                    this.binding.foodAdd.visibility = View.INVISIBLE
-                    viewModel.addFood(foodList[holder.adapterPosition])
-                    viewModel.addFoodToMeal(foodList[holder.adapterPosition])
+                    if (!this.binding.amountInput.text.toString().all { char -> char.isDigit() }) {
+                        Snackbar.make(this.binding.foodList, "Invalid value for amount", Snackbar.LENGTH_LONG).show()
+                    }
+                    else {
+                        foodList[holder.adapterPosition].amount = this.binding.amountInput.text.toString().toInt()
+                        this.binding.amountInput.text.clear()
+                        this.binding.amountInput.visibility = View.INVISIBLE
+                        this.binding.amount.visibility = View.INVISIBLE
+                        this.binding.foodAdd.visibility = View.INVISIBLE
+                        viewModel.addFood(foodList[holder.adapterPosition])
+                        viewModel.addFoodToMeal(foodList[holder.adapterPosition])
+                    }
+
                 }
             }
         }

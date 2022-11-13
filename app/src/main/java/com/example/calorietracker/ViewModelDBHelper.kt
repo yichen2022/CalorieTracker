@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
+import com.example.calorietracker.model.WeeklyCal
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import java.time.ZoneId
@@ -114,6 +115,15 @@ class ViewModelDBHelper {
             currentUser.postValue(user)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error updating user")
+        }
+    }
+    fun setWeeklyCal(weeklyCal: WeeklyCal, summary: MutableLiveData<WeeklyCal>) {
+        weeklyCal.firestoreId = db.collection("weeklyCal").document().id
+        db.collection("weeklyCal").document(weeklyCal.firestoreId).set(weeklyCal).addOnSuccessListener {
+            Log.d(javaClass.simpleName, "Weekly Calories successfully set")
+            summary.postValue(weeklyCal)
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error setting weekly calories")
         }
     }
 }
