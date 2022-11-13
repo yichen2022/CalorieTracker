@@ -27,7 +27,9 @@
         android:id="@+id/mealDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text=""
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile"
@@ -36,7 +38,9 @@
         android:id="@+id/mealTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text=""
+        android:textColor="@color/black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealDate"
@@ -45,7 +49,8 @@
         android:id="@+id/grains"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Grains: "
+        android:textColor="#FF9800"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealTitle"
@@ -54,7 +59,8 @@
         android:id="@+id/fruitVeggie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Fruit/Vegetables: "
+        android:textColor="#4CAF50"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/grains"
@@ -63,7 +69,8 @@
         android:id="@+id/meat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Meat: "
+        android:textColor="#673AB7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fruitVeggie"
@@ -72,7 +79,8 @@
         android:id="@+id/dairyGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Dairy: "
+        android:textColor="#00BCD4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meat"
@@ -81,38 +89,71 @@
         android:id="@+id/other"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Other: "
+        android:textColor="#FF0000"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dairyGroup"
         app:layout_constraintBottom_toTopOf="@+id/add"/>
-    <ImageView
+    <LinearLayout
         android:id="@+id/diary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/diary"
-        app:layout_constraintTop_toBottomOf="@+id/other"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add" />
-    <ImageView
+        app:layout_constraintRight_toLeftOf="@id/add"
+        app:layout_constraintTop_toBottomOf="@id/other">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/diary" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diary"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add"
-        app:layout_constraintTop_toBottomOf="@+id/other"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <ImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/other">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/trend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/trend"
-        app:layout_constraintTop_toBottomOf="@+id/other"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/add" />
+        app:layout_constraintLeft_toRightOf="@id/add"
+        app:layout_constraintTop_toBottomOf="@id/other">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/trend" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trend"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

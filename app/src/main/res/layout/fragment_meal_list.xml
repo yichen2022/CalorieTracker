@@ -44,6 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/progress"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview">
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/remainingCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
             android:layout_alignRight="@id/progress"
             android:layout_alignBottom="@id/progress"/>
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/recommendedCalories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,32 +82,64 @@
         app:layout_constraintBottom_toTopOf="@+id/add"
         tools:context=".fragments.CalorieSummaryFragment"
         tools:listitem="@layout/fragment_meal" />
-    <ImageView
+    <LinearLayout
         android:id="@+id/diary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/diary"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/add" />
-    <ImageView
+        app:layout_constraintRight_toLeftOf="@id/add"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/diary" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Diary"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/add"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    <ImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/trend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/trend"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/add" />
+        app:layout_constraintLeft_toRightOf="@id/add"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/trend" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trend"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
