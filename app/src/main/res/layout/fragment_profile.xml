@@ -113,7 +113,7 @@
         app:layout_constraintBottom_toTopOf="@+id/height"
         app:layout_constraintTop_toBottomOf="@+id/gender">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/age"
             android:id="@+id/ageImage" />
@@ -123,7 +123,7 @@
             android:id="@+id/ageInput" />
         <TextView
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Years"
             android:id="@+id/years" />
@@ -139,7 +139,7 @@
         app:layout_constraintTop_toBottomOf="@+id/age"
         app:layout_constraintBottom_toTopOf="@+id/weight">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/height"/>
         <EditText
@@ -148,7 +148,7 @@
             android:id="@+id/heightInput"
             />
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/heightUnit"/>
     </LinearLayout>
@@ -163,7 +163,7 @@
         app:layout_constraintTop_toBottomOf="@+id/height"
         app:layout_constraintBottom_toTopOf="@+id/activity">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:src="@drawable/weight"/>
         <EditText
@@ -172,7 +172,7 @@
             android:id="@+id/weightInput"
             />
         <Spinner
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/weightUnit"/>
     </LinearLayout>
