@@ -39,6 +39,7 @@ class WeeklyCalFragment : Fragment() {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
             val weeklyCal = WeeklyCal()
+            weeklyCal.userId = viewModel.observeUser().value!!.firestoreId
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
             for (i in 7 downTo 1) {
