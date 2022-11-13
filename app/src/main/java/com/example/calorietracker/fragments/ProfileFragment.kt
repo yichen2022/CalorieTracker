@@ -53,15 +53,6 @@ class ProfileFragment : Fragment() {
         viewModel.fetchUser()
         viewModel.observeUser().observe(viewLifecycleOwner) {
             if (viewModel.observeUser().value != null) {
-                binding.female.isEnabled = false
-                binding.male.isEnabled = false
-                binding.heightUnit.isEnabled = false
-                binding.heightInput.isEnabled = false
-                binding.ageInput.isEnabled = false
-                binding.weightInput.isEnabled = false
-                binding.weightUnit.isEnabled = false
-                binding.activityDropdown.isEnabled = false
-                binding.calculate.isEnabled = false
                 binding.BMIValue.text = "BMI: ${(viewModel.observeUser().value!!.bmi * 10).roundToInt() / 10.0}"
                 var status = ""
                 if (viewModel.observeUser().value!!.bmi > 30) {
@@ -90,7 +81,7 @@ class ProfileFragment : Fragment() {
                 }
                 binding.BMIStatus.text = "Status: $status"
                 binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"
-                binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb"
+                binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb (${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} kg)"
             }
         }
         binding.add.setOnClickListener {
@@ -263,7 +254,7 @@ class ProfileFragment : Fragment() {
             binding.progressBar.setProgress(15, true)
         }
         binding.BMIStatus.text = "Status: $status"
-        binding.idealWeightText.text = "${(18.5 * user.height  * user.height / 703.0).roundToInt()} - ${(25 * user.height * user.height / 703.0).roundToInt()} lb"
+        binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb (${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} kg)"
     }
     private fun handleActivityLevel(activityPos: Int) {
         if (activityPos > 0) {
