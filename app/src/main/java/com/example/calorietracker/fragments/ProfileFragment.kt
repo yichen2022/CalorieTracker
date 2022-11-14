@@ -1,6 +1,7 @@
 package com.example.calorietracker.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -11,11 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
+import com.example.calorietracker.firebase.AuthInit
 import com.example.calorietracker.model.User
 import com.google.android.material.snackbar.Snackbar
 import kotlin.math.roundToInt
@@ -26,6 +29,18 @@ class ProfileFragment : Fragment() {
     private var user = User()
     private var weightUnit = ""
     private val viewModel: MainViewModel by activityViewModels()
+    private val signInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.updateUser()
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            // ...
+            Log.d(javaClass.simpleName, "sign in failed $result")
+        }
+    }
     private val weightUnits: Array<String> by lazy {
         resources.getStringArray(R.array.weight)
     }
@@ -317,6 +332,7 @@ class ProfileFragment : Fragment() {
     }
     private fun logOut() {
         viewModel.signOut()
+        AuthInit(viewModel, signInLauncher)
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, BlankFragment.newInstance()).addToBackStack("blankFragment").commit()
         Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
     }
