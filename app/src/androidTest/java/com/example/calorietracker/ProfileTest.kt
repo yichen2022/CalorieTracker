@@ -17,13 +17,6 @@ import org.hamcrest.Matchers.*
 @RunWith(AndroidJUnit4::class)
 class ProfileTest {
     @Test
-    fun testNavigationToProfile() {
-        launchActivity<MainActivity>().use {
-            onView(withId(R.id.logo)).perform(click())
-            onView(withId(R.id.start)).perform(click())
-        }
-    }
-    @Test
     fun testProfile() {
         launchActivity<MainActivity>().use {
             onView(withId(R.id.logo)).perform(click())
