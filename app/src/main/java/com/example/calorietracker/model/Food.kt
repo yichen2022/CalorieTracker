@@ -19,13 +19,4 @@ class Food {
         } else {
             false
         }
-
-    override fun toString(): String {
-        return "Food{" +
-                "meal: " + meal +
-                ", group: " + group +
-                ", name: " + name +
-                ", firestoreID: " + firestoreId +
-                "}"
-    }
 }

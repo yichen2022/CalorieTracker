@@ -8,7 +8,6 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.example.calorietracker.model.WeeklyCal
-import com.google.firebase.auth.FirebaseAuth
 import java.util.Date
 
 class MainViewModel() : ViewModel() {
@@ -41,22 +40,22 @@ class MainViewModel() : ViewModel() {
     }
     fun setMeals() {
         val breakfast = Meal()
-        breakfast.authorId = FirebaseAuth.getInstance().currentUser!!.uid
+        breakfast.authorId = getCurrentUser()
         breakfast.type = "Breakfast"
         breakfast.date = currentDate.value
         breakfast.index = 1
         val lunch = Meal()
-        lunch.authorId = FirebaseAuth.getInstance().currentUser!!.uid
+        lunch.authorId = getCurrentUser()
         lunch.type = "Lunch"
         lunch.date = currentDate.value
         lunch.index = 2
         val dinner = Meal()
-        dinner.authorId = FirebaseAuth.getInstance().currentUser!!.uid
+        dinner.authorId = getCurrentUser()
         dinner.type = "Dinner"
         dinner.date = currentDate.value
         dinner.index = 3
         val snacks = Meal()
-        snacks.authorId = FirebaseAuth.getInstance().currentUser!!.uid
+        snacks.authorId = getCurrentUser()
         snacks.type = "Snacks"
         snacks.date = currentDate.value
         snacks.index = 4
