@@ -27,6 +27,9 @@ class MainViewModel() : ViewModel() {
     fun observeCalories(): LiveData<Int> {
         return numCalories
     }
+    fun observeWeeklyCalSummary(): LiveData<WeeklyCal> {
+        return weeklyCalSummary
+    }
     fun setWeeklyCalSummary(weeklyCal: WeeklyCal) {
         dbHelp.setWeeklyCal(weeklyCal, weeklyCalSummary)
     }

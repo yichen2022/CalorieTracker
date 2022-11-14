@@ -69,6 +69,7 @@ class ProfileFragment : Fragment() {
         viewModel.fetchUser()
         viewModel.observeUser().observe(viewLifecycleOwner) {
             if (viewModel.observeUser().value != null) {
+                user.firestoreId = viewModel.observeUser().value!!.firestoreId
                 binding.BMIValue.text = "BMI: ${(viewModel.observeUser().value!!.bmi * 10).roundToInt() / 10.0}"
                 var status = ""
                 if (viewModel.observeUser().value!!.bmi > 30) {
@@ -295,10 +296,10 @@ class ProfileFragment : Fragment() {
         user.age = binding.ageInput.text.toString().toInt()
         when (user.sex) {
             "Female" -> {
-                bmr = 655.1 + 9.563 * user.weight + 1.85 * user.height - 4.676 * user.age
+                bmr = 655.1 + 9.563 * user.weight / 2.205 + 1.85 * user.height * 2.54 - 4.676 * user.age
             }
             "Male" -> {
-                bmr = 66.47 + 13.75 * user.weight + 5.003 * user.height - 6.755 * user.age
+                bmr = 66.47 + 13.75 * user.weight / 2.205 + 5.003 * user.height * 2.54 - 6.755 * user.age
             }
         }
         when (user.activityLevel) {

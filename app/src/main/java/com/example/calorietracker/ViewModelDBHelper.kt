@@ -112,7 +112,9 @@ class ViewModelDBHelper {
         }
     }
     fun setUser(user: User, currentUser: MutableLiveData<User>) {
-        user.firestoreId = db.collection("user").document().id
+        if (user.firestoreId == "") {
+            user.firestoreId = db.collection("user").document().id
+        }
         db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
             Log.d(javaClass.simpleName, "User successfully set")
             currentUser.postValue(user)
