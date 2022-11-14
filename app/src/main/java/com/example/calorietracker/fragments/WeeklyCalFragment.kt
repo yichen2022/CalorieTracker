@@ -12,6 +12,7 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentWeeklyCalListBinding
 import com.example.calorietracker.model.WeeklyCal
+import com.google.firebase.auth.FirebaseAuth
 import java.time.ZoneId
 import java.util.*
 
@@ -39,6 +40,7 @@ class WeeklyCalFragment : Fragment() {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
             val weeklyCal = WeeklyCal()
+            weeklyCal.authorId = FirebaseAuth.getInstance().currentUser!!.uid
             weeklyCal.userId = viewModel.observeUser().value!!.firestoreId
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0

@@ -14,6 +14,7 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentFoodListBinding
 import com.example.calorietracker.model.Food
+import com.google.firebase.auth.FirebaseAuth
 import java.io.InputStreamReader
 
 class FoodFragment : Fragment() {
@@ -115,6 +116,7 @@ class FoodFragment : Fragment() {
     }
     private fun readFood(category: String, reader: JsonReader): Food {
         val food = Food()
+        food.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         reader.beginObject()
         while (reader.hasNext()) {
             when (reader.nextName()) {

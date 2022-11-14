@@ -8,6 +8,7 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.example.calorietracker.model.WeeklyCal
+import com.google.firebase.auth.FirebaseAuth
 import java.util.Date
 
 class MainViewModel() : ViewModel() {
@@ -40,18 +41,22 @@ class MainViewModel() : ViewModel() {
     }
     fun setMeals() {
         val breakfast = Meal()
+        breakfast.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         breakfast.type = "Breakfast"
         breakfast.date = currentDate.value
         breakfast.index = 1
         val lunch = Meal()
+        lunch.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         lunch.type = "Lunch"
         lunch.date = currentDate.value
         lunch.index = 2
         val dinner = Meal()
+        dinner.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         dinner.type = "Dinner"
         dinner.date = currentDate.value
         dinner.index = 3
         val snacks = Meal()
+        snacks.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         snacks.type = "Snacks"
         snacks.date = currentDate.value
         snacks.index = 4
@@ -68,10 +73,14 @@ class MainViewModel() : ViewModel() {
             dbHelp.createMeal(snacks, allMeals)
         }
     }
+    fun getCurrentUser(): String {
+        return firebaseAuthLiveData.getCurrentUser()!!.uid
+    }
     fun getMeal(title: String, date: Date): Meal {
         val meal = Meal()
         meal.type = title
         meal.date = date
+        meal.authorId = getCurrentUser()
         val index = allMeals.value!!.indexOf(meal)
         if (index == -1) {
             return meal

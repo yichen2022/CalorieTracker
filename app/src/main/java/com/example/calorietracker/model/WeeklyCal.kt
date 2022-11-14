@@ -15,6 +15,7 @@ class WeeklyCal {
     var target = 0
     var average = 0
     var userId = ""
+    var authorId = ""
     @DocumentId
     var firestoreId: String = ""
 }

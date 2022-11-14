@@ -18,6 +18,7 @@ import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
 import com.example.calorietracker.model.User
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
@@ -50,6 +51,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        user.authorId = FirebaseAuth.getInstance().currentUser!!.uid
         viewModel.fetchUser()
         viewModel.observeUser().observe(viewLifecycleOwner) {
             if (viewModel.observeUser().value != null) {
@@ -203,6 +205,9 @@ class ProfileFragment : Fragment() {
         binding.diary.setOnClickListener {
             toMealSummary()
         }
+        binding.profile.setOnClickListener {
+            logOut()
+        }
     }
     private fun handleHeight(heightPos: Int) {
         if (heightPos > 0) {
@@ -254,7 +259,7 @@ class ProfileFragment : Fragment() {
             binding.progressBar.setProgress(15, true)
         }
         binding.BMIStatus.text = "Status: $status"
-        binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb (${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} kg)"
+        binding.idealWeightText.text = "${(18.5 * user.height  * user.height / 703.0).roundToInt()} - ${(25 * user.height * user.height / 703.0).roundToInt()} lb (${(18.5 * user.height  * user.height / 703.0 * 0.454).roundToInt()} - ${(25 * user.height * user.height / 703.0 * 0.454).roundToInt()} kg)"
     }
     private fun handleActivityLevel(activityPos: Int) {
         if (activityPos > 0) {
@@ -310,6 +315,10 @@ class ProfileFragment : Fragment() {
     }
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
+    }
+    private fun logOut() {
+        FirebaseAuth.getInstance().signOut()
+        Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
     }
     companion object {
         @JvmStatic

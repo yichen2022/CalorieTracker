@@ -10,6 +10,7 @@ class User {
     var weight = 0.0
     var bmi = 0.0
     var sex = ""
+    var authorId = ""
     @DocumentId
     var firestoreId: String = ""
 }

@@ -6,6 +6,7 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.example.calorietracker.model.WeeklyCal
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import java.time.ZoneId
@@ -16,9 +17,13 @@ class ViewModelDBHelper {
     fun dbFetchSelectedFoods(foodList: MutableLiveData<List<Food>>) {
         db.collection("selectedFoods").get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Selected foods fetched successfully")
-            foodList.postValue(result.documents.mapNotNull {
-                it.toObject(Food::class.java)
-            })
+            val list = mutableListOf<Food>()
+            result.documents.mapNotNull {
+                if (it.toObject(Food::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                    list.add(it.toObject(Food::class.java)!!)
+                }
+            }
+            foodList.postValue(list)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching selected foods")
         }
@@ -27,7 +32,9 @@ class ViewModelDBHelper {
         db.collection("user").limit(1).get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Successfully fetched user")
             result.documents.mapNotNull {
-                user.postValue(it.toObject(User::class.java))
+                if (it.toObject(User::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                    user.postValue(it.toObject(User::class.java))
+                }
             }
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching user")
@@ -36,9 +43,13 @@ class ViewModelDBHelper {
     fun dbFetchMealByDate(date: Date, mealList: MutableLiveData<List<Meal>>){
         db.collection("allMeals").whereEqualTo("date", date).get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Meals in the current day fetched successfully")
-            mealList.postValue(result.documents.mapNotNull {
-                it.toObject(Meal::class.java)
-            })
+            val list = mutableListOf<Meal>()
+            result.documents.mapNotNull {
+                if (it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                    list.add(it.toObject(Meal::class.java)!!)
+                }
+            }
+            mealList.postValue(list)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching meals")
         }

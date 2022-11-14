@@ -14,12 +14,13 @@ class Meal {
     var otherCategories = 0
     var date: Date? = null
     var index = 0
+    var authorId = ""
     @DocumentId
     var firestoreId: String = ""
 
     override fun equals(other: Any?): Boolean =
         if (other is Meal) {
-            type == other.type && date == other.date
+            type == other.type && date == other.date && authorId == other.authorId
         } else {
             false
         }
