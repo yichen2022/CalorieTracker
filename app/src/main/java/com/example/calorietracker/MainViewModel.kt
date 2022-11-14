@@ -8,6 +8,7 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.example.calorietracker.model.WeeklyCal
+import com.google.firebase.auth.FirebaseAuth
 import java.util.Date
 
 class MainViewModel() : ViewModel() {
@@ -91,6 +92,9 @@ class MainViewModel() : ViewModel() {
     }
     fun getAllMeals() {
         dbHelp.dbFetchMeals(allMeals)
+    }
+    fun signOut() {
+        FirebaseAuth.getInstance().signOut()
     }
     fun addFoodToMeal(food: Food) {
         val meal = getMeal(currentMeal.value!!, currentDate.value!!)

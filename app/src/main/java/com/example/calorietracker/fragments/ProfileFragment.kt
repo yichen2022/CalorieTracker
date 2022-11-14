@@ -18,7 +18,6 @@ import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
 import com.example.calorietracker.model.User
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import kotlin.math.roundToInt
 
 class ProfileFragment : Fragment() {
@@ -51,7 +50,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        user.authorId = FirebaseAuth.getInstance().currentUser!!.uid
+        user.authorId = viewModel.getCurrentUser()
         viewModel.fetchUser()
         viewModel.observeUser().observe(viewLifecycleOwner) {
             if (viewModel.observeUser().value != null) {
@@ -317,7 +316,8 @@ class ProfileFragment : Fragment() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
     }
     private fun logOut() {
-        FirebaseAuth.getInstance().signOut()
+        viewModel.signOut()
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, BlankFragment.newInstance()).addToBackStack("blankFragment").commit()
         Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
     }
     companion object {

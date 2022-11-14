@@ -36,4 +36,10 @@ class BlankFragment : Fragment() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
     }
+    companion object {
+        @JvmStatic
+        fun newInstance(): BlankFragment {
+            return BlankFragment()
+        }
+    }
 }
