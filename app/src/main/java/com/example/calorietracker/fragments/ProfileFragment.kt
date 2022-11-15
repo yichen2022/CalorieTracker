@@ -218,7 +218,7 @@ class ProfileFragment : Fragment() {
             toDate()
         }
         binding.diary.setOnClickListener {
-            toMealSummary()
+            toCalorieSummary()
         }
         binding.profile.setOnClickListener {
             logOut()
@@ -228,9 +228,6 @@ class ProfileFragment : Fragment() {
         if (heightPos > 0) {
             heightUnit = heightUnits[heightPos]
         }
-    }
-    private fun toMealSummary() {
-        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
     }
     private fun handleWeight(weightPos: Int) {
         if (weightPos > 0) {
