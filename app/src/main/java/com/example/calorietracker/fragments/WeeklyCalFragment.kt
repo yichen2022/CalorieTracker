@@ -40,6 +40,7 @@ class WeeklyCalFragment : Fragment() {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
             val weeklyCal = WeeklyCal()
+            viewModel.fetchWeeklyCal()
             viewModel.observeWeeklyCalSummary().observeForever {
                 if (viewModel.observeWeeklyCalSummary().value != null) {
                     weeklyCal.firestoreId = viewModel.observeWeeklyCalSummary().value!!.firestoreId

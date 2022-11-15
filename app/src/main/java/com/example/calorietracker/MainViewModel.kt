@@ -187,6 +187,9 @@ class MainViewModel() : ViewModel() {
     fun fetchUser() {
         dbHelp.dbFetchUser(currentUser)
     }
+    fun fetchWeeklyCal() {
+        dbHelp.dbFetchWeeklyCal(weeklyCalSummary)
+    }
     fun observeUser(): LiveData<User> {
         return currentUser
     }

@@ -54,6 +54,18 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Error fetching meals")
         }
     }
+    fun dbFetchWeeklyCal(weeklyCal: MutableLiveData<WeeklyCal>) {
+        db.collection("weeklyCal").limit(1).get().addOnSuccessListener { result ->
+            Log.d(javaClass.simpleName, "Successfully fetched weekly calories")
+            result.documents.mapNotNull {
+                if (it.toObject(WeeklyCal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                    weeklyCal.postValue(it.toObject(WeeklyCal::class.java))
+                }
+            }
+        }.addOnFailureListener {
+            Log.d(javaClass.simpleName, "Error fetching weekly calories")
+        }
+    }
     fun dbFetchMealByLast7Days(date: Date, mealList: MutableLiveData<List<Meal>>) {
         val temp = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
             .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
