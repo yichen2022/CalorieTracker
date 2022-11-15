@@ -19,7 +19,7 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Selected foods fetched successfully")
             val list = mutableListOf<Food>()
             result.documents.mapNotNull {
-                if (it.toObject(Food::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                if (it.toObject(Food::class.java)!!.testing == MainActivity.testing && it.toObject(Food::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
                     list.add(it.toObject(Food::class.java)!!)
                 }
             }
@@ -45,7 +45,7 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Meals in the current day fetched successfully")
             val list = mutableListOf<Meal>()
             result.documents.mapNotNull {
-                if (it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                if (it.toObject(Meal::class.java)!!.testing == MainActivity.testing && it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
                     list.add(it.toObject(Meal::class.java)!!)
                 }
             }
@@ -73,9 +73,13 @@ class ViewModelDBHelper {
             Date.from(temp)).whereLessThanOrEqualTo("date", date).orderBy("date").get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
-                mealList.postValue(result.documents.mapNotNull {
-                    it.toObject(Meal::class.java)
-                })
+                val list = mutableListOf<Meal>()
+                result.documents.mapNotNull {
+                    if (it.toObject(Meal::class.java)!!.testing == MainActivity.testing && it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                        list.add(it.toObject(Meal::class.java)!!)
+                    }
+                }
+                mealList.postValue(list)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching meals")
             }
@@ -83,9 +87,13 @@ class ViewModelDBHelper {
     fun dbFetchMeals(mealList: MutableLiveData<List<Meal>>) {
         db.collection("allMeals").get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Meals fetched successfully")
-            mealList.postValue(result.documents.mapNotNull {
-                it.toObject(Meal::class.java)
-            })
+            val list = mutableListOf<Meal>()
+            result.documents.mapNotNull {
+                if (it.toObject(Meal::class.java)!!.testing == MainActivity.testing && it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                    list.add(it.toObject(Meal::class.java)!!)
+                }
+            }
+            mealList.postValue(list)
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching meals")
         }

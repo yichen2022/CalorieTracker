@@ -8,12 +8,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
+    companion object {
+        var testing = false
+    }
     private val signInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -35,11 +39,15 @@ class MainActivity : AppCompatActivity() {
         AuthInit(viewModel, signInLauncher)
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         viewModel.observeSelectedFoods().observeForever {
-            viewModel.getSelectedFoods()
+            if (!testing && FirebaseAuth.getInstance().currentUser != null) {
+                viewModel.getSelectedFoods()
+            }
         }
         viewModel.getAllMeals()
         viewModel.observeAllMeals().observeForever {
-            viewModel.setMeals()
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                viewModel.setMeals()
+            }
         }
     }
 
