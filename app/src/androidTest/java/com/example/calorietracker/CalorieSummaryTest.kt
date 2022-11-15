@@ -45,7 +45,6 @@ class CalorieSummaryTest {
                 onView(withId(R.id.idealWeightText)).check(matches(withText("125 - 169 lb (57 - 77 kg)")))
                 onView(withId(R.id.recommendedCal)).check(matches(withText("2025 Cal")))
                 onView(withId(R.id.diary)).perform(click())
-                onView(withId(R.id.remainingCalories)).check(matches(withText("2025 Calories Left")))
                 onView(withId(R.id.recommendedCalories)).check(matches(withText("Recommended: 2025")))
             }
         }
