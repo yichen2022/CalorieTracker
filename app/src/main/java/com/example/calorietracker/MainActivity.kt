@@ -1,6 +1,8 @@
 package com.example.calorietracker
 
 import android.app.Activity
+import android.content.Context
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
+import com.google.firebase.auth.FirebaseAuth
+import java.net.URL
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -32,7 +36,12 @@ class MainActivity : AppCompatActivity() {
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        AuthInit(viewModel, signInLauncher)
+        if (isNetworkAvailable()) {
+            AuthInit(viewModel, signInLauncher)
+        }
+        else {
+            FirebaseAuth.getInstance().signInAnonymously()
+        }
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         viewModel.observeSelectedFoods().observeForever {
             viewModel.getSelectedFoods()
@@ -43,7 +52,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null
+    }
+    private fun hasActiveInternetConnection() {
+        if (isNetworkAvailable()) {
 
+        }
+    }
     override fun onStart() {
         super.onStart()
         Log.i(javaClass.name, "onStart")

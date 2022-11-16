@@ -69,7 +69,7 @@ class MainViewModel() : ViewModel() {
         }
     }
     fun getCurrentUser(): String {
-        return firebaseAuthLiveData.getCurrentUser()!!.uid
+        return firebaseAuthLiveData.getCurrentUser()?.uid.toString()
     }
     fun getMeal(title: String, date: Date): Meal {
         val meal = Meal()
