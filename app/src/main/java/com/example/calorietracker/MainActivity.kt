@@ -57,11 +57,6 @@ class MainActivity : AppCompatActivity() {
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         return activeNetworkInfo != null
     }
-    private fun hasActiveInternetConnection() {
-        if (isNetworkAvailable()) {
-
-        }
-    }
     override fun onStart() {
         super.onStart()
         Log.i(javaClass.name, "onStart")
