@@ -21,6 +21,7 @@ class WeeklyCalFragment : Fragment() {
     private var _binding: FragmentWeeklyCalListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
+    private val weeklyCal = WeeklyCal()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,16 +37,15 @@ class WeeklyCalFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
         viewModel.getMealsByLast7Days(day)
+        viewModel.fetchWeeklyCal()
+        viewModel.observeWeeklyCalSummary().observeForever {
+            if (viewModel.observeWeeklyCalSummary().value != null) {
+                weeklyCal.firestoreId = viewModel.observeWeeklyCalSummary().value!!.firestoreId
+            }
+        }
         viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
-            val weeklyCal = WeeklyCal()
-            viewModel.fetchWeeklyCal()
-            viewModel.observeWeeklyCalSummary().observeForever {
-                if (viewModel.observeWeeklyCalSummary().value != null) {
-                    weeklyCal.firestoreId = viewModel.observeWeeklyCalSummary().value!!.firestoreId
-                }
-            }
             weeklyCal.authorId = FirebaseAuth.getInstance().currentUser!!.uid
             weeklyCal.userId = viewModel.observeUser().value!!.firestoreId
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
