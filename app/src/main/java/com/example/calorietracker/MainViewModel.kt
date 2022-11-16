@@ -48,25 +48,21 @@ class MainViewModel() : ViewModel() {
         breakfast.type = "Breakfast"
         breakfast.date = currentDate.value
         breakfast.index = 1
-        breakfast.testing = MainActivity.testing
         val lunch = Meal()
         lunch.authorId = getCurrentUser()
         lunch.type = "Lunch"
         lunch.date = currentDate.value
         lunch.index = 2
-        lunch.testing = MainActivity.testing
         val dinner = Meal()
         dinner.authorId = getCurrentUser()
         dinner.type = "Dinner"
         dinner.date = currentDate.value
         dinner.index = 3
-        dinner.testing = MainActivity.testing
         val snacks = Meal()
         snacks.authorId = getCurrentUser()
         snacks.type = "Snacks"
         snacks.date = currentDate.value
         snacks.index = 4
-        snacks.testing = MainActivity.testing
         if (allMeals.value == null || !allMeals.value!!.contains(breakfast)) {
             dbHelp.createMeal(breakfast, allMeals)
         }

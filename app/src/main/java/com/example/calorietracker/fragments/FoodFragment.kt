@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.calorietracker.MainActivity
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentFoodListBinding
@@ -117,7 +116,6 @@ class FoodFragment : Fragment() {
     private fun readFood(category: String, reader: JsonReader): Food {
         val food = Food()
         food.authorId = viewModel.getCurrentUser()
-        food.testing = MainActivity.testing
         reader.beginObject()
         while (reader.hasNext()) {
             when (reader.nextName()) {
