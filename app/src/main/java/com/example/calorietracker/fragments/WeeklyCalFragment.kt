@@ -838,7 +838,6 @@ class WeeklyCalFragment : Fragment() {
             binding.dinnerPercent.text = "${weeklyCal.dinnerPercent}%"
             binding.otherCal.text = "${weeklyCal.otherCal} Cal"
             binding.otherPercent.text = "${weeklyCal.otherPercent}%"
-            viewModel.setWeeklyCalSummary(weeklyCal)
         }
         binding.profile.setOnClickListener {
             toProfile()
