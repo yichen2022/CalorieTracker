@@ -1,7 +1,5 @@
 package com.example.calorietracker.model
 
-import com.google.firebase.firestore.DocumentId
-
 class WeeklyCal {
     var numCal = 0
     var breakfastPercent = 0
@@ -14,8 +12,4 @@ class WeeklyCal {
     var otherCal = 0
     var target = 0
     var average = 0
-    var userId = ""
-    var authorId = ""
-    @DocumentId
-    var firestoreId: String = ""
 }

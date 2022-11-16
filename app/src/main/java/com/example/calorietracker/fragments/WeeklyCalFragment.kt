@@ -37,17 +37,9 @@ class WeeklyCalFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         var day = viewModel.observeDate().value!!
         viewModel.getMealsByLast7Days(day)
-        viewModel.fetchWeeklyCal()
-        viewModel.observeWeeklyCalSummary().observeForever {
-            if (viewModel.observeWeeklyCalSummary().value != null) {
-                weeklyCal.firestoreId = viewModel.observeWeeklyCalSummary().value!!.firestoreId
-            }
-        }
         viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
-            weeklyCal.authorId = FirebaseAuth.getInstance().currentUser!!.uid
-            weeklyCal.userId = viewModel.observeUser().value!!.firestoreId
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
             for (i in 7 downTo 1) {
