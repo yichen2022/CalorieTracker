@@ -21,6 +21,7 @@ class TestWeeklyCalSummary {
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
             launchActivity<MainActivity>().use {
+                Thread.sleep(5000)
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.female)).perform(click())

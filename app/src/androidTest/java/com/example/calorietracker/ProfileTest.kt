@@ -23,6 +23,7 @@ class ProfileTest {
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
             launchActivity<MainActivity>().use {
+                Thread.sleep(5000)
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.male)).perform(click())
@@ -45,7 +46,17 @@ class ProfileTest {
                 onView(withId(R.id.BMIStatus)).check(matches(withText("Status: Ideal")))
                 onView(withId(R.id.idealWeightText)).check(matches(withText("125 - 169 lb (57 - 77 kg)")))
                 onView(withId(R.id.recommendedCal)).check(matches(withText("2025 Cal")))
-
+            }
+        }
+    }
+    @Test
+    fun testProfile2() {
+        val auth = FirebaseAuth.getInstance()
+        if (auth.currentUser != null) {
+            launchActivity<MainActivity>().use {
+                Thread.sleep(5000)
+                onView(withId(R.id.logo)).perform(click())
+                onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.female)).perform(click())
                 onView(withId(R.id.checkmarkM)).check(matches(not(isDisplayed())))
                 onView(withId(R.id.checkmarkF)).check(matches(isDisplayed()))
