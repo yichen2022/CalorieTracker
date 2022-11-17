@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
-import com.example.calorietracker.model.WeeklyCal
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import java.time.ZoneId
 import java.util.Date
 
