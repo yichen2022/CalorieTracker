@@ -30,13 +30,17 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "sign in failed $result")
         }
     }
+    companion object {
+        var isConnected = false
+    }
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (isNetworkAvailable()) {
+        isConnected = isNetworkAvailable()
+        if (isConnected) {
             AuthInit(viewModel, signInLauncher)
         }
         else {

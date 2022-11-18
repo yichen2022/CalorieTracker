@@ -17,7 +17,7 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Selected foods fetched successfully")
             val list = mutableListOf<Food>()
             result.documents.mapNotNull {
-                if (it.toObject(Food::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                if (it.toObject(Food::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
                     list.add(it.toObject(Food::class.java)!!)
                 }
             }
@@ -30,7 +30,7 @@ class ViewModelDBHelper {
         db.collection("user").limit(1).get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Successfully fetched user")
             result.documents.mapNotNull {
-                if (it.toObject(User::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                if (it.toObject(User::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
                     user.postValue(it.toObject(User::class.java))
                 }
             }
@@ -43,7 +43,7 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Meals in the current day fetched successfully")
             val list = mutableListOf<Meal>()
             result.documents.mapNotNull {
-                if (it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser!!.uid) {
+                if (it.toObject(Meal::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
                     list.add(it.toObject(Meal::class.java)!!)
                 }
             }
