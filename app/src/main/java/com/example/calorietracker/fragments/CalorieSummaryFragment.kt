@@ -66,7 +66,13 @@ class CalorieSummaryFragment : Fragment() {
         binding.calendar.setOnClickListener {
             toDate()
         }
+        binding.add.setOnClickListener {
+            toMeal()
+        }
         return binding.root
+    }
+    private fun toMeal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }
     private fun toWeeklyCal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
