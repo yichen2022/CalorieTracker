@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             AuthInit(viewModel, signInLauncher)
         }
         else {
-            FirebaseAuth.getInstance().signInAnonymously()
+            FirebaseAuth.getInstance().signInWithEmailAndPassword("fake@example.com", "123456")
         }
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         viewModel.observeSelectedFoods().observeForever {
