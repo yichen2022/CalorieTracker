@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             AuthInit(viewModel, signInLauncher)
         }
         else {
+            viewModel.signOut()
             FirebaseAuth.getInstance().signInWithEmailAndPassword("fake@example.com", "123456")
         }
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
