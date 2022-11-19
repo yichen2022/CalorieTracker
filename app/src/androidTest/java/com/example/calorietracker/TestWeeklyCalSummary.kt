@@ -26,6 +26,7 @@ class TestWeeklyCalSummary {
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.trend)).perform(click())
+                Thread.sleep(5000)
                 onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
             }
         }
@@ -39,6 +40,7 @@ class TestWeeklyCalSummary {
                 Thread.sleep(5000)
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.calendar)).perform(click())
+                Thread.sleep(5000)
                 onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 11, 10))
                 onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.trend)).perform(click())
@@ -55,6 +57,7 @@ class TestWeeklyCalSummary {
                 Thread.sleep(5000)
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.calendar)).perform(click())
+                Thread.sleep(5000)
                 onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 10, 9))
                 onView(withId(R.id.start)).perform(click())
                 onView(withId(R.id.trend)).perform(click())
