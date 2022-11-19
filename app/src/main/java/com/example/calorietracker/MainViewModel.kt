@@ -21,7 +21,6 @@ class MainViewModel() : ViewModel() {
     private val dbHelp = ViewModelDBHelper()
     private val currentDate = MutableLiveData<Date>()
     private var firebaseAuthLiveData = FirestoreAuthLiveData()
-    private val numCalories = MutableLiveData<Int>()
     fun observeDate(): LiveData<Date> {
         return currentDate
     }
