@@ -89,17 +89,17 @@ class WeeklyCalFragment : Fragment() {
                 dayText += day.date.toString()
                 when (i) {
                     7 -> {
-                        if (weeklyCal.numCal == 0) {
+                        if (totalCal == 0) {
                             binding.breakfast7.layoutParams.height = 0
                             binding.lunch7.layoutParams.height = 0
                             binding.dinner7.layoutParams.height = 0
                             binding.other7.layoutParams.height = 0
                         }
                         else {
-                            binding.breakfast7.layoutParams.height = breakfastCal * 200 / weeklyCal.numCal
-                            binding.lunch7.layoutParams.height = lunchCal * 200 / weeklyCal.numCal
-                            binding.dinner7.layoutParams.height = dinnerCal * 200 / weeklyCal.numCal
-                            binding.other7.layoutParams.height = otherCal * 200 / weeklyCal.numCal
+                            binding.breakfast7.layoutParams.height = breakfastCal * 200 / totalCal
+                            binding.lunch7.layoutParams.height = lunchCal * 200 / totalCal
+                            binding.dinner7.layoutParams.height = dinnerCal * 200 / totalCal
+                            binding.other7.layoutParams.height = otherCal * 200 / totalCal
                         }
                         binding.breakfast7.requestLayout()
                         binding.lunch7.requestLayout()
