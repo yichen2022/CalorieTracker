@@ -257,13 +257,13 @@
         app:layout_constraintTop_toBottomOf="@+id/BMIText"
         app:layout_constraintBottom_toTopOf="@+id/calories">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ideal_weight"/>
         <TextView
             android:textColor="@color/black"
             android:id="@+id/idealWeightText"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text=""/>
     </LinearLayout>
@@ -278,13 +278,13 @@
         app:layout_constraintTop_toBottomOf="@+id/idealWeight"
         app:layout_constraintBottom_toTopOf="@+id/add">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:src="@drawable/calories"/>
         <TextView
             android:textColor="@color/black"
             android:id="@+id/recommendedCal"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text=""/>
     </LinearLayout>
