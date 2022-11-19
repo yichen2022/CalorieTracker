@@ -34,7 +34,7 @@ class FoodFragment : Fragment() {
         _binding = FragmentFoodListBinding.inflate(inflater, container, false)
         var adapter = FoodAdapter(viewModel, listOf(), binding)
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        viewModel.observeFoodGroup().observeForever {
+        viewModel.observeFoodGroup().observe(viewLifecycleOwner) {
             when(viewModel.observeFoodGroup().value!!) {
                 "Grains" -> {
                     val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("grains.json")))

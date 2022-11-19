@@ -31,11 +31,11 @@ class MealSummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        viewModel.observeMeal().observeForever {
-            viewModel.observeDate().observeForever {
+        viewModel.observeMeal().observe(viewLifecycleOwner) {
+            viewModel.observeDate().observe(viewLifecycleOwner) {
                 binding.mealDate.text = DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!).toString()
                 binding.mealTitle.text = viewModel.observeMeal().value.toString()
-                viewModel.observeAllMeals().observeForever {
+                viewModel.observeAllMeals().observe(viewLifecycleOwner) {
                     val meal = viewModel.getMeal(viewModel.observeMeal().value.toString(), viewModel.observeDate().value!!)
                     if (meal.calories != 0) {
                         binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
