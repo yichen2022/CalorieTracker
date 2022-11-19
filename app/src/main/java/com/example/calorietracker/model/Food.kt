@@ -15,7 +15,7 @@ class Food {
     @DocumentId var firestoreId: String = ""
     override fun equals(other: Any?): Boolean =
         if (other is Food) {
-            name == other.name && meal == other.meal && group == other.group && authorId == other.authorId
+            name == other.name && meal == other.meal && date == other.date && authorId == other.authorId
         } else {
             false
         }
