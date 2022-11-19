@@ -29,14 +29,12 @@ class CalorieSummaryFragment : Fragment() {
         val adapter = CalorieAdapter()
         viewModel.observeDate().observe(viewLifecycleOwner) {
             viewModel.getMealsByDate(viewModel.observeDate().value!!)
-            viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) {
+            viewModel.observeSelectedMealsByDay().observeForever {
                 var calories = 0
                 val list =
-                    viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
-                thread {
-                    for (i in list.indices) {
-                        calories += list[i].calories
-                    }
+                viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
+                for (i in list.indices) {
+                    calories += list[i].calories
                 }
                 adapter.submitList(list)
                 viewModel.observeUser().observe(viewLifecycleOwner) {
@@ -45,11 +43,11 @@ class CalorieSummaryFragment : Fragment() {
                     if (calories > viewModel.observeUser().value!!.recommendedCal) {
                         binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
                         binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
-                        binding.remainingCalories.text = "0 Calories Left"
+                        binding.remainingCalories.text = "${calories - viewModel.observeUser().value!!.recommendedCal} Calories Exceeded Recommendation"
                     } else {
                         binding.progress.progress = calories
                         binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                        binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
+                        binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Remaining"
                     }
                 }
             }

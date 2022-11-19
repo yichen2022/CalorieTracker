@@ -17,6 +17,7 @@ import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
+import kotlin.math.roundToInt
 
 class WeeklyCalFragment : Fragment() {
 
@@ -52,37 +53,35 @@ class WeeklyCalFragment : Fragment() {
                 var dinnerCal = 0
                 var otherCal = 0
                 var totalCal = 0
-                thread {
-                    days++
-                    for (j in 1..4) {
-                        if (meals.isEmpty()) {
-                            break
+                days++
+                for (j in 1..4) {
+                    if (meals.isEmpty()) {
+                        break
+                    }
+                    val meal = meals.removeLast()
+                    i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
+                    day = meal.date!!
+                    totalCal += meal.calories
+                    when (meal.index) {
+                        1 -> {
+                            breakfastCal = meal.calories
+                            weeklyCal.breakfastCal += meal.calories
                         }
-                        val meal = meals.removeLast()
-                        i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
-                        day = meal.date!!
-                        totalCal += meal.calories
-                        when (meal.index) {
-                            1 -> {
-                                breakfastCal = meal.calories
-                                weeklyCal.breakfastCal += meal.calories
-                            }
-                            2 -> {
-                                lunchCal = meal.calories
-                                weeklyCal.lunchCal += meal.calories
-                            }
-                            3 -> {
-                                dinnerCal = meal.calories
-                                weeklyCal.dinnerCal += meal.calories
-                            }
-                            4 -> {
-                                otherCal = meal.calories
-                                weeklyCal.otherCal += meal.calories
-                            }
+                        2 -> {
+                            lunchCal = meal.calories
+                            weeklyCal.lunchCal += meal.calories
+                        }
+                        3 -> {
+                            dinnerCal = meal.calories
+                            weeklyCal.dinnerCal += meal.calories
+                        }
+                        4 -> {
+                            otherCal = meal.calories
+                            weeklyCal.otherCal += meal.calories
                         }
                     }
-                    weeklyCal.numCal += totalCal
                 }
+                weeklyCal.numCal += totalCal
                 var dayText: String = daysOfWeek[day.day]
                 if (day.date < 10) {
                     dayText += "0"
@@ -90,17 +89,17 @@ class WeeklyCalFragment : Fragment() {
                 dayText += day.date.toString()
                 when (i) {
                     7 -> {
-                        if (totalCal == 0) {
+                        if (weeklyCal.numCal == 0) {
                             binding.breakfast7.layoutParams.height = 0
                             binding.lunch7.layoutParams.height = 0
                             binding.dinner7.layoutParams.height = 0
                             binding.other7.layoutParams.height = 0
                         }
                         else {
-                            binding.breakfast7.layoutParams.height = breakfastCal * 200 / totalCal
-                            binding.lunch7.layoutParams.height = lunchCal * 200 / totalCal
-                            binding.dinner7.layoutParams.height = dinnerCal * 200 / totalCal
-                            binding.other7.layoutParams.height = otherCal * 200 / totalCal
+                            binding.breakfast7.layoutParams.height = breakfastCal * 200 / weeklyCal.numCal
+                            binding.lunch7.layoutParams.height = lunchCal * 200 / weeklyCal.numCal
+                            binding.dinner7.layoutParams.height = dinnerCal * 200 / weeklyCal.numCal
+                            binding.other7.layoutParams.height = otherCal * 200 / weeklyCal.numCal
                         }
                         binding.breakfast7.requestLayout()
                         binding.lunch7.requestLayout()
@@ -245,10 +244,10 @@ class WeeklyCalFragment : Fragment() {
             binding.weeklyCalText.text = "${weeklyCal.numCal} Calories Per Week"
             binding.target.text = "Target: ${weeklyCal.target}"
             if (weeklyCal.numCal != 0) {
-                weeklyCal.breakfastPercent = weeklyCal.breakfastCal * 100 / weeklyCal.numCal
-                weeklyCal.lunchPercent = weeklyCal.lunchCal * 100 / weeklyCal.numCal
-                weeklyCal.dinnerPercent = weeklyCal.dinnerCal * 100 / weeklyCal.numCal
-                weeklyCal.otherPercent = weeklyCal.otherCal * 100 / weeklyCal.numCal
+                weeklyCal.breakfastPercent = (weeklyCal.breakfastCal * 100.0 / weeklyCal.numCal).roundToInt()
+                weeklyCal.lunchPercent = (weeklyCal.lunchCal * 100.0 / weeklyCal.numCal).roundToInt()
+                weeklyCal.dinnerPercent = (weeklyCal.dinnerCal * 100.0 / weeklyCal.numCal).roundToInt()
+                weeklyCal.otherPercent = (weeklyCal.otherCal * 100.0 / weeklyCal.numCal).roundToInt()
             }
             binding.breakfastCal.text = "${weeklyCal.breakfastCal} Cal"
             binding.breakfastPercent.text = "${weeklyCal.breakfastPercent}%"

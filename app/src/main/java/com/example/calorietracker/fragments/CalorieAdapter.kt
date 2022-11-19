@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ class CalorieAdapter() : ListAdapter<Meal, CalorieAdapter.ViewHolder>(Diff()) {
         return ViewHolder(rowBinding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.numCal.text = getItem(position).calories.toString() + " Cal"
         holder.binding.meal.text = getItem(position).type
