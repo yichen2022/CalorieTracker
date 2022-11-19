@@ -15,6 +15,8 @@ import com.example.calorietracker.model.WeeklyCal
 import com.google.firebase.auth.FirebaseAuth
 import java.time.ZoneId
 import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 
 class WeeklyCalFragment : Fragment() {
 
@@ -22,6 +24,7 @@ class WeeklyCalFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
     private val weeklyCal = WeeklyCal()
+    private val daysOfWeek = listOf("Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat ")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,67 +45,49 @@ class WeeklyCalFragment : Fragment() {
             val meals = it.toMutableList()
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
-            for (i in 7 downTo 1) {
-                if (meals.isEmpty()) {
-                    break
-                }
-                days++
+            var i = 7
+            while (meals.isNotEmpty() && i > 0) {
                 var breakfastCal = 0
                 var lunchCal = 0
                 var dinnerCal = 0
                 var otherCal = 0
                 var totalCal = 0
-                var dayText = ""
-                when (day.day) {
-                    1 -> {
-                        dayText += "Mon "
+                thread {
+                    days++
+                    for (j in 1..4) {
+                        if (meals.isEmpty()) {
+                            break
+                        }
+                        val meal = meals.removeLast()
+                        i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
+                        day = meal.date!!
+                        totalCal += meal.calories
+                        when (meal.index) {
+                            1 -> {
+                                breakfastCal = meal.calories
+                                weeklyCal.breakfastCal += meal.calories
+                            }
+                            2 -> {
+                                lunchCal = meal.calories
+                                weeklyCal.lunchCal += meal.calories
+                            }
+                            3 -> {
+                                dinnerCal = meal.calories
+                                weeklyCal.dinnerCal += meal.calories
+                            }
+                            4 -> {
+                                otherCal = meal.calories
+                                weeklyCal.otherCal += meal.calories
+                            }
+                        }
                     }
-                    2 -> {
-                        dayText += "Tue "
-                    }
-                    3 -> {
-                        dayText += "Wed "
-                    }
-                    4 -> {
-                        dayText += "Thu "
-                    }
-                    5 -> {
-                        dayText += "Fri "
-                    }
-                    6 -> {
-                        dayText += "Sat "
-                    }
-                    0 -> {
-                        dayText += "Sun "
-                    }
+                    weeklyCal.numCal += totalCal
                 }
+                var dayText: String = daysOfWeek[day.day]
                 if (day.date < 10) {
                     dayText += "0"
                 }
                 dayText += day.date.toString()
-                for (j in 1..4) {
-                    val meal = meals.removeLast()
-                    totalCal += meal.calories
-                    when (meal.index) {
-                        1 -> {
-                            breakfastCal = meal.calories
-                            weeklyCal.breakfastCal += meal.calories
-                        }
-                        2 -> {
-                            lunchCal = meal.calories
-                            weeklyCal.lunchCal += meal.calories
-                        }
-                        3 -> {
-                            dinnerCal = meal.calories
-                            weeklyCal.dinnerCal += meal.calories
-                        }
-                        4 -> {
-                            otherCal = meal.calories
-                            weeklyCal.otherCal += meal.calories
-                        }
-                    }
-                }
-                weeklyCal.numCal += totalCal
                 when (i) {
                     7 -> {
                         if (totalCal == 0) {
@@ -252,7 +237,6 @@ class WeeklyCalFragment : Fragment() {
                         binding.day1.visibility = View.VISIBLE
                     }
                 }
-                day = Date.from(day.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(1).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
             }
             if (days != 0) {
                 weeklyCal.average = weeklyCal.numCal/days

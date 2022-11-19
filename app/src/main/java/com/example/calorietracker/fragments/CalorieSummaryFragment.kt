@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealListBinding
+import kotlin.concurrent.thread
 
 class CalorieSummaryFragment : Fragment() {
     private var _binding: FragmentMealListBinding? = null
@@ -30,11 +31,13 @@ class CalorieSummaryFragment : Fragment() {
             viewModel.getMealsByDate(viewModel.observeDate().value!!)
             viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) {
                 var calories = 0
-                val list = viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
-                for (i in list.indices) {
-                    calories += list[i].calories
+                val list =
+                    viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
+                thread {
+                    for (i in list.indices) {
+                        calories += list[i].calories
+                    }
                 }
-                Log.i(javaClass.simpleName, calories.toString())
                 adapter.submitList(list)
                 viewModel.observeUser().observe(viewLifecycleOwner) {
                     binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"

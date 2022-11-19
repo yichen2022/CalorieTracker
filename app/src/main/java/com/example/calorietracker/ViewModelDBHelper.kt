@@ -6,12 +6,9 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.*
 import java.time.ZoneId
 import java.util.Date
 
@@ -61,7 +58,7 @@ class ViewModelDBHelper {
         val temp = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
             .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
         db.collection("allMeals").whereGreaterThanOrEqualTo("date",
-            Date.from(temp)).whereLessThanOrEqualTo("date", date).orderBy("date").get()
+            Date.from(temp)).whereLessThanOrEqualTo("date", date).orderBy("date", Query.Direction.DESCENDING).get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
                 mealList.postValue(result.documents.mapNotNull {
