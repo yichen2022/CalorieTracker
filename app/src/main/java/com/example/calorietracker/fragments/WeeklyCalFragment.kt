@@ -12,11 +12,7 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentWeeklyCalListBinding
 import com.example.calorietracker.model.WeeklyCal
-import com.google.firebase.auth.FirebaseAuth
-import java.time.ZoneId
-import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 import kotlin.math.roundToInt
 
 class WeeklyCalFragment : Fragment() {
