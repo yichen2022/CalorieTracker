@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
 import com.google.firebase.auth.FirebaseAuth
-import java.net.URL
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
