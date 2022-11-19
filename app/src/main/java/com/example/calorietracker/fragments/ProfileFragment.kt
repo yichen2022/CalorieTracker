@@ -89,7 +89,6 @@ class ProfileFragment : Fragment() {
                     status = "Underweight"
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
                 }
-                Log.i(javaClass.simpleName, viewModel.observeUser().value!!.bmi.toString())
                 if (viewModel.observeUser().value!!.bmi > 15 && viewModel.observeUser().value!!.bmi < 40) {
                     binding.progressBar.progress = it.bmi.roundToInt()
                 } else if (viewModel.observeUser().value!!.bmi > 40) {

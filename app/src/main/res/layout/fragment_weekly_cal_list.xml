@@ -93,7 +93,8 @@
                 android:id="@+id/bar1"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast1"
                     android:layout_width="30dp"
@@ -123,7 +124,8 @@
                 android:id="@+id/bar2"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast2"
                     android:layout_width="30dp"
@@ -153,7 +155,8 @@
                 android:id="@+id/bar3"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast3"
                     android:layout_width="30dp"
@@ -183,7 +186,8 @@
                 android:id="@+id/bar4"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast4"
                     android:layout_width="30dp"
@@ -213,7 +217,8 @@
                 android:id="@+id/bar5"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast5"
                     android:layout_width="30dp"
@@ -243,7 +248,8 @@
                 android:id="@+id/bar6"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast6"
                     android:layout_width="30dp"
@@ -273,7 +279,8 @@
                 android:id="@+id/bar7"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp">
+                android:layout_marginLeft="20dp"
+                android:visibility="invisible">
                 <View
                     android:id="@+id/breakfast7"
                     android:layout_width="30dp"
@@ -316,43 +323,43 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:text="Sun"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Mon"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day3"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Tue"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day4"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Wed"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day5"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Thu"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day6"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Fri"/>
+                android:text=""/>
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/day7"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="Sat"/>
+                android:text=""/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

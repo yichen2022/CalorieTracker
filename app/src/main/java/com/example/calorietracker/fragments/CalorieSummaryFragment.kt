@@ -26,31 +26,27 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
-        viewModel.observeDate().observeForever {
+        viewModel.observeDate().observe(viewLifecycleOwner) {
             viewModel.getMealsByDate(viewModel.observeDate().value!!)
-            viewModel.observeSelectedMealsByDay().observeForever {
+            viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) {
                 var calories = 0
                 val list = viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
                 for (i in list.indices) {
                     calories += list[i].calories
                 }
                 Log.i(javaClass.simpleName, calories.toString())
-                viewModel.setCalories(calories)
                 adapter.submitList(list)
-                viewModel.observeCalories().observeForever {
-                    viewModel.observeUser().observeForever {
-                        binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
-                        if (calories > viewModel.observeUser().value!!.recommendedCal) {
-                            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                            binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
-                            binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
-                            binding.remainingCalories.text = "0 Calories Left"
-                        } else {
-                            binding.progress.max = viewModel.observeUser().value!!.recommendedCal
-                            binding.progress.progress = calories
-                            binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                            binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
-                        }
+                viewModel.observeUser().observe(viewLifecycleOwner) {
+                    binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
+                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                    if (calories > viewModel.observeUser().value!!.recommendedCal) {
+                        binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
+                        binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
+                        binding.remainingCalories.text = "0 Calories Left"
+                    } else {
+                        binding.progress.progress = calories
+                        binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
+                        binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Left"
                     }
                 }
             }
