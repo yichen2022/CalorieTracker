@@ -43,7 +43,6 @@ class WeeklyCalFragment : Fragment() {
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
             for (i in 7 downTo 1) {
-                Log.i(javaClass.simpleName, day.toString())
                 when (i) {
                     7 -> {
                         if (meals.isEmpty()) {

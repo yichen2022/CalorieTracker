@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import com.example.calorietracker.MainActivity
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
@@ -331,7 +332,9 @@ class ProfileFragment : Fragment() {
     private fun logOut() {
         viewModel.signOut()
         Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
-        AuthInit(viewModel, signInLauncher)
+        if (MainActivity.isConnected) {
+            AuthInit(viewModel, signInLauncher)
+        }
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, BlankFragment.newInstance()).addToBackStack("blankFragment").commit()
     }
     companion object {
