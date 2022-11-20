@@ -18,9 +18,7 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
         val holder = ViewHolder(binding)
         holder.binding.item.setOnClickListener {
             //Fetches all the foods
-            viewModel.observeSelectedFoods().observeForever {
-                viewModel.getSelectedFoods()
-            }
+            viewModel.getSelectedFoods()
             //Check for duplicates
             if (viewModel.observeSelectedFoods().value != null && viewModel.observeSelectedFoods().value!!.contains(foodList[holder.adapterPosition])) {
                 viewModel.removeFoodFromMeal(foodList[holder.adapterPosition])
