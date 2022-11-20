@@ -27,30 +27,30 @@ class CalorieSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
         val adapter = CalorieAdapter()
-        viewModel.observeDate().observe(viewLifecycleOwner) {
-            viewModel.getMealsByDate(viewModel.observeDate().value!!)
-            viewModel.observeSelectedMealsByDay().observeForever {
+        viewModel.observeDate().observe(viewLifecycleOwner) { date ->
+            viewModel.getMealsByDate(date)
+            viewModel.observeSelectedMealsByDay().observeForever { meal ->
                 var calories = 0
                 //Calculates the total number of calories consumed daily
                 val list =
-                viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
+                meal.sortedWith(compareBy { it.index })
                 for (i in list.indices) {
                     calories += list[i].calories
                 }
                 adapter.submitList(list)
-                viewModel.observeUser().observeForever {
-                    binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
-                    binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                viewModel.observeUser().observeForever { user ->
+                    binding.recommendedCalories.text = "Recommended: ${user.recommendedCal}"
+                    binding.progress.max = user.recommendedCal
                     //If calories is over recommendation, progress bar is red and displays number of calories exceeded
                     //Otherwise, progress bar is blue and displays the remaining calories
-                    if (calories > viewModel.observeUser().value!!.recommendedCal) {
-                        binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
+                    if (calories > user.recommendedCal) {
+                        binding.progress.progress = user.recommendedCal
                         binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
-                        binding.remainingCalories.text = "${calories - viewModel.observeUser().value!!.recommendedCal} Calories Exceeded Recommendation"
+                        binding.remainingCalories.text = "${calories - user.recommendedCal} Calories Exceeded Recommendation"
                     } else {
                         binding.progress.progress = calories
                         binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                        binding.remainingCalories.text = "${viewModel.observeUser().value!!.recommendedCal - calories} Calories Remaining"
+                        binding.remainingCalories.text = "${user.recommendedCal - calories} Calories Remaining"
                     }
                 }
             }
