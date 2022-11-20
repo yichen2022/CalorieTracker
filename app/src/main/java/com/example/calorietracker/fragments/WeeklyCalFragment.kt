@@ -12,6 +12,8 @@ import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentWeeklyCalListBinding
 import com.example.calorietracker.model.WeeklyCal
+import java.time.ZoneId
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
@@ -43,7 +45,6 @@ class WeeklyCalFragment : Fragment() {
             val meals = it.toMutableList()
             //Set calorie recommendation
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
-            var days = 0
             var i = 7
             //Check if meals is empty
             while (meals.isNotEmpty() && i > 0) {
@@ -52,8 +53,6 @@ class WeeklyCalFragment : Fragment() {
                 var dinnerCal = 0
                 var otherCal = 0
                 var totalCal = 0
-                //Increment number of days count
-                days++
                 for (j in 1..4) {
                     //Terminate if meals is empty
                     if (meals.isEmpty()) {
@@ -85,22 +84,45 @@ class WeeklyCalFragment : Fragment() {
                     }
                 }
                 weeklyCal.numCal += totalCal
-                var dayText: String = daysOfWeek[day.day]
-                if (day.date < 10) {
-                    dayText += "0"
+                //Populates the days of the week axis
+                for (k in 0 until 7) {
+                    val temp = day.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(k.toLong())
+                        .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
+                    val dateOfMonth = Date.from(temp).date
+                    val dayOfWeek = Date.from(temp).day
+                    var dayText: String = daysOfWeek[dayOfWeek]
+                    if (dateOfMonth < 10) {
+                        dayText += "0"
+                    }
+                    dayText += dateOfMonth.toString()
+                    when (k) {
+                        0 -> {
+                            binding.day7.text = dayText
+                        }
+                        1 -> {
+                            binding.day6.text = dayText
+                        }
+                        2 -> {
+                            binding.day5.text = dayText
+                        }
+                        3 -> {
+                            binding.day4.text = dayText
+                        }
+                        4 -> {
+                            binding.day3.text = dayText
+                        }
+                        5 -> {
+                            binding.day2.text = dayText
+                        }
+                        6 -> {
+                            binding.day1.text = dayText
+                        }
+                    }
                 }
-                dayText += day.date.toString()
-                //Updates the bars and the date texts
-                //Position depends on the date
+                //Updates the bars
                 when (i) {
                     7 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast7.layoutParams.height = 0
-                            binding.lunch7.layoutParams.height = 0
-                            binding.dinner7.layoutParams.height = 0
-                            binding.other7.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast7.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch7.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner7.layoutParams.height = dinnerCal * 200 / totalCal
@@ -110,18 +132,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch7.requestLayout()
                         binding.dinner7.requestLayout()
                         binding.other7.requestLayout()
-                        binding.day7.text = dayText
-                        binding.bar7.visibility = View.VISIBLE
-                        binding.day7.visibility = View.VISIBLE
                     }
                     6 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast6.layoutParams.height = 0
-                            binding.lunch6.layoutParams.height = 0
-                            binding.dinner6.layoutParams.height = 0
-                            binding.other6.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast6.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch6.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner6.layoutParams.height = dinnerCal * 200 / totalCal
@@ -131,18 +144,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch6.requestLayout()
                         binding.dinner6.requestLayout()
                         binding.other6.requestLayout()
-                        binding.day6.text = dayText
-                        binding.bar6.visibility = View.VISIBLE
-                        binding.day6.visibility = View.VISIBLE
                     }
                     5 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast5.layoutParams.height = 0
-                            binding.lunch5.layoutParams.height = 0
-                            binding.dinner5.layoutParams.height = 0
-                            binding.other5.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast5.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch5.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner5.layoutParams.height = dinnerCal * 200 / totalCal
@@ -152,18 +156,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch5.requestLayout()
                         binding.dinner5.requestLayout()
                         binding.other5.requestLayout()
-                        binding.day5.text = dayText
-                        binding.bar5.visibility = View.VISIBLE
-                        binding.day5.visibility = View.VISIBLE
                     }
                     4 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast4.layoutParams.height = 0
-                            binding.lunch4.layoutParams.height = 0
-                            binding.dinner4.layoutParams.height = 0
-                            binding.other4.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast4.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch4.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner4.layoutParams.height = dinnerCal * 200 / totalCal
@@ -173,18 +168,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch4.requestLayout()
                         binding.dinner4.requestLayout()
                         binding.other4.requestLayout()
-                        binding.day4.text = dayText
-                        binding.bar4.visibility = View.VISIBLE
-                        binding.day4.visibility = View.VISIBLE
                     }
                     3 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast3.layoutParams.height = 0
-                            binding.lunch3.layoutParams.height = 0
-                            binding.dinner3.layoutParams.height = 0
-                            binding.other3.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast3.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch3.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner3.layoutParams.height = dinnerCal * 200 / totalCal
@@ -194,18 +180,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch3.requestLayout()
                         binding.dinner3.requestLayout()
                         binding.other3.requestLayout()
-                        binding.day3.text = dayText
-                        binding.bar3.visibility = View.VISIBLE
-                        binding.day3.visibility = View.VISIBLE
                     }
                     2 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast2.layoutParams.height = 0
-                            binding.lunch2.layoutParams.height = 0
-                            binding.dinner2.layoutParams.height = 0
-                            binding.other2.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast2.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch2.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner2.layoutParams.height = dinnerCal * 200 / totalCal
@@ -215,18 +192,9 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch2.requestLayout()
                         binding.dinner2.requestLayout()
                         binding.other2.requestLayout()
-                        binding.day2.text = dayText
-                        binding.bar2.visibility = View.VISIBLE
-                        binding.day2.visibility = View.VISIBLE
                     }
                     1 -> {
-                        if (totalCal == 0) {
-                            binding.breakfast1.layoutParams.height = 0
-                            binding.lunch1.layoutParams.height = 0
-                            binding.dinner1.layoutParams.height = 0
-                            binding.other1.layoutParams.height = 0
-                        }
-                        else {
+                        if (totalCal != 0) {
                             binding.breakfast1.layoutParams.height = breakfastCal * 200 / totalCal
                             binding.lunch1.layoutParams.height = lunchCal * 200 / totalCal
                             binding.dinner1.layoutParams.height = dinnerCal * 200 / totalCal
@@ -236,16 +204,11 @@ class WeeklyCalFragment : Fragment() {
                         binding.lunch1.requestLayout()
                         binding.dinner1.requestLayout()
                         binding.other1.requestLayout()
-                        binding.day1.text = dayText
-                        binding.bar1.visibility = View.VISIBLE
-                        binding.day1.visibility = View.VISIBLE
                     }
                 }
             }
-            //Calculates average calories
-            if (days != 0) {
-                weeklyCal.average = weeklyCal.numCal/days
-            }
+            //Calculates average calories this week
+            weeklyCal.average = weeklyCal.numCal/7
             binding.avgCal.text = "Daily Average: ${weeklyCal.average}"
             binding.weeklyCalText.text = "${weeklyCal.numCal} Calories Per Week"
             binding.target.text = "Target: ${weeklyCal.target}"
@@ -278,12 +241,15 @@ class WeeklyCalFragment : Fragment() {
             toCalorieSummary()
         }
     }
+    //To calorie summary
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
     }
+    //Go to profile
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()
     }
+    //Go to date selection
     private fun toDate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }

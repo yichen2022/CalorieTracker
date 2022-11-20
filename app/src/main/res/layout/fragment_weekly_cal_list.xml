@@ -93,30 +93,29 @@
                 android:id="@+id/bar1"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast1"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch1"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast1"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner1"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch1"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other1"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner1"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -124,30 +123,29 @@
                 android:id="@+id/bar2"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast2"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch2"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast2"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner2"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch2"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other2"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner2"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -155,30 +153,29 @@
                 android:id="@+id/bar3"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast3"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch3"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast3"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner3"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch3"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other3"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner3"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -186,30 +183,29 @@
                 android:id="@+id/bar4"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast4"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch4"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast4"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner4"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch4"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other4"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner4"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -217,30 +213,29 @@
                 android:id="@+id/bar5"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast5"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch5"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast5"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner5"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch5"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other5"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner5"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -248,30 +243,29 @@
                 android:id="@+id/bar6"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast6"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch6"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast6"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner6"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch6"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other6"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner6"
                     android:background="#FFEB3B"/>
             </RelativeLayout>
@@ -279,30 +273,29 @@
                 android:id="@+id/bar7"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:visibility="invisible">
+                android:layout_marginLeft="20dp">
                 <View
                     android:id="@+id/breakfast7"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
                     android:background="#ff00"/>
                 <View
                     android:id="@+id/lunch7"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/breakfast7"
                     android:background="#0543b6"/>
                 <View
                     android:id="@+id/dinner7"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/lunch7"
                     android:background="#0ca709"/>
                 <View
                     android:id="@+id/other7"
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
                     android:layout_above="@id/dinner7"
                     android:background="#FFEB3B"/>
             </RelativeLayout>

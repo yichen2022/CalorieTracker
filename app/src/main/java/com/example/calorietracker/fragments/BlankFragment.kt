@@ -29,6 +29,7 @@ class BlankFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //Click the logo to start the page
         binding.logo.setOnClickListener {
+            binding.description.isVisible = false
             binding.logo.isVisible = false
             this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, StartFragment.newInstance()).addToBackStack("startFragment").commit()
         }
