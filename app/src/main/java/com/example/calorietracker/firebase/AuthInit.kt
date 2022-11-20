@@ -15,14 +15,14 @@ class AuthInit(viewModel: MainViewModel, signInLauncher: ActivityResultLauncher<
     init {
         val user = FirebaseAuth.getInstance().currentUser
         if (user == null) {
-            Log.d(TAG, "XXX user null")
+            Log.d(TAG, "user null")
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build()
             )
             val signInIntent = AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setIsSmartLockEnabled(false).build()
             signInLauncher.launch(signInIntent)
         } else {
-            Log.d(TAG, "XXX user ${user.displayName} email ${user.email}")
+            Log.d(TAG, "user ${user.displayName} email ${user.email}")
             viewModel.updateUser()
         }
     }
