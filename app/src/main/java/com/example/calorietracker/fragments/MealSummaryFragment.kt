@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
@@ -28,6 +29,7 @@ class MealSummaryFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")

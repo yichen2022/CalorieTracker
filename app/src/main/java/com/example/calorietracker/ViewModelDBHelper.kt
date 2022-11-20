@@ -6,8 +6,6 @@ import com.example.calorietracker.model.Food
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.*
 import java.time.ZoneId
 import java.util.Date
@@ -92,12 +90,6 @@ class ViewModelDBHelper {
             }
 
         })
-//        db.collection("allMeals").document(meal.firestoreId).set(meal).addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "Meal successfully uploaded")
-//            dbFetchMeals(mealList)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error uploading meal")
-//        }
     }
     fun addFoodToSelection(food: Food, foodList: MutableLiveData<List<Food>>) {
         food.firestoreId = db.collection("selectedFoods").document().id
@@ -112,12 +104,6 @@ class ViewModelDBHelper {
                 dbFetchSelectedFoods(foodList)
             }
         })
-//        db.collection("selectedFoods").document(food.firestoreId).set(food).addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "Food successfully added")
-//            dbFetchSelectedFoods(foodList)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error adding food")
-//        }
     }
     fun updateMeal(meal: Meal, mealList: MutableLiveData<List<Meal>>) {
         db.collection("allMeals").document(meal.firestoreId).addSnapshotListener(object : EventListener<DocumentSnapshot>{
@@ -132,12 +118,6 @@ class ViewModelDBHelper {
             }
 
         })
-//        db.collection("allMeals").document(meal.firestoreId).set(meal).addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "Meal updated successfully")
-//            dbFetchMeals(mealList)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error updating meal")
-//        }
     }
     fun removeFoodFromSelection(food: Food, foodList: MutableLiveData<List<Food>>) {
         db.collection("selectedFoods").document(food.firestoreId).addSnapshotListener(object : EventListener<DocumentSnapshot> {
@@ -151,12 +131,6 @@ class ViewModelDBHelper {
                 dbFetchSelectedFoods(foodList)
             }
         })
-//        db.collection("selectedFoods").document(food.firestoreId).delete().addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "Food successfully removed")
-//            dbFetchSelectedFoods(foodList)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error removing food")
-//        }
     }
     fun setUser(user: User, currentUser: MutableLiveData<User>) {
         if (user.firestoreId == "") {
@@ -174,12 +148,6 @@ class ViewModelDBHelper {
             }
 
         })
-//        db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "User successfully set")
-//            currentUser.postValue(user)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error setting user")
-//        }
     }
     fun updateUser(user: User, currentUser: MutableLiveData<User>) {
         db.collection("user").document(user.firestoreId).addSnapshotListener(object : EventListener<DocumentSnapshot> {
@@ -194,11 +162,5 @@ class ViewModelDBHelper {
             }
 
         })
-//        db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
-//            Log.d(javaClass.simpleName, "User successfully updated")
-//            currentUser.postValue(user)
-//        }.addOnFailureListener {
-//            Log.d(javaClass.simpleName, "Error updating user")
-//        }
     }
 }

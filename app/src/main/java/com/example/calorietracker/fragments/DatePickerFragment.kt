@@ -1,20 +1,17 @@
 package com.example.calorietracker.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.databinding.FragmentDatePickerBinding
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Date
 
 class DatePickerFragment : Fragment() {
     private var _binding: FragmentDatePickerBinding? = null
@@ -31,27 +28,28 @@ class DatePickerFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         val calendar = Calendar.getInstance()
         binding.datePicker.maxDate = calendar.timeInMillis
-        binding.datePicker.setOnDateChangedListener { view, year, monthOfYear, dayOfMonth ->
+        binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
             var dateString = "$year-"
             val month = monthOfYear + 1
-            if (month < 10) {
-                dateString += "0$month"
+            dateString += if (month < 10) {
+                "0$month"
             } else {
-                dateString += month.toString()
+                month.toString()
             }
             dateString += "-"
-            if (dayOfMonth < 10) {
-                dateString += "0$dayOfMonth"
+            dateString += if (dayOfMonth < 10) {
+                "0$dayOfMonth"
             } else {
-                dateString += dayOfMonth.toString()
+                dayOfMonth.toString()
             }
             val formatter = SimpleDateFormat("yyyy-MM-dd")
-            viewModel.setDate(formatter.parse(dateString))
+            viewModel.setDate(formatter.parse(dateString)!!)
             viewModel.setMeals()
             requireActivity().supportFragmentManager.popBackStack()
         }

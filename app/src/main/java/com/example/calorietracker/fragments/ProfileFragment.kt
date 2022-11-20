@@ -72,7 +72,7 @@ class ProfileFragment : Fragment() {
             if (viewModel.observeUser().value != null) {
                 user.firestoreId = viewModel.observeUser().value!!.firestoreId
                 binding.BMIValue.text = "BMI: ${(viewModel.observeUser().value!!.bmi * 10).roundToInt() / 10.0}"
-                var status = ""
+                val status: String
                 if (viewModel.observeUser().value!!.bmi > 30) {
                     status = "Obese"
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
@@ -246,7 +246,7 @@ class ProfileFragment : Fragment() {
         }
         user.bmi = user.weight / user.height / user.height * 703.0
         binding.BMIValue.text = "BMI: ${(user.bmi * 10).roundToInt() / 10.0}"
-        var status = ""
+        val status: String
         if (user.bmi > 30) {
             status = "Obese"
             binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)

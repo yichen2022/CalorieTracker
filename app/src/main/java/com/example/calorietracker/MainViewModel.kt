@@ -10,7 +10,7 @@ import com.example.calorietracker.model.User
 import com.google.firebase.auth.FirebaseAuth
 import java.util.Date
 
-class MainViewModel() : ViewModel() {
+class MainViewModel : ViewModel() {
     private var currentUser = MutableLiveData<User>()
     private var foodGroup = MutableLiveData<String>()
     private var currentMeal = MutableLiveData<String>()

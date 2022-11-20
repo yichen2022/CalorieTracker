@@ -10,7 +10,7 @@ import com.example.calorietracker.databinding.FragmentMealBinding
 
 import com.example.calorietracker.model.Meal
 
-class CalorieAdapter() : ListAdapter<Meal, CalorieAdapter.ViewHolder>(Diff()) {
+class CalorieAdapter : ListAdapter<Meal, CalorieAdapter.ViewHolder>(Diff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rowBinding = FragmentMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
