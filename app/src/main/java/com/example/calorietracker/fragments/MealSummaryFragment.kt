@@ -33,13 +33,13 @@ class MealSummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
-        viewModel.observeMeal().observe(viewLifecycleOwner) {
-            viewModel.observeDate().observe(viewLifecycleOwner) {
+        viewModel.observeMeal().observe(viewLifecycleOwner) { temp ->
+            viewModel.observeDate().observe(viewLifecycleOwner) { date ->
                 //Sets the meal and date
-                binding.mealDate.text = DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!).toString()
-                binding.mealTitle.text = viewModel.observeMeal().value.toString()
+                binding.mealDate.text = DateFormat.format("yyyy-MM-dd", date).toString()
+                binding.mealTitle.text = temp.toString()
                 viewModel.observeAllMeals().observe(viewLifecycleOwner) {
-                    val meal = viewModel.getMeal(viewModel.observeMeal().value.toString(), viewModel.observeDate().value!!)
+                    val meal = viewModel.getMeal(temp.toString(), date)
                     //Sets the percentages for each food group
                     if (meal.calories != 0) {
                         binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
