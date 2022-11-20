@@ -35,10 +35,12 @@ class MealSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         viewModel.observeMeal().observe(viewLifecycleOwner) {
             viewModel.observeDate().observe(viewLifecycleOwner) {
+                //Sets the meal and date
                 binding.mealDate.text = DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!).toString()
                 binding.mealTitle.text = viewModel.observeMeal().value.toString()
                 viewModel.observeAllMeals().observe(viewLifecycleOwner) {
                     val meal = viewModel.getMeal(viewModel.observeMeal().value.toString(), viewModel.observeDate().value!!)
+                    //Sets the percentages for each food group
                     if (meal.calories != 0) {
                         binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
                         binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100.0/meal.calories).roundToInt()}%"
@@ -55,18 +57,23 @@ class MealSummaryFragment : Fragment() {
                 }
             }
         }
+        //Go to calorie summary
         binding.diary.setOnClickListener {
             toCalorieSummary()
         }
+        //Go to weekly calorie summary
         binding.trend.setOnClickListener {
             toWeeklyCal()
         }
+        //Go to profile page
         binding.profile.setOnClickListener {
             toProfile()
         }
+        //Date selection
         binding.calendar.setOnClickListener {
             toDate()
         }
+        //Add a new food
         binding.add.setOnClickListener {
             toMeal()
         }

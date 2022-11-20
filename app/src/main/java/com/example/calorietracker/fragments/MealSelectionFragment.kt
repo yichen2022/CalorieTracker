@@ -29,6 +29,7 @@ class MealSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        //Set the meal based on the click
         binding.breakfast.setOnClickListener {
             viewModel.setMeal("Breakfast")
             myPlate()
@@ -45,15 +46,19 @@ class MealSelectionFragment : Fragment() {
             viewModel.setMeal("Snacks")
             myPlate()
         }
+        //Go to weekly calorie summary
         binding.trend.setOnClickListener {
             toWeeklyCal()
         }
+        //Go to profile
         binding.profile.setOnClickListener {
             toProfile()
         }
+        //Go to date selection
         binding.calendar.setOnClickListener {
             toDate()
         }
+        //Go to meal summary
         binding.diary.setOnClickListener {
             toMealSummary()
         }

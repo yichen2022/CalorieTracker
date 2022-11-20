@@ -21,6 +21,7 @@ class WeeklyCalFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
     private val weeklyCal = WeeklyCal()
+    //The days of the week
     private val daysOfWeek = listOf("Sun ", "Mon ", "Tue ", "Wed ", "Thu ", "Fri ", "Sat ")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,24 +41,30 @@ class WeeklyCalFragment : Fragment() {
         viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) {
             day = viewModel.observeDate().value!!
             val meals = it.toMutableList()
+            //Set calorie recommendation
             weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
             var days = 0
             var i = 7
+            //Check if meals is empty
             while (meals.isNotEmpty() && i > 0) {
                 var breakfastCal = 0
                 var lunchCal = 0
                 var dinnerCal = 0
                 var otherCal = 0
                 var totalCal = 0
+                //Increment number of days count
                 days++
                 for (j in 1..4) {
+                    //Terminate if meals is empty
                     if (meals.isEmpty()) {
                         break
                     }
                     val meal = meals.removeLast()
+                    //Change bar position
                     i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
                     day = meal.date!!
                     totalCal += meal.calories
+                    //Checks to see which meal to add calories
                     when (meal.index) {
                         1 -> {
                             breakfastCal = meal.calories
@@ -83,6 +90,8 @@ class WeeklyCalFragment : Fragment() {
                     dayText += "0"
                 }
                 dayText += day.date.toString()
+                //Updates the bars and the date texts
+                //Position depends on the date
                 when (i) {
                     7 -> {
                         if (totalCal == 0) {
@@ -233,12 +242,14 @@ class WeeklyCalFragment : Fragment() {
                     }
                 }
             }
+            //Calculates average calories
             if (days != 0) {
                 weeklyCal.average = weeklyCal.numCal/days
             }
             binding.avgCal.text = "Daily Average: ${weeklyCal.average}"
             binding.weeklyCalText.text = "${weeklyCal.numCal} Calories Per Week"
             binding.target.text = "Target: ${weeklyCal.target}"
+            //Calculates the meal percentages
             if (weeklyCal.numCal != 0) {
                 weeklyCal.breakfastPercent = (weeklyCal.breakfastCal * 100.0 / weeklyCal.numCal).roundToInt()
                 weeklyCal.lunchPercent = (weeklyCal.lunchCal * 100.0 / weeklyCal.numCal).roundToInt()
@@ -254,18 +265,21 @@ class WeeklyCalFragment : Fragment() {
             binding.otherCal.text = "${weeklyCal.otherCal} Cal"
             binding.otherPercent.text = "${weeklyCal.otherPercent}%"
         }
+        //Go to profile page
         binding.profile.setOnClickListener {
             toProfile()
         }
+        //Go to date selection
         binding.calendar.setOnClickListener {
             toDate()
         }
+        //Go to calorie summary
         binding.diary.setOnClickListener {
-            toMealSummary()
+            toCalorieSummary()
         }
     }
-    private fun toMealSummary() {
-        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSummaryFragment.newInstance()).addToBackStack("mealSummaryFragment").commit()
+    private fun toCalorieSummary() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
     }
     private fun toProfile() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, ProfileFragment.newInstance()).addToBackStack("profileFragment").commit()

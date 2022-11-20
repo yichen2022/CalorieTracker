@@ -38,7 +38,10 @@ class MainActivity : AppCompatActivity() {
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //Check if there is an internet connection
         isConnected = isNetworkAvailable()
+        //If connected, initialize authentication
+        //Otherwise, sign in with an anonymous user
         if (isConnected) {
             AuthInit(viewModel, signInLauncher)
         }
@@ -46,11 +49,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.signOut()
             FirebaseAuth.getInstance().signInWithEmailAndPassword("fake@example.com", "123456")
         }
+        //Set the date to the current date if not set by user
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-        viewModel.observeSelectedFoods().observeForever {
-            viewModel.getSelectedFoods()
-        }
+        //Fetches all the meals
         viewModel.getAllMeals()
+        //Set all the meals
         viewModel.observeAllMeals().observeForever {
             viewModel.setMeals()
         }

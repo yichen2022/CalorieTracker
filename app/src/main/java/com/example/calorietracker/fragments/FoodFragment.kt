@@ -36,6 +36,7 @@ class FoodFragment : Fragment() {
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         Log.i(javaClass.simpleName, viewModel.observeFoodGroup().value!!)
         viewModel.observeFoodGroup().observeForever {
+            //Set the list based on the food group selected
             when(viewModel.observeFoodGroup().value!!) {
                 "Grains" -> {
                     val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("grains.json")))
@@ -69,6 +70,7 @@ class FoodFragment : Fragment() {
                 }
             }
         }
+        //Set up the adapter
         binding.recyclerview.adapter = adapter
         binding.recyclerview.layoutManager = layoutManager
         return binding.root
@@ -105,6 +107,7 @@ class FoodFragment : Fragment() {
     private fun toWeeklyCal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, WeeklyCalFragment.newInstance()).addToBackStack("weeklyCalFragment").commit()
     }
+    //Reads the JSON food array
     private fun readFoodsArray(category: String, reader: JsonReader): List<Food>  {
         val list = mutableListOf<Food>()
         reader.beginArray()
@@ -114,6 +117,7 @@ class FoodFragment : Fragment() {
         reader.endArray()
         return list
     }
+    //Reads a single food from the JSON file
     private fun readFood(category: String, reader: JsonReader): Food {
         val food = Food()
         food.authorId = viewModel.getCurrentUser()

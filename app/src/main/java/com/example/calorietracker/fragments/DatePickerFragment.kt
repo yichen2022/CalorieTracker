@@ -34,9 +34,12 @@ class DatePickerFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         val calendar = Calendar.getInstance()
         binding.datePicker.maxDate = calendar.timeInMillis
+        //Chooses a date
         binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
+            //YYYY-MM-DD
             var dateString = "$year-"
             val month = monthOfYear + 1
+            //Leading zeroes added
             dateString += if (month < 10) {
                 "0$month"
             } else {
@@ -48,6 +51,7 @@ class DatePickerFragment : Fragment() {
             } else {
                 dayOfMonth.toString()
             }
+            //Set the meals according to the date
             val formatter = SimpleDateFormat("yyyy-MM-dd")
             viewModel.setDate(formatter.parse(dateString)!!)
             viewModel.setMeals()

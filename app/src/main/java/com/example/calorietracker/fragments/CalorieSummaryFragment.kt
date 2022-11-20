@@ -31,15 +31,18 @@ class CalorieSummaryFragment : Fragment() {
             viewModel.getMealsByDate(viewModel.observeDate().value!!)
             viewModel.observeSelectedMealsByDay().observeForever {
                 var calories = 0
+                //Calculates the total number of calories consumed daily
                 val list =
                 viewModel.observeSelectedMealsByDay().value!!.sortedWith(compareBy { it.index })
                 for (i in list.indices) {
                     calories += list[i].calories
                 }
                 adapter.submitList(list)
-                viewModel.observeUser().observe(viewLifecycleOwner) {
+                viewModel.observeUser().observeForever {
                     binding.recommendedCalories.text = "Recommended: ${viewModel.observeUser().value!!.recommendedCal}"
                     binding.progress.max = viewModel.observeUser().value!!.recommendedCal
+                    //If calories is over recommendation, progress bar is red and displays number of calories exceeded
+                    //Otherwise, progress bar is blue and displays the remaining calories
                     if (calories > viewModel.observeUser().value!!.recommendedCal) {
                         binding.progress.progress = viewModel.observeUser().value!!.recommendedCal
                         binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
@@ -53,16 +56,19 @@ class CalorieSummaryFragment : Fragment() {
             }
         }
         binding.recyclerview.adapter = adapter
-
+        //Go to profile page
         binding.profile.setOnClickListener {
             toProfile()
         }
+        //Go to weekly calorie summary
         binding.trend.setOnClickListener {
             toWeeklyCal()
         }
+        //Go to date selection
         binding.calendar.setOnClickListener {
             toDate()
         }
+        //Go to meal selection and add food
         binding.add.setOnClickListener {
             toMeal()
         }

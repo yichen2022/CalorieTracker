@@ -35,24 +35,30 @@ class MyPlateFragment : Fragment() {
         val categoryAdapter = ArrayAdapter.createFromResource(this.requireActivity().applicationContext, R.array.categories, android.R.layout.simple_spinner_item)
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         binding.categorySelection.adapter = categoryAdapter
+        //Move to food fragment based on selection
         binding.myPlate.setOnClickListener {
             val selection = handleCategory()
             if (selection != "") {
                 toFoodList(selection)
             }
         }
+        //Go back to meal selection page
         binding.add.setOnClickListener {
             this.requireActivity().supportFragmentManager.popBackStack()
         }
+        //Go to weekly calories
         binding.trend.setOnClickListener {
             toWeeklyCal()
         }
+        //Go to profile page
         binding.profile.setOnClickListener {
             toProfile()
         }
+        //Go to date selection page
         binding.calendar.setOnClickListener {
             toDate()
         }
+        //Go to meal summary page
         binding.diary.setOnClickListener {
             toMealSummary()
         }

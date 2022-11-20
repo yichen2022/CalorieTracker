@@ -27,6 +27,7 @@ class BlankFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i(javaClass.simpleName, "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
+        //Click the logo to start the page
         binding.logo.setOnClickListener {
             binding.logo.isVisible = false
             this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, StartFragment.newInstance()).addToBackStack("startFragment").commit()

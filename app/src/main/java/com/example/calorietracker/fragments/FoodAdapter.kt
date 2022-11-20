@@ -1,6 +1,5 @@
 package com.example.calorietracker.fragments
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -18,19 +17,22 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
         val binding = FragmentFoodBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = ViewHolder(binding)
         holder.binding.item.setOnClickListener {
+            //Fetches all the foods
             viewModel.observeSelectedFoods().observeForever {
                 viewModel.getSelectedFoods()
             }
-            Log.i(javaClass.simpleName, viewModel.observeSelectedFoods().value.toString())
+            //Check for duplicates
             if (viewModel.observeSelectedFoods().value != null && viewModel.observeSelectedFoods().value!!.contains(foodList[holder.adapterPosition])) {
                 viewModel.removeFoodFromMeal(foodList[holder.adapterPosition])
                 viewModel.removeFood(foodList[holder.adapterPosition])
             }
             else {
+                //Handles the user input for the amount of foods
                 this.binding.amountInput.visibility = View.VISIBLE
                 this.binding.amount.visibility = View.VISIBLE
                 this.binding.foodAdd.visibility = View.VISIBLE
                 this.binding.foodAdd.setOnClickListener {
+                    //Reject invalid values for amount
                     if (!this.binding.amountInput.text.toString().all { char -> char.isDigit() }) {
                         Snackbar.make(this.binding.foodList, "Invalid value for amount", Snackbar.LENGTH_LONG).show()
                     }
