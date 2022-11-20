@@ -87,6 +87,7 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "Meal successfully uploaded")
                 value?.reference?.set(meal)
                 dbFetchMeals(mealList)
+                return
             }
 
         })
@@ -102,6 +103,7 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "Food successfully added")
                 value?.reference?.set(food)
                 dbFetchSelectedFoods(foodList)
+                return
             }
         })
     }
@@ -115,6 +117,7 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "Meal updated successfully")
                 value?.reference?.set(meal)
                 dbFetchMeals(mealList)
+                return
             }
 
         })
@@ -129,6 +132,7 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "Food successfully removed")
                 value?.reference?.delete()
                 dbFetchSelectedFoods(foodList)
+                return
             }
         })
     }
@@ -145,6 +149,7 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "User successfully set")
                 value?.reference?.set(user)
                 currentUser.postValue(user)
+                return
             }
 
         })
@@ -159,8 +164,8 @@ class ViewModelDBHelper {
                 Log.d(javaClass.simpleName, "User successfully updated")
                 value?.reference?.set(user)
                 currentUser.postValue(user)
+                return
             }
-
         })
     }
 }
