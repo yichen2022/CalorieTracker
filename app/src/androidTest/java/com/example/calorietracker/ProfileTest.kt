@@ -26,6 +26,7 @@ class ProfileTest {
                 Thread.sleep(5000)
                 onView(withId(R.id.logo)).perform(click())
                 onView(withId(R.id.start)).perform(click())
+                Thread.sleep(60000)
                 onView(withId(R.id.BMIValue)).check(matches(withText("BMI: 21.2")))
                 onView(withId(R.id.BMIStatus)).check(matches(withText("Status: Ideal")))
                 onView(withId(R.id.idealWeightText)).check(matches(withText("125 - 169 lb (57 - 77 kg)")))
