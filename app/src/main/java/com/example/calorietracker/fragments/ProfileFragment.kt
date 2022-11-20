@@ -71,12 +71,12 @@ class ProfileFragment : Fragment() {
         //Check if the user for the account already exists.
         viewModel.observeUser().observe(viewLifecycleOwner) {
             //If it does exist, the user interface updates to reflect the
-            if (viewModel.observeUser().value != null) {
-                user.firestoreId = viewModel.observeUser().value!!.firestoreId
-                binding.BMIValue.text = "BMI: ${(viewModel.observeUser().value!!.bmi * 10).roundToInt() / 10.0}"
+            if (it != null) {
+                user.firestoreId = it.firestoreId
+                binding.BMIValue.text = "BMI: ${(it.bmi * 10).roundToInt() / 10.0}"
                 //Set the status of the person based on BMI
                 val status: String
-                if (viewModel.observeUser().value!!.bmi > 30) {
+                if (it.bmi > 30) {
                     status = "Obese"
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
                 }
@@ -93,7 +93,7 @@ class ProfileFragment : Fragment() {
                     binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
                 }
                 //Fills the progress bar
-                if (viewModel.observeUser().value!!.bmi > 15 && viewModel.observeUser().value!!.bmi < 40) {
+                if (it.bmi > 15 && it.bmi < 40) {
                     binding.progressBar.progress = it.bmi.roundToInt()
                 } else if (viewModel.observeUser().value!!.bmi > 40) {
                     binding.progressBar.progress = 40
