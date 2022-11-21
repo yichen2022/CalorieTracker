@@ -27,12 +27,10 @@ class ViewModelDBHelper {
         }
     }
     fun dbFetchUser(user: MutableLiveData<User>) {
-        db.collection("user").limit(1).get().addOnSuccessListener { result ->
+        db.collection("user").whereEqualTo("authorId", FirebaseAuth.getInstance().currentUser?.uid.toString()).limit(1).get().addOnSuccessListener { result ->
             Log.d(javaClass.simpleName, "Successfully fetched user")
             result.documents.mapNotNull {
-                if (it.toObject(User::class.java)!!.authorId == FirebaseAuth.getInstance().currentUser?.uid.toString()) {
-                    user.postValue(it.toObject(User::class.java))
-                }
+                user.postValue(it.toObject(User::class.java))
             }
         }.addOnFailureListener {
             Log.d(javaClass.simpleName, "Error fetching user")

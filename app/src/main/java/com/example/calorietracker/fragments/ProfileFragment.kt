@@ -362,9 +362,7 @@ class ProfileFragment : Fragment() {
     private fun logOut() {
         viewModel.signOut()
         Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
-        if (MainActivity.isConnected) {
-            AuthInit(viewModel, signInLauncher)
-        }
+        AuthInit(viewModel, signInLauncher)
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, BlankFragment.newInstance()).addToBackStack("blankFragment").commit()
     }
     companion object {

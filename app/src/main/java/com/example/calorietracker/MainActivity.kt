@@ -30,23 +30,14 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "sign in failed $result")
         }
     }
-    companion object {
-        var isConnected = false
-    }
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        isConnected = isNetworkAvailable()
-        if (isConnected) {
-            AuthInit(viewModel, signInLauncher)
-        }
-        else {
-            viewModel.signOut()
-            FirebaseAuth.getInstance().signInWithEmailAndPassword("fake@example.com", "123456")
-        }
+        viewModel.signOut()
+        AuthInit(viewModel, signInLauncher)
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         viewModel.observeSelectedFoods().observeForever {
             viewModel.getSelectedFoods()
@@ -55,12 +46,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.observeAllMeals().observeForever {
             viewModel.setMeals()
         }
-    }
-
-    private fun isNetworkAvailable(): Boolean {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null
     }
     override fun onStart() {
         super.onStart()
@@ -78,10 +63,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        viewModel.signOut()
         Log.i(javaClass.name, "onStop")
     }
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.signOut()
         Log.i(javaClass.name, "onDestroy")
     }
 }
