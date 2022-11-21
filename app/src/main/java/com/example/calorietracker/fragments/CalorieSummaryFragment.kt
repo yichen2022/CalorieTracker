@@ -38,7 +38,7 @@ class CalorieSummaryFragment : Fragment() {
                     calories += list[i].calories
                 }
                 adapter.submitList(list)
-                viewModel.observeUser().observeForever { user ->
+                viewModel.observeUser().observe(viewLifecycleOwner) { user ->
                     binding.recommendedCalories.text = "Recommended: ${user.recommendedCal}"
                     binding.progress.max = user.recommendedCal
                     //If calories is over recommendation, progress bar is red and displays number of calories exceeded

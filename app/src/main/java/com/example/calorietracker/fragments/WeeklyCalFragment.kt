@@ -41,11 +41,12 @@ class WeeklyCalFragment : Fragment() {
         this.requireActivity().runOnUiThread {
             var day = viewModel.observeDate().value!!
             viewModel.getMealsByLast7Days(day)
-            viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) {
-//                day = viewModel.observeDate().value!!
-                val meals = it.toMutableList()
+            viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) { m ->
                 //Set calorie recommendation
-                weeklyCal.target = viewModel.observeUser().value!!.recommendedCal
+                viewModel.observeUser().observe(viewLifecycleOwner) {
+                    weeklyCal.target = it.recommendedCal
+                }
+                val meals = m.toMutableList()
                 var i = 7
                 //Check if meals is empty
                 while (meals.isNotEmpty() && i > 0) {
