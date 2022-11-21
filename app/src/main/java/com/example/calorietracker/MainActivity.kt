@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
 import com.google.firebase.auth.FirebaseAuth
+import java.net.URL
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -38,22 +39,18 @@ class MainActivity : AppCompatActivity() {
         Log.i(javaClass.name, "onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //Check if there is an internet connection
         isConnected = isNetworkAvailable()
-        //If connected, initialize authentication
-        //Otherwise, sign in with an anonymous user
         if (isConnected) {
             AuthInit(viewModel, signInLauncher)
         }
         else {
-            viewModel.signOut()
-            FirebaseAuth.getInstance().signInWithEmailAndPassword("fake@example.com", "123456")
+            FirebaseAuth.getInstance().signInAnonymously()
         }
-        //Set the date to the current date if not set by user
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-        //Fetches all the meals
+        viewModel.observeSelectedFoods().observeForever {
+            viewModel.getSelectedFoods()
+        }
         viewModel.getAllMeals()
-        //Set all the meals
         viewModel.observeAllMeals().observeForever {
             viewModel.setMeals()
         }
