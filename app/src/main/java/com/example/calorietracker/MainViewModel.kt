@@ -177,11 +177,11 @@ class MainViewModel : ViewModel() {
     }
     fun addFood(food: Food) {
         dbHelp.addFoodToSelection(food, selectedFoods)
-        dbHelp.updateUser(currentUser.value!!, currentUser)
+        dbHelp.setUser(currentUser.value!!, currentUser)
     }
     fun removeFood(food: Food) {
         dbHelp.removeFoodFromSelection(food, selectedFoods)
-        dbHelp.updateUser(currentUser.value!!, currentUser)
+        dbHelp.setUser(currentUser.value!!, currentUser)
     }
     fun updateFoodGroup(selection: String) {
         foodGroup.value = selection

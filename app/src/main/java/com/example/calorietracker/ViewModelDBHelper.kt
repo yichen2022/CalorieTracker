@@ -148,22 +148,7 @@ class ViewModelDBHelper {
                 }
                 Log.d(javaClass.simpleName, "User successfully set")
                 value?.reference?.set(user)
-                currentUser.postValue(user)
-                return
-            }
-
-        })
-    }
-    fun updateUser(user: User, currentUser: MutableLiveData<User>) {
-        db.collection("user").document(user.firestoreId).addSnapshotListener(object : EventListener<DocumentSnapshot> {
-            override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                if (error != null) {
-                    Log.d(javaClass.simpleName, "Error updating user")
-                    return
-                }
-                Log.d(javaClass.simpleName, "User successfully updated")
-                value?.reference?.set(user)
-                currentUser.postValue(user)
+                dbFetchUser(currentUser)
                 return
             }
         })
