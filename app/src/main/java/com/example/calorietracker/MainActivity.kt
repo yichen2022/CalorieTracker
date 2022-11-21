@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "sign in failed $result")
         }
     }
+    companion object {
+        var testing = false
+    }
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +40,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.signOut()
-        AuthInit(viewModel, signInLauncher)
+        if (!testing) {
+            AuthInit(viewModel, signInLauncher)
+        }
+        else {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword("test@example.com", "1234567")
+        }
         viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         viewModel.observeSelectedFoods().observeForever {
             viewModel.getSelectedFoods()

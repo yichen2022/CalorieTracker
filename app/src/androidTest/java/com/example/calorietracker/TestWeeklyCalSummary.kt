@@ -19,60 +19,54 @@ import org.hamcrest.Matchers.*
 class TestWeeklyCalSummary {
     @Test
     fun testWeeklyCal() {
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            launchActivity<MainActivity>().use {
-                Thread.sleep(5000)
-                onView(withId(R.id.logo)).perform(click())
-                onView(withId(R.id.start)).perform(click())
-                onView(withId(R.id.trend)).perform(click())
-                onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
-            }
+        MainActivity.testing = true
+        launchActivity<MainActivity>().use {
+            Thread.sleep(5000)
+            onView(withId(R.id.logo)).perform(click())
+            onView(withId(R.id.start)).perform(click())
+            onView(withId(R.id.trend)).perform(click())
+            onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
         }
     }
 
     @Test
     fun testWeeklyCal2() {
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            launchActivity<MainActivity>().use {
-                Thread.sleep(5000)
-                onView(withId(R.id.logo)).perform(click())
-                onView(withId(R.id.calendar)).perform(click())
-                onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 11, 10))
-                onView(withId(R.id.start)).perform(click())
-                onView(withId(R.id.trend)).perform(click())
-                onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
-                onView(withId(R.id.day7)).check(matches(withText("Thu 10")))
-                onView(withId(R.id.day6)).check(matches(withText("Wed 09")))
-                onView(withId(R.id.day5)).check(matches(withText("Tue 08")))
-                onView(withId(R.id.day4)).check(matches(withText("Mon 07")))
-                onView(withId(R.id.day3)).check(matches(withText("Sun 06")))
-                onView(withId(R.id.day2)).check(matches(withText("Sat 05")))
-                onView(withId(R.id.day1)).check(matches(withText("Fri 04")))
-            }
+        MainActivity.testing = true
+        launchActivity<MainActivity>().use {
+            Thread.sleep(5000)
+            onView(withId(R.id.logo)).perform(click())
+            onView(withId(R.id.calendar)).perform(click())
+            onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 11, 10))
+            onView(withId(R.id.start)).perform(click())
+            onView(withId(R.id.trend)).perform(click())
+            onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
+            onView(withId(R.id.day7)).check(matches(withText("Thu 10")))
+            onView(withId(R.id.day6)).check(matches(withText("Wed 09")))
+            onView(withId(R.id.day5)).check(matches(withText("Tue 08")))
+            onView(withId(R.id.day4)).check(matches(withText("Mon 07")))
+            onView(withId(R.id.day3)).check(matches(withText("Sun 06")))
+            onView(withId(R.id.day2)).check(matches(withText("Sat 05")))
+            onView(withId(R.id.day1)).check(matches(withText("Fri 04")))
         }
     }
     @Test
     fun testWeeklyCal3() {
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            launchActivity<MainActivity>().use {
-                Thread.sleep(5000)
-                onView(withId(R.id.logo)).perform(click())
-                onView(withId(R.id.calendar)).perform(click())
-                onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 10, 9))
-                onView(withId(R.id.start)).perform(click())
-                onView(withId(R.id.trend)).perform(click())
-                onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
-                onView(withId(R.id.day7)).check(matches(withText("Sun 09")))
-                onView(withId(R.id.day6)).check(matches(withText("Sat 08")))
-                onView(withId(R.id.day5)).check(matches(withText("Fri 07")))
-                onView(withId(R.id.day4)).check(matches(withText("Thu 06")))
-                onView(withId(R.id.day3)).check(matches(withText("Wed 05")))
-                onView(withId(R.id.day2)).check(matches(withText("Tue 04")))
-                onView(withId(R.id.day1)).check(matches(withText("Mon 03")))
-            }
+        MainActivity.testing = true
+        launchActivity<MainActivity>().use {
+            Thread.sleep(5000)
+            onView(withId(R.id.logo)).perform(click())
+            onView(withId(R.id.calendar)).perform(click())
+            onView(withId(R.id.datePicker)).perform(PickerActions.setDate(2022, 10, 9))
+            onView(withId(R.id.start)).perform(click())
+            onView(withId(R.id.trend)).perform(click())
+            onView(withId(R.id.target)).check(matches(withText("Target: 1983")))
+            onView(withId(R.id.day7)).check(matches(withText("Sun 09")))
+            onView(withId(R.id.day6)).check(matches(withText("Sat 08")))
+            onView(withId(R.id.day5)).check(matches(withText("Fri 07")))
+            onView(withId(R.id.day4)).check(matches(withText("Thu 06")))
+            onView(withId(R.id.day3)).check(matches(withText("Wed 05")))
+            onView(withId(R.id.day2)).check(matches(withText("Tue 04")))
+            onView(withId(R.id.day1)).check(matches(withText("Mon 03")))
         }
     }
 }
