@@ -121,12 +121,4 @@ class ViewModelDBHelper {
             Log.d(javaClass.simpleName, "Error setting user")
         }
     }
-    fun updateUser(user: User, currentUser: MutableLiveData<User>) {
-        db.collection("user").document(user.firestoreId).set(user).addOnSuccessListener {
-            Log.d(javaClass.simpleName, "User successfully updated")
-            currentUser.postValue(user)
-        }.addOnFailureListener {
-            Log.d(javaClass.simpleName, "Error updating user")
-        }
-    }
 }
