@@ -28,18 +28,15 @@ class User {
             "Underweight"
         }
     }
-    fun calculateBMI(age: Int, height: Double, weight: Double, heightUnit: String, weightUnit: String) {
-        this.age = age
-        this.height = height
-        this.weight = weight
+    fun calculateBMI(heightUnit: String, weightUnit: String) {
         //Conversions
         if (weightUnit == "kg") {
-            this.weight *= 2.205
+            weight *= 2.205
         }
         if (heightUnit == "cm") {
-            this.height /= 2.54
+            height /= 2.54
         }
-        bmi = this.weight / this.height.pow(2) * 703.0
+        bmi = weight / height.pow(2) * 703.0
     }
     fun calculateIdealWeight() {
         idealWeight = "${(18.5 * height  * height / 703.0).roundToInt()} - " +

@@ -177,7 +177,10 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(binding.profileLayout, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
             }
             else {
-                user.calculateBMI(binding.ageInput.text.toString().toInt(), binding.heightInput.text.toString().toDouble(), binding.weightInput.text.toString().toDouble(), heightUnit, weightUnit)
+                user.age = binding.ageInput.text.toString().toInt()
+                user.height = binding.heightInput.text.toString().toDouble()
+                user.weight = binding.weightInput.text.toString().toDouble()
+                user.calculateBMI(heightUnit, weightUnit)
                 user.calculateStatus()
                 user.calculateIdealWeight()
                 user.calculateRecommendedCal()
