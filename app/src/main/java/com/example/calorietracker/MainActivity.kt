@@ -1,8 +1,6 @@
 package com.example.calorietracker
 
 import android.app.Activity
-import android.content.Context
-import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +9,6 @@ import androidx.activity.viewModels
 import com.example.calorietracker.databinding.ActivityMainBinding
 import com.example.calorietracker.firebase.AuthInit
 import com.google.firebase.auth.FirebaseAuth
-import java.net.URL
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
