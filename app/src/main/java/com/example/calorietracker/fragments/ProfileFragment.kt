@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import com.example.calorietracker.MainActivity
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentProfileBinding
@@ -70,40 +69,10 @@ class ProfileFragment : Fragment() {
         viewModel.fetchUser()
         //Check if the user for the account already exists.
         viewModel.observeUser().observe(viewLifecycleOwner) {
-            //If it does exist, the user interface updates to reflect the
+            //If it does exist, the user interface updates to reflect the current user
             if (it != null) {
                 user.firestoreId = it.firestoreId
-                binding.BMIValue.text = "BMI: ${(it.bmi * 10).roundToInt() / 10.0}"
-                //Set the status of the person based on BMI
-                val status: String
-                if (it.bmi > 30) {
-                    status = "Obese"
-                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
-                }
-                else if (viewModel.observeUser().value!!.bmi > 25) {
-                    status = "Overweight"
-                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
-                }
-                else if (viewModel.observeUser().value!!.bmi > 18.5) {
-                    status = "Ideal"
-                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
-                }
-                else {
-                    status = "Underweight"
-                    binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                }
-                //Fills the progress bar
-                if (it.bmi > 15 && it.bmi < 40) {
-                    binding.progressBar.progress = it.bmi.roundToInt()
-                } else if (viewModel.observeUser().value!!.bmi > 40) {
-                    binding.progressBar.progress = 40
-                } else {
-                    binding.progressBar.progress = 15
-                }
-                //Updates the ideal weight and calorie recommendations
-                binding.BMIStatus.text = "Status: $status"
-                binding.recommendedCal.text = viewModel.observeUser().value!!.recommendedCal.toString() + " Cal"
-                binding.idealWeightText.text = "${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0).roundToInt()} lb (${(18.5 * viewModel.observeUser().value!!.height  * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} - ${(25 * viewModel.observeUser().value!!.height * viewModel.observeUser().value!!.height / 703.0 * 0.454).roundToInt()} kg)"
+                setDisplay(it)
             }
         }
         //Add a food to selection
@@ -208,8 +177,11 @@ class ProfileFragment : Fragment() {
                 Snackbar.make(binding.profileLayout, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
             }
             else {
-                calculateBMI()
-                calculateRecommendedCalories()
+                user.calculateBMI(binding.ageInput.text.toString().toInt(), binding.heightInput.text.toString().toDouble(), binding.weightInput.text.toString().toDouble(), heightUnit, weightUnit)
+                user.calculateStatus()
+                user.calculateIdealWeight()
+                user.calculateRecommendedCal()
+                setDisplay(user)
                 viewModel.setProfile(user)
             }
         }
@@ -252,51 +224,6 @@ class ProfileFragment : Fragment() {
             weightUnit = weightUnits[weightPos]
         }
     }
-    //Calculates the BMI of that person
-    @SuppressLint("SetTextI18n")
-    private fun calculateBMI() {
-        user.height = binding.heightInput.text.toString().toDouble()
-        user.weight = binding.weightInput.text.toString().toDouble()
-        //Converts units for consistency
-        if (weightUnit == "kg") {
-            user.weight = user.weight * 2.205
-        }
-        if (heightUnit == "cm") {
-            user.height = user.height / 2.54
-        }
-        //Sets the BMI
-        user.bmi = user.weight / user.height / user.height * 703.0
-        binding.BMIValue.text = "BMI: ${(user.bmi * 10).roundToInt() / 10.0}"
-        //Set the status
-        val status: String
-        if (user.bmi > 30) {
-            status = "Obese"
-            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
-        }
-        else if (user.bmi > 25) {
-            status = "Overweight"
-            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
-        }
-        else if (user.bmi > 18.5) {
-            status = "Ideal"
-            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
-        }
-        else {
-            status = "Underweight"
-            binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
-        }
-        //Sets the progress
-        if (user.bmi > 15 && user.bmi < 40) {
-            binding.progressBar.setProgress(user.bmi.roundToInt(), true)
-        } else if (user.bmi > 40) {
-            binding.progressBar.setProgress(40, true)
-        } else {
-            binding.progressBar.setProgress(15, true)
-        }
-        //Setss ideal weight
-        binding.BMIStatus.text = "Status: $status"
-        binding.idealWeightText.text = "${(18.5 * user.height  * user.height / 703.0).roundToInt()} - ${(25 * user.height * user.height / 703.0).roundToInt()} lb (${(18.5 * user.height  * user.height / 703.0 * 0.454).roundToInt()} - ${(25 * user.height * user.height / 703.0 * 0.454).roundToInt()} kg)"
-    }
     //Sets the activity level according to the selection
     private fun handleActivityLevel(activityPos: Int) {
         if (activityPos > 0) {
@@ -315,41 +242,6 @@ class ProfileFragment : Fragment() {
     private fun toDate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
     }
-    //Calculates the number of calories recommended for that person
-    @SuppressLint("SetTextI18n")
-    private fun calculateRecommendedCalories() {
-        var bmr = 0.0
-        user.age = binding.ageInput.text.toString().toInt()
-        //Calculates BMR
-        when (user.sex) {
-            "Female" -> {
-                bmr = 655.1 + 9.563 * user.weight / 2.205 + 1.85 * user.height * 2.54 - 4.676 * user.age
-            }
-            "Male" -> {
-                bmr = 66.47 + 13.75 * user.weight / 2.205 + 5.003 * user.height * 2.54 - 6.755 * user.age
-            }
-        }
-        //Calculates calories recommended based on activity level
-        when (user.activityLevel) {
-            "Sedentary" -> {
-                user.recommendedCal = (1.2 * bmr).roundToInt()
-            }
-            "Lightly Active" -> {
-                user.recommendedCal = (1.375 * bmr).roundToInt()
-            }
-            "Moderately Active" -> {
-                user.recommendedCal = (1.55 * bmr).roundToInt()
-            }
-            "Active" -> {
-                user.recommendedCal = (1.725 * bmr).roundToInt()
-            }
-            "Very Active" -> {
-                user.recommendedCal = (1.9 * bmr).roundToInt()
-            }
-        }
-        //Set recommendation
-        binding.recommendedCal.text = user.recommendedCal.toString() + " Cal"
-    }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
         super.onDestroyView()
@@ -357,6 +249,35 @@ class ProfileFragment : Fragment() {
     //To the calorie summary page
     private fun toCalorieSummary() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, CalorieSummaryFragment.newInstance()).addToBackStack("calorieSummaryFragment").commit()
+    }
+    @SuppressLint("SetTextI18n")
+    private fun setDisplay(u: User) {
+        binding.BMIValue.text = "BMI: ${(u.bmi * 10).roundToInt() / 10.0}"
+        binding.BMIStatus.text = "Status: ${u.bmiStatus}"
+        binding.recommendedCal.text = u.idealCal.toString() + " Cal"
+        binding.idealWeightText.text = u.idealWeight
+        //Fills the progress bar
+        if (u.bmi > 15 && u.bmi < 40) {
+            binding.progressBar.progress = u.bmi.roundToInt()
+        } else if (u.bmi > 40) {
+            binding.progressBar.progress = 40
+        } else {
+            binding.progressBar.progress = 15
+        }
+        when (u.bmiStatus) {
+            "Obese" -> {
+                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.RED)
+            }
+            "Overweight" -> {
+                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.YELLOW)
+            }
+            "Ideal" -> {
+                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.GREEN)
+            }
+            "Underweight" -> {
+                binding.progressBar.progressTintList = ColorStateList.valueOf(Color.BLUE)
+            }
+        }
     }
     //Logs out of page
     private fun logOut() {

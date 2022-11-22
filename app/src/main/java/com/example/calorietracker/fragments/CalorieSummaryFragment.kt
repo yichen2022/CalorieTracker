@@ -13,12 +13,12 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealListBinding
-import kotlin.concurrent.thread
 
 class CalorieSummaryFragment : Fragment() {
     private var _binding: FragmentMealListBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
+    private var calories = 0
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +30,7 @@ class CalorieSummaryFragment : Fragment() {
         viewModel.observeDate().observe(viewLifecycleOwner) { date ->
             viewModel.getMealsByDate(date)
             viewModel.observeSelectedMealsByDay().observeForever { meal ->
-                var calories = 0
+                calories = 0
                 //Calculates the total number of calories consumed daily
                 val list =
                 meal.sortedWith(compareBy { it.index })
@@ -39,19 +39,7 @@ class CalorieSummaryFragment : Fragment() {
                 }
                 adapter.submitList(list)
                 viewModel.observeUser().observe(viewLifecycleOwner) { user ->
-                    binding.recommendedCalories.text = "Recommended: ${user.recommendedCal}"
-                    binding.progress.max = user.recommendedCal
-                    //If calories is over recommendation, progress bar is red and displays number of calories exceeded
-                    //Otherwise, progress bar is blue and displays the remaining calories
-                    if (calories > user.recommendedCal) {
-                        binding.progress.progress = user.recommendedCal
-                        binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
-                        binding.remainingCalories.text = "${calories - user.recommendedCal} Calories Exceeded Recommendation"
-                    } else {
-                        binding.progress.progress = calories
-                        binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
-                        binding.remainingCalories.text = "${user.recommendedCal - calories} Calories Remaining"
-                    }
+                    setProgressBar(user.idealCal)
                 }
             }
         }
@@ -74,6 +62,24 @@ class CalorieSummaryFragment : Fragment() {
         }
         return binding.root
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun setProgressBar(cal: Int) {
+        binding.recommendedCalories.text = "Recommended: $cal"
+        binding.progress.max = cal
+        //If calories is over recommendation, progress bar is red and displays number of calories exceeded
+        //Otherwise, progress bar is blue and displays the remaining calories
+        if (calories > cal) {
+            binding.progress.progress = cal
+            binding.progress.progressTintList = ColorStateList.valueOf(Color.RED)
+            binding.remainingCalories.text = "${calories - cal} Calories Exceeded Recommendation"
+        } else {
+            binding.progress.progress = calories
+            binding.progress.progressTintList = ColorStateList.valueOf(Color.BLUE)
+            binding.remainingCalories.text = "${cal - calories} Calories Remaining"
+        }
+    }
+
     private fun toMeal() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }

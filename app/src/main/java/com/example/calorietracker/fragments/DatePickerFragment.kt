@@ -37,26 +37,30 @@ class DatePickerFragment : Fragment() {
         //Chooses a date
         binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
             //YYYY-MM-DD
-            var dateString = "$year-"
-            val month = monthOfYear + 1
-            //Leading zeroes added
-            dateString += if (month < 10) {
-                "0$month"
-            } else {
-                month.toString()
-            }
-            dateString += "-"
-            dateString += if (dayOfMonth < 10) {
-                "0$dayOfMonth"
-            } else {
-                dayOfMonth.toString()
-            }
+            parseDate(year, monthOfYear + 1, dayOfMonth)
             //Set the meals according to the date
-            val formatter = SimpleDateFormat("yyyy-MM-dd")
-            viewModel.setDate(formatter.parse(dateString)!!)
             viewModel.setMeals()
             requireActivity().supportFragmentManager.popBackStack()
         }
+    }
+    @SuppressLint("SimpleDateFormat")
+    private fun parseDate(year: Int, month: Int, day: Int) {
+        var dateString = "$year-"
+        //Leading zeroes added
+        dateString += if (month < 10) {
+            "0$month"
+        } else {
+            month.toString()
+        }
+        dateString += "-"
+        dateString += if (day < 10) {
+            "0$day"
+        } else {
+            day.toString()
+        }
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        viewModel.setDate(formatter.parse(dateString)!!)
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

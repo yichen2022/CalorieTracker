@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //Sign out for security purposes because health data is private
         viewModel.signOut()
+        //Set the date to current date
+        viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
         //If not in testing mode, authentication starts
         //If in testing mode, the test user gets logged in
         if (!testing) {
@@ -45,16 +47,6 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             FirebaseAuth.getInstance().signInWithEmailAndPassword("test@example.com", "1234567")
-        }
-        //Set the date to current date
-        viewModel.setDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))
-        viewModel.observeSelectedFoods().observeForever {
-            viewModel.getSelectedFoods()
-        }
-        //Sets and fetches the meals
-        viewModel.getAllMeals()
-        viewModel.observeAllMeals().observeForever {
-            viewModel.setMeals()
         }
     }
     override fun onStart() {

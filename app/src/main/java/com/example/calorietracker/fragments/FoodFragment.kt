@@ -32,46 +32,10 @@ class FoodFragment : Fragment() {
         Log.i(javaClass.simpleName, "onCreateView")
         // Inflate the layout for this fragment
         _binding = FragmentFoodListBinding.inflate(inflater, container, false)
-        var adapter = FoodAdapter(viewModel, listOf(), binding)
         val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         Log.i(javaClass.simpleName, viewModel.observeFoodGroup().value!!)
-        viewModel.observeFoodGroup().observeForever {
-            //Set the list based on the food group selected
-            when(viewModel.observeFoodGroup().value!!) {
-                "Grains" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("grains.json")))
-                    val list = readFoodsArray("Grains", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-                "Veggies" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("veggies.json")))
-                    val list = readFoodsArray("Veggies", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-                "Fruits" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("fruits.json")))
-                    val list = readFoodsArray("Fruits", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-                "Dairy" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("dairy.json")))
-                    val list = readFoodsArray("Dairy", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-                "Protein" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("protein.json")))
-                    val list = readFoodsArray("Protein", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-                "Sugars" -> {
-                    val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("sugars.json")))
-                    val list = readFoodsArray("Sugars", jsonReader)
-                    adapter = FoodAdapter(viewModel, list, binding)
-                }
-            }
-        }
         //Set up the adapter
-        binding.recyclerview.adapter = adapter
+        populateFoods()
         binding.recyclerview.layoutManager = layoutManager
         return binding.root
     }
@@ -144,6 +108,45 @@ class FoodFragment : Fragment() {
         }
         reader.endObject()
         return food
+    }
+    private fun populateFoods() {
+        this.requireActivity().runOnUiThread {
+            viewModel.observeFoodGroup().observeForever {
+                //Set the list based on the food group selected
+                when(viewModel.observeFoodGroup().value!!) {
+                    "Grains" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("grains.json")))
+                        val list = readFoodsArray("Grains", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                    "Veggies" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("veggies.json")))
+                        val list = readFoodsArray("Veggies", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                    "Fruits" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("fruits.json")))
+                        val list = readFoodsArray("Fruits", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                    "Dairy" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("dairy.json")))
+                        val list = readFoodsArray("Dairy", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                    "Protein" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("protein.json")))
+                        val list = readFoodsArray("Protein", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                    "Sugars" -> {
+                        val jsonReader = JsonReader(InputStreamReader(mContext.assets.open("sugars.json")))
+                        val list = readFoodsArray("Sugars", jsonReader)
+                        binding.recyclerview.adapter = FoodAdapter(viewModel, list, binding)
+                    }
+                }
+            }
+        }
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

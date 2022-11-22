@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealSummaryBinding
+import java.util.Date
 import kotlin.math.roundToInt
 
 class MealSummaryFragment : Fragment() {
@@ -35,25 +36,8 @@ class MealSummaryFragment : Fragment() {
         Log.i(javaClass.simpleName, "onViewCreated")
         viewModel.observeMeal().observe(viewLifecycleOwner) { temp ->
             viewModel.observeDate().observe(viewLifecycleOwner) { date ->
-                //Sets the meal and date
-                binding.mealDate.text = DateFormat.format("yyyy-MM-dd", date).toString()
-                binding.mealTitle.text = temp.toString()
                 viewModel.observeAllMeals().observe(viewLifecycleOwner) {
-                    val meal = viewModel.getMeal(temp.toString(), date)
-                    //Sets the percentages for each food group
-                    if (meal.calories != 0) {
-                        binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
-                        binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100.0/meal.calories).roundToInt()}%"
-                        binding.meat.text = "Meat: ${(meal.meat * 100.0/meal.calories).roundToInt()}%"
-                        binding.dairyGroup.text = "Dairy: ${(meal.dairy * 100.0/meal.calories).roundToInt()}%"
-                        binding.other.text = "Other: ${(meal.otherCategories * 100.0/meal.calories).roundToInt()}%"
-                    } else {
-                        binding.grains.text = "Grains: 0%"
-                        binding.fruitVeggie.text = "Fruit/Vegetables: 0%"
-                        binding.meat.text = "Meat: 0%"
-                        binding.dairyGroup.text = "Dairy: 0%"
-                        binding.other.text = "Other: 0%"
-                    }
+                    calculateFoodGroups(temp, date)
                 }
             }
         }
@@ -76,6 +60,27 @@ class MealSummaryFragment : Fragment() {
         //Add a new food
         binding.add.setOnClickListener {
             toMeal()
+        }
+    }
+    @SuppressLint("SetTextI18n")
+    private fun calculateFoodGroups(name: String, date: Date) {
+        //Sets the meal and date
+        binding.mealDate.text = DateFormat.format("yyyy-MM-dd", date).toString()
+        binding.mealTitle.text = name
+        val meal = viewModel.getMeal(name, date)
+        //Sets the percentages for each food group
+        if (meal.calories != 0) {
+            binding.grains.text = "Grains: ${(meal.grains * 100.0/meal.calories).roundToInt()}%"
+            binding.fruitVeggie.text = "Fruit/Vegetables: ${(meal.fruitVeggie * 100.0/meal.calories).roundToInt()}%"
+            binding.meat.text = "Meat: ${(meal.meat * 100.0/meal.calories).roundToInt()}%"
+            binding.dairyGroup.text = "Dairy: ${(meal.dairy * 100.0/meal.calories).roundToInt()}%"
+            binding.other.text = "Other: ${(meal.otherCategories * 100.0/meal.calories).roundToInt()}%"
+        } else {
+            binding.grains.text = "Grains: 0%"
+            binding.fruitVeggie.text = "Fruit/Vegetables: 0%"
+            binding.meat.text = "Meat: 0%"
+            binding.dairyGroup.text = "Dairy: 0%"
+            binding.other.text = "Other: 0%"
         }
     }
     private fun toMeal() {
