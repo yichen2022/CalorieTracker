@@ -11,7 +11,6 @@ import org.junit.runner.RunWith
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.google.firebase.auth.FirebaseAuth
 
 @RunWith(AndroidJUnit4::class)
 class MealSummaryTest {

@@ -1,6 +1,5 @@
 package com.example.calorietracker
 
-import android.os.Handler
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -13,7 +12,6 @@ import org.junit.runner.RunWith
 
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
-import com.google.firebase.auth.FirebaseAuth
 import org.hamcrest.Matchers.*
 
 @RunWith(AndroidJUnit4::class)
