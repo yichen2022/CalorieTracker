@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.calorietracker.fragments
 
 import android.annotation.SuppressLint
