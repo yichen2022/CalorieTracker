@@ -38,8 +38,6 @@ class DatePickerFragment : Fragment() {
         binding.datePicker.setOnDateChangedListener { _, year, monthOfYear, dayOfMonth ->
             //YYYY-MM-DD
             parseDate(year, monthOfYear + 1, dayOfMonth)
-            //Set the meals according to the date
-            viewModel.setMeals()
             requireActivity().supportFragmentManager.popBackStack()
         }
     }

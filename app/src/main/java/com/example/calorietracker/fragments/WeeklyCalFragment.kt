@@ -26,7 +26,7 @@ class WeeklyCalFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MainViewModel by activityViewModels()
     //Placeholder for the data that is not written to the DB
-    private val weeklyCal = WeeklyCal()
+    private lateinit var weeklyCal: WeeklyCal
     private var breakfastCal = 0
     private var lunchCal = 0
     private var dinnerCal = 0
@@ -47,10 +47,25 @@ class WeeklyCalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        weeklyCal = WeeklyCal()
+
         this.requireActivity().runOnUiThread {
+
             var day = viewModel.observeDate().value!!
             viewModel.getMealsByLast7Days(day)
+            //Populates the days of the week axis
+            setUpDayAxis(day)
             viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) { m ->
+                weeklyCal.breakfastCal = 0
+                weeklyCal.lunchCal = 0
+                weeklyCal.dinnerCal = 0
+                weeklyCal.otherCal = 0
+                weeklyCal.numCal = 0
+                weeklyCal.breakfastPercent = 0
+                weeklyCal.lunchPercent = 0
+                weeklyCal.dinnerPercent = 0
+                weeklyCal.otherPercent = 0
+                day = viewModel.observeDate().value!!
                 //Set calorie recommendation
                 viewModel.observeUser().observe(viewLifecycleOwner) {
                     weeklyCal.target = it.idealCal
@@ -64,6 +79,7 @@ class WeeklyCalFragment : Fragment() {
                     dinnerCal = 0
                     otherCal = 0
                     totalCal = 0
+                    Log.i(javaClass.simpleName, meals.size.toString())
                     for (j in 1..4) {
                         val meal = meals.removeLast()
                         //Change bar position
@@ -72,8 +88,8 @@ class WeeklyCalFragment : Fragment() {
                         calculateCalories(meal)
                     }
                     weeklyCal.numCal += totalCal
-                    //Populates the days of the week axis
-                    setUpDayAxis(day)
+                    Log.i(javaClass.simpleName, weeklyCal.numCal.toString())
+
                     setBars(i)
                 }
                 calculateAveragesAndPercentages()
