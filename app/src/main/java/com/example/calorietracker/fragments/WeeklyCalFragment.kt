@@ -62,11 +62,14 @@ class WeeklyCalFragment : Fragment() {
                     dinnerCal = 0
                     otherCal = 0
                     totalCal = 0
-                    val meal = meals.removeLast()
-                    //Change bar position
-                    i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
-                    day = meal.date!!
-                    calculateCalories(meal)
+                    for (j in 1..4) {
+                        val meal = meals.removeLast()
+                        //Change bar position
+                        i -= TimeUnit.MILLISECONDS.toDays(day.time - meal.date!!.time).toInt()
+                        day = meal.date!!
+                        calculateCalories(meal)
+                    }
+                    weeklyCal.numCal += totalCal
                     //Populates the days of the week axis
                     setUpDayAxis(day)
                     setBars(i)
@@ -109,7 +112,6 @@ class WeeklyCalFragment : Fragment() {
                 weeklyCal.otherCal += meal.calories
             }
         }
-        weeklyCal.numCal += totalCal
     }
 
     private fun setUpDayAxis(day: Date) {

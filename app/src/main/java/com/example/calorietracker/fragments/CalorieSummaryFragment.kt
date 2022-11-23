@@ -26,40 +26,6 @@ class CalorieSummaryFragment : Fragment() {
     ): View {
         Log.i(javaClass.simpleName, "onCreateView")
         _binding = FragmentMealListBinding.inflate(inflater, container, false)
-        val adapter = CalorieAdapter()
-        viewModel.observeDate().observe(viewLifecycleOwner) { date ->
-            viewModel.getMealsByDate(date)
-            viewModel.observeSelectedMealsByDay().observeForever { meal ->
-                calories = 0
-                //Calculates the total number of calories consumed daily
-                val list =
-                meal.sortedWith(compareBy { it.index })
-                for (i in list.indices) {
-                    calories += list[i].calories
-                }
-                adapter.submitList(list)
-                viewModel.observeUser().observe(viewLifecycleOwner) { user ->
-                    setProgressBar(user.idealCal)
-                }
-            }
-        }
-        binding.recyclerview.adapter = adapter
-        //Go to profile page
-        binding.profile.setOnClickListener {
-            toProfile()
-        }
-        //Go to weekly calorie summary
-        binding.trend.setOnClickListener {
-            toWeeklyCal()
-        }
-        //Go to date selection
-        binding.calendar.setOnClickListener {
-            toDate()
-        }
-        //Go to meal selection and add food
-        binding.add.setOnClickListener {
-            toMeal()
-        }
         return binding.root
     }
 
@@ -95,6 +61,40 @@ class CalorieSummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        val adapter = CalorieAdapter()
+        viewModel.observeDate().observe(viewLifecycleOwner) { date ->
+            viewModel.getMealsByDate(date)
+            viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) { meal ->
+                calories = 0
+                //Calculates the total number of calories consumed daily
+                val list =
+                    meal.sortedWith(compareBy { it.index })
+                for (i in list.indices) {
+                    calories += list[i].calories
+                }
+                adapter.submitList(list)
+                viewModel.observeUser().observe(viewLifecycleOwner) { user ->
+                    setProgressBar(user.idealCal)
+                }
+            }
+        }
+        binding.recyclerview.adapter = adapter
+        //Go to profile page
+        binding.profile.setOnClickListener {
+            toProfile()
+        }
+        //Go to weekly calorie summary
+        binding.trend.setOnClickListener {
+            toWeeklyCal()
+        }
+        //Go to date selection
+        binding.calendar.setOnClickListener {
+            toDate()
+        }
+        //Go to meal selection and add food
+        binding.add.setOnClickListener {
+            toMeal()
+        }
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
