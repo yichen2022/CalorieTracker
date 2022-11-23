@@ -23,7 +23,6 @@ class ProfileTest {
             Thread.sleep(5000)
             onView(withId(R.id.logo)).perform(click())
             onView(withId(R.id.start)).perform(click())
-            Thread.sleep(5000)
             onView(withId(R.id.BMIValue)).check(matches(withText("BMI: 21.2")))
             onView(withId(R.id.BMIStatus)).check(matches(withText("Status: Ideal")))
             onView(withId(R.id.idealWeightText)).check(matches(withText("125 - 169 lb (57 - 77 kg)")))
@@ -55,7 +54,7 @@ class ProfileTest {
             onView(withId(R.id.calculate)).perform(click())
             onView(withId(R.id.BMIValue)).check(matches(withText("BMI: 19.0")))
             onView(withId(R.id.BMIStatus)).check(matches(withText("Status: Ideal")))
-            onView(withId(R.id.idealWeightText)).check(matches(withText("123 - 166 lb (56 - 76 kg)")))
+            onView(withId(R.id.idealWeightText)).check(matches(withText("123 - 166 lb (56 - 75 kg)")))
             onView(withId(R.id.recommendedCal)).check(matches(withText("1983 Cal")))
         }
     }
