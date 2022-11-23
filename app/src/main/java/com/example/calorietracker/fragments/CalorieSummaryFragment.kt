@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.calorietracker.MainViewModel
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentMealListBinding
+import java.util.*
 
 class CalorieSummaryFragment : Fragment() {
     private var _binding: FragmentMealListBinding? = null
@@ -30,7 +32,8 @@ class CalorieSummaryFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun setProgressBar(cal: Int) {
+    private fun setProgressBar(date: Date, cal: Int) {
+        binding.date.text = DateFormat.format("yyyy-MM-dd", date).toString()
         binding.recommendedCalories.text = "Recommended: $cal"
         binding.progress.max = cal
         //If calories is over recommendation, progress bar is red and displays number of calories exceeded
@@ -74,7 +77,7 @@ class CalorieSummaryFragment : Fragment() {
                 }
                 adapter.submitList(list)
                 viewModel.observeUser().observe(viewLifecycleOwner) { user ->
-                    setProgressBar(user.idealCal)
+                    setProgressBar(date, user.idealCal)
                 }
             }
         }

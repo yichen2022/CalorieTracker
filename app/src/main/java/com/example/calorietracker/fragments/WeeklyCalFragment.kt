@@ -79,7 +79,6 @@ class WeeklyCalFragment : Fragment() {
                     dinnerCal = 0
                     otherCal = 0
                     totalCal = 0
-                    Log.i(javaClass.simpleName, meals.size.toString())
                     for (j in 1..4) {
                         val meal = meals.removeLast()
                         //Change bar position
@@ -88,7 +87,6 @@ class WeeklyCalFragment : Fragment() {
                         calculateCalories(meal)
                     }
                     weeklyCal.numCal += totalCal
-                    Log.i(javaClass.simpleName, weeklyCal.numCal.toString())
 
                     setBars(i)
                 }
