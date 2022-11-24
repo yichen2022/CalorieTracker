@@ -57,6 +57,7 @@ class WeeklyCalFragment : Fragment() {
             //Populates the days of the week axis
             setUpDayAxis(day)
             viewModel.observeSelectedMealsByWeek().observe(viewLifecycleOwner) { m ->
+                //Reset calorie counts
                 weeklyCal.breakfastCal = 0
                 weeklyCal.lunchCal = 0
                 weeklyCal.dinnerCal = 0
