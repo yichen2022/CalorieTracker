@@ -4,6 +4,7 @@ package com.example.calorietracker.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -50,8 +51,8 @@ class WeeklyCalFragment : Fragment() {
         weeklyCal = WeeklyCal()
 
         this.requireActivity().runOnUiThread {
-
             var day = viewModel.observeDate().value!!
+            binding.mealDate.text = DateFormat.format("yyyy-MM-dd", day).toString()
             viewModel.getMealsByLast7Days(day)
             //Populates the days of the week axis
             setUpDayAxis(day)

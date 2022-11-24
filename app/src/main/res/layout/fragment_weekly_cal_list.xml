@@ -43,6 +43,17 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_weight="1"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/mealDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topPanel"
+        app:layout_constraintBottom_toTopOf="@+id/summary"/>
     <LinearLayout
         android:id="@+id/summary"
         android:layout_width="match_parent"
@@ -78,8 +89,8 @@
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/list"
-        app:layout_constraintTop_toBottomOf="@+id/summary">
+        app:layout_constraintTop_toBottomOf="@+id/list"
+        app:layout_constraintBottom_toTopOf="@+id/chartTitle">
         <LinearLayout
             android:id="@+id/barGraph"
             android:layout_width="match_parent"
@@ -355,6 +366,16 @@
                 android:text=""/>
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/chartTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total calories consumed in the last 7 days listed above"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintTop_toBottomOf="@+id/barChart"/>
     <LinearLayout
         android:id="@+id/list"
         android:layout_width="match_parent"
@@ -362,7 +383,7 @@
         android:orientation="vertical"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barChart"
+        app:layout_constraintTop_toBottomOf="@+id/chartTitle"
         app:layout_constraintBottom_toTopOf="@+id/add">
         <LinearLayout
             android:layout_width="match_parent"
