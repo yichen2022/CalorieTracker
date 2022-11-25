@@ -370,6 +370,8 @@
         android:id="@+id/chartTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center_horizontal"
         android:text="Total calories consumed in the last 7 days listed above"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
