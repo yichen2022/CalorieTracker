@@ -107,6 +107,10 @@ class WeeklyCalFragment : Fragment() {
         binding.diary.setOnClickListener {
             toCalorieSummary()
         }
+        //Add new food
+        binding.add.setOnClickListener {
+            toMeal()
+        }
     }
 
     private fun calculateCalories(meal: Meal) {
@@ -180,6 +184,10 @@ class WeeklyCalFragment : Fragment() {
     //Go to date selection
     private fun toDate() {
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, DatePickerFragment.newInstance()).addToBackStack("datePickerFragment").commit()
+    }
+    //To the meal page
+    private fun toMeal() {
+        this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, MealSelectionFragment.newInstance()).addToBackStack("mealSelectionFragment").commit()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")
