@@ -53,7 +53,7 @@ class ViewModelDBHelper {
     fun dbFetchMealByLast7Days(date: Date, mealList: MutableLiveData<List<Meal>>) {
         val temp = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().minusDays(7)
             .atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
-        db.collection("allMeals").whereGreaterThanOrEqualTo("date",
+        db.collection("allMeals").whereGreaterThan("date",
             Date.from(temp)).whereLessThanOrEqualTo("date", date).orderBy("date").get()
             .addOnSuccessListener { result ->
                 Log.d(javaClass.simpleName, "Meals in the last 7 days from the current date fetched successfully")
