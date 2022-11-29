@@ -38,6 +38,7 @@ class CalorieSummaryTest {
             onView(withId(R.id.activityDropdown)).check(matches(withSpinnerText(containsString("Sedentary"))))
             onView(withId(R.id.calculate)).perform(click())
             onView(withId(R.id.diary)).perform(click())
+            Thread.sleep(5000)
             onView(withId(R.id.recommendedCalories)).check(matches(withText("Recommended: 2025")))
         }
     }
