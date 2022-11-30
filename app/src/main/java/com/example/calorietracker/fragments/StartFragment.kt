@@ -44,6 +44,10 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
+        viewModel.getAllMeals()
+        viewModel.observeAllMeals().observe(viewLifecycleOwner) {
+            viewModel.setMeals()
+        }
         //Start goes to profile
         binding.start.setOnClickListener {
             toProfile()

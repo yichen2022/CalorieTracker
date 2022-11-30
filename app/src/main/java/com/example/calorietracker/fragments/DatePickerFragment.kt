@@ -59,6 +59,7 @@ class DatePickerFragment : Fragment() {
 
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         viewModel.setDate(formatter.parse(dateString)!!)
+        viewModel.setMeals()
     }
     override fun onDestroyView() {
         Log.i(javaClass.simpleName, "onDestroyView")

@@ -94,16 +94,16 @@
         <LinearLayout
             android:id="@+id/barGraph"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:orientation="horizontal">
             <View
                 android:layout_width="5dp"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:background="#000000" />
             <RelativeLayout
                 android:id="@+id/bar1"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast1"
@@ -133,7 +133,7 @@
             <RelativeLayout
                 android:id="@+id/bar2"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast2"
@@ -163,7 +163,7 @@
             <RelativeLayout
                 android:id="@+id/bar3"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast3"
@@ -193,7 +193,7 @@
             <RelativeLayout
                 android:id="@+id/bar4"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast4"
@@ -223,7 +223,7 @@
             <RelativeLayout
                 android:id="@+id/bar5"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast5"
@@ -253,7 +253,7 @@
             <RelativeLayout
                 android:id="@+id/bar6"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast6"
@@ -283,7 +283,7 @@
             <RelativeLayout
                 android:id="@+id/bar7"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:layout_marginStart="20dp">
                 <View
                     android:id="@+id/breakfast7"
@@ -381,7 +381,7 @@
     <LinearLayout
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:orientation="vertical"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -147,34 +147,34 @@ class ProfileFragment : Fragment() {
         binding.calculate.setOnClickListener {
             //Checks for missing and invalid values
             if (user.sex == "") {
-                Snackbar.make(binding.profileLayout, "Missing sex", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing sex", Snackbar.LENGTH_LONG).show()
             }
             else if (binding.ageInput.text.toString() == "") {
-                Snackbar.make(binding.profileLayout, "Missing age", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing age", Snackbar.LENGTH_LONG).show()
             }
             else if (binding.heightInput.text.toString() == "") {
-                Snackbar.make(binding.profileLayout, "Missing height", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing height", Snackbar.LENGTH_LONG).show()
             }
             else if (binding.weightInput.text.toString() == "") {
-                Snackbar.make(binding.profileLayout, "Missing weight", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing weight", Snackbar.LENGTH_LONG).show()
             }
             else if (user.activityLevel == "") {
-                Snackbar.make(binding.profileLayout, "Missing activity level", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing activity level", Snackbar.LENGTH_LONG).show()
             }
             else if (heightUnit == "") {
-                Snackbar.make(binding.profileLayout, "Missing unit for height", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing unit for height", Snackbar.LENGTH_LONG).show()
             }
             else if (weightUnit == "") {
-                Snackbar.make(binding.profileLayout, "Missing unit for weight", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Missing unit for weight", Snackbar.LENGTH_LONG).show()
             }
             else if (!binding.ageInput.text.toString().all { char -> char.isDigit() }) {
-                Snackbar.make(binding.profileLayout, "Invalid value for age", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Invalid value for age", Snackbar.LENGTH_LONG).show()
             }
             else if (binding.heightInput.text.toString()[0] == '-' || binding.heightInput.text.toString().toDoubleOrNull() == null) {
-                Snackbar.make(binding.profileLayout, "Invalid value for height", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Invalid value for height", Snackbar.LENGTH_LONG).show()
             }
             else if (binding.weightInput.text.toString()[0] == '-' || binding.weightInput.text.toString().toDoubleOrNull() == null) {
-                Snackbar.make(binding.profileLayout, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.topPanel, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
             }
             else {
                 user.age = binding.ageInput.text.toString().toInt()
@@ -184,8 +184,12 @@ class ProfileFragment : Fragment() {
                 user.calculateStatus()
                 user.calculateIdealWeight()
                 user.calculateRecommendedCal()
-                setDisplay(user)
-                viewModel.setProfile(user)
+                if (user.idealCal > 3900) {
+                    Snackbar.make(binding.topPanel, "Too many calories recommended, please check the input values.", Snackbar.LENGTH_LONG).show()
+                } else {
+                    setDisplay(user)
+                    viewModel.setProfile(user)
+                }
             }
         }
         //Populates all the dropdowns
@@ -285,7 +289,6 @@ class ProfileFragment : Fragment() {
     //Logs out of page
     private fun logOut() {
         viewModel.signOut()
-        Snackbar.make(binding.profileLayout, "Successfully logged out", Snackbar.LENGTH_LONG).show()
         AuthInit(viewModel, signInLauncher)
         this.requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragment, BlankFragment.newInstance()).addToBackStack("blankFragment").commit()
     }

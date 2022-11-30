@@ -65,23 +65,20 @@ class CalorieSummaryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.i(javaClass.simpleName, "onViewCreated")
         val adapter = CalorieAdapter()
-        viewModel.observeDate().observe(viewLifecycleOwner) { date ->
-            viewModel.getMealsByDate(date)
-            viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) { meal ->
-                calories = 0
-                //Calculates the total number of calories consumed daily
-                val list =
-                    meal.sortedWith(compareBy { it.index })
-                for (i in list.indices) {
-                    calories += list[i].calories
-                }
-                adapter.submitList(list)
-                viewModel.observeUser().observe(viewLifecycleOwner) { user ->
-                    setProgressBar(date, user.idealCal)
-                }
+        val date = viewModel.observeDate().value!!
+        viewModel.getMealsByDate(date)
+        viewModel.observeSelectedMealsByDay().observe(viewLifecycleOwner) { meal ->
+            adapter.submitList(meal.sortedWith(compareBy { it.index }).toMutableList())
+            calories = 0
+            //Calculates the total number of calories consumed daily
+            for (i in meal.indices) {
+                calories += meal[i].calories
+            }
+            binding.recyclerview.adapter = adapter
+            viewModel.observeUser().observe(viewLifecycleOwner) { user ->
+                setProgressBar(date, user.idealCal)
             }
         }
-        binding.recyclerview.adapter = adapter
         //Go to profile page
         binding.profile.setOnClickListener {
             toProfile()

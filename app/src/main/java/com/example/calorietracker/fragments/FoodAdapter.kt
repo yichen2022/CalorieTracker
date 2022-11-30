@@ -1,5 +1,6 @@
 package com.example.calorietracker.fragments
 
+import android.text.format.DateFormat
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,7 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
             if (viewModel.observeSelectedFoods().value != null && viewModel.observeSelectedFoods().value!!.contains(foodList[holder.adapterPosition])) {
                 viewModel.removeFoodFromMeal(foodList[holder.adapterPosition])
                 viewModel.removeFood(foodList[holder.adapterPosition])
+                Snackbar.make(this.binding.foodList, "Successfully removed ${foodList[holder.adapterPosition].name} from ${viewModel.observeMeal().value.toString()} on ${DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!)}", Snackbar.LENGTH_LONG).show()
             }
             else {
                 //Handles the user input for the amount of foods
@@ -31,7 +33,10 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
                 this.binding.foodAdd.visibility = View.VISIBLE
                 this.binding.foodAdd.setOnClickListener {
                     //Reject invalid values for amount
-                    if (!this.binding.amountInput.text.toString().all { char -> char.isDigit() }) {
+                    if (this.binding.amountInput.text.toString() == "") {
+                        Snackbar.make(this.binding.foodList, "Missing value for amount", Snackbar.LENGTH_LONG).show()
+                    }
+                    else if (!this.binding.amountInput.text.toString().all { char -> char.isDigit() }) {
                         Snackbar.make(this.binding.foodList, "Invalid value for amount", Snackbar.LENGTH_LONG).show()
                     }
                     else {
@@ -42,8 +47,8 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
                         this.binding.foodAdd.visibility = View.INVISIBLE
                         viewModel.addFood(foodList[holder.adapterPosition])
                         viewModel.addFoodToMeal(foodList[holder.adapterPosition])
+                        Snackbar.make(this.binding.foodList, "Successfully added ${foodList[holder.adapterPosition].name} to ${viewModel.observeMeal().value.toString()} on ${DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!)}", Snackbar.LENGTH_LONG).show()
                     }
-
                 }
             }
         }

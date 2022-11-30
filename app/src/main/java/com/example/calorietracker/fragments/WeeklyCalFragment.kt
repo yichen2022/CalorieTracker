@@ -16,6 +16,7 @@ import com.example.calorietracker.R
 import com.example.calorietracker.databinding.FragmentWeeklyCalListBinding
 import com.example.calorietracker.model.Meal
 import com.example.calorietracker.model.WeeklyCal
+import com.google.android.material.snackbar.Snackbar
 import java.time.ZoneId
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -194,14 +195,18 @@ class WeeklyCalFragment : Fragment() {
         super.onDestroyView()
     }
     private fun setBars(i: Int) {
+        if (totalCal > 3900) {
+            Snackbar.make(binding.barGraph, "Too many calories intake, please check the input values.", Snackbar.LENGTH_LONG).show()
+            return
+        }
         //Updates the bars
         when (i) {
             7 -> {
                 if (totalCal != 0) {
-                    binding.breakfast7.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch7.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner7.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other7.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast7.layoutParams.height = breakfastCal / 13
+                    binding.lunch7.layoutParams.height = lunchCal / 13
+                    binding.dinner7.layoutParams.height = dinnerCal / 13
+                    binding.other7.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast7.requestLayout()
                 binding.lunch7.requestLayout()
@@ -210,10 +215,10 @@ class WeeklyCalFragment : Fragment() {
             }
             6 -> {
                 if (totalCal != 0) {
-                    binding.breakfast6.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch6.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner6.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other6.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast6.layoutParams.height = breakfastCal / 13
+                    binding.lunch6.layoutParams.height = lunchCal / 13
+                    binding.dinner6.layoutParams.height = dinnerCal / 13
+                    binding.other6.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast6.requestLayout()
                 binding.lunch6.requestLayout()
@@ -222,10 +227,10 @@ class WeeklyCalFragment : Fragment() {
             }
             5 -> {
                 if (totalCal != 0) {
-                    binding.breakfast5.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch5.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner5.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other5.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast5.layoutParams.height = breakfastCal / 13
+                    binding.lunch5.layoutParams.height = lunchCal / 13
+                    binding.dinner5.layoutParams.height = dinnerCal / 13
+                    binding.other5.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast5.requestLayout()
                 binding.lunch5.requestLayout()
@@ -234,10 +239,10 @@ class WeeklyCalFragment : Fragment() {
             }
             4 -> {
                 if (totalCal != 0) {
-                    binding.breakfast4.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch4.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner4.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other4.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast4.layoutParams.height = breakfastCal / 13
+                    binding.lunch4.layoutParams.height = lunchCal / 13
+                    binding.dinner4.layoutParams.height = dinnerCal / 13
+                    binding.other4.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast4.requestLayout()
                 binding.lunch4.requestLayout()
@@ -246,10 +251,10 @@ class WeeklyCalFragment : Fragment() {
             }
             3 -> {
                 if (totalCal != 0) {
-                    binding.breakfast3.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch3.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner3.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other3.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast3.layoutParams.height = breakfastCal / 13
+                    binding.lunch3.layoutParams.height = lunchCal / 13
+                    binding.dinner3.layoutParams.height = dinnerCal / 13
+                    binding.other3.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast3.requestLayout()
                 binding.lunch3.requestLayout()
@@ -258,10 +263,10 @@ class WeeklyCalFragment : Fragment() {
             }
             2 -> {
                 if (totalCal != 0) {
-                    binding.breakfast2.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch2.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner2.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other2.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast2.layoutParams.height = breakfastCal / 13
+                    binding.lunch2.layoutParams.height = lunchCal / 13
+                    binding.dinner2.layoutParams.height = dinnerCal / 13
+                    binding.other2.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast2.requestLayout()
                 binding.lunch2.requestLayout()
@@ -270,10 +275,10 @@ class WeeklyCalFragment : Fragment() {
             }
             1 -> {
                 if (totalCal != 0) {
-                    binding.breakfast1.layoutParams.height = breakfastCal * 200 / totalCal
-                    binding.lunch1.layoutParams.height = lunchCal * 200 / totalCal
-                    binding.dinner1.layoutParams.height = dinnerCal * 200 / totalCal
-                    binding.other1.layoutParams.height = otherCal * 200 / totalCal
+                    binding.breakfast1.layoutParams.height = breakfastCal / 13
+                    binding.lunch1.layoutParams.height = lunchCal / 13
+                    binding.dinner1.layoutParams.height = dinnerCal / 13
+                    binding.other1.layoutParams.height = otherCal / 13
                 }
                 binding.breakfast1.requestLayout()
                 binding.lunch1.requestLayout()

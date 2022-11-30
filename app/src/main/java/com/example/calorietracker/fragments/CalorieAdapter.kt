@@ -26,11 +26,11 @@ class CalorieAdapter : ListAdapter<Meal, CalorieAdapter.ViewHolder>(Diff()) {
     inner class ViewHolder(val binding: FragmentMealBinding) : RecyclerView.ViewHolder(binding.root)
     class Diff : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem.type == newItem.type && oldItem.date == newItem.date
+            return oldItem.type == newItem.type && oldItem.date == newItem.date && oldItem.authorId == newItem.authorId && oldItem.calories == newItem.calories
         }
 
         override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem.type == newItem.type && oldItem.date == newItem.date
+            return oldItem.type == newItem.type && oldItem.date == newItem.date && oldItem.authorId == newItem.authorId && oldItem.calories == newItem.calories
         }
     }
 }
