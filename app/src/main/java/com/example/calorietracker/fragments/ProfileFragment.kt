@@ -170,10 +170,12 @@ class ProfileFragment : Fragment() {
             else if (!binding.ageInput.text.toString().all { char -> char.isDigit() }) {
                 Snackbar.make(binding.topPanel, "Invalid value for age", Snackbar.LENGTH_LONG).show()
             }
-            else if (binding.heightInput.text.toString()[0] == '-' || binding.heightInput.text.toString().toDoubleOrNull() == null) {
+            else if (binding.heightInput.text.toString()[0] == '-' || binding.heightInput.text.toString().toDoubleOrNull() == null ||
+                binding.heightInput.text.toString()[binding.heightInput.text.toString().length - 1] == 'd' || binding.heightInput.text.toString()[binding.heightInput.text.toString().length - 1] == 'f') {
                 Snackbar.make(binding.topPanel, "Invalid value for height", Snackbar.LENGTH_LONG).show()
             }
-            else if (binding.weightInput.text.toString()[0] == '-' || binding.weightInput.text.toString().toDoubleOrNull() == null) {
+            else if (binding.weightInput.text.toString()[0] == '-' || binding.weightInput.text.toString().toDoubleOrNull() == null ||
+                binding.weightInput.text.toString()[binding.weightInput.text.toString().length - 1] == 'd' || binding.weightInput.text.toString()[binding.weightInput.text.toString().length - 1] == 'f') {
                 Snackbar.make(binding.topPanel, "Invalid value for weight", Snackbar.LENGTH_LONG).show()
             }
             else {
