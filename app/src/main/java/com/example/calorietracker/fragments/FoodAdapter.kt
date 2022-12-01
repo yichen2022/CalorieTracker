@@ -22,8 +22,9 @@ class FoodAdapter(private val viewModel: MainViewModel, private val foodList: Li
             viewModel.getSelectedFoods()
             //Check for duplicates
             if (viewModel.observeSelectedFoods().value != null && viewModel.observeSelectedFoods().value!!.contains(foodList[holder.adapterPosition])) {
-                viewModel.removeFoodFromMeal(foodList[holder.adapterPosition])
-                viewModel.removeFood(foodList[holder.adapterPosition])
+                val index = viewModel.observeSelectedFoods().value!!.indexOf(foodList[holder.adapterPosition])
+                viewModel.removeFoodFromMeal(viewModel.observeSelectedFoods().value!![index])
+                viewModel.removeFood(viewModel.observeSelectedFoods().value!![index])
                 Snackbar.make(this.binding.foodList, "Successfully removed ${foodList[holder.adapterPosition].name} from ${viewModel.observeMeal().value.toString()} on ${DateFormat.format("yyyy-MM-dd", viewModel.observeDate().value!!)}", Snackbar.LENGTH_LONG).show()
             }
             else {

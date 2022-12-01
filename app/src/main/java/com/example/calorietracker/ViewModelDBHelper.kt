@@ -105,6 +105,7 @@ class ViewModelDBHelper {
         }
     }
     fun removeFoodFromSelection(food: Food, foodList: MutableLiveData<List<Food>>) {
+        Log.i(javaClass.simpleName, food.firestoreId)
         db.collection("selectedFoods").document(food.firestoreId).delete().addOnSuccessListener {
             Log.d(javaClass.simpleName, "Food successfully removed")
             dbFetchSelectedFoods(foodList)
